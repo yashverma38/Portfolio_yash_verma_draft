@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact — Yash Verma</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="page page--contact">
+    <header class="site-header">
+      <div class="site-header__inner container">
+        <a href="index.html" class="logo">YV.</a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <nav class="site-nav" id="siteNav">
+          <a class="site-nav__link" href="index.html">Home</a>
+          <a class="site-nav__link" href="about.html">About</a>
+          <a class="site-nav__link" href="projects.html">Projects</a>
+          <a class="site-nav__link site-nav__link--active" href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <div class="container">
+          <p class="eyebrow">Contact</p>
+          <h1>Let’s create something extraordinary.</h1>
+          <p class="page-hero__intro">
+            Share a few details about your project and I’ll get back within two
+            business days to schedule an intro call.
+          </p>
+        </div>
+      </section>
+
+      <section class="contact container">
+        <div class="contact__grid">
+          <div class="contact__details">
+            <h2>How we can collaborate</h2>
+            <p>
+              From product vision workshops to full redesigns, I partner with
+              teams to uncover opportunities and deliver meaningful outcomes.
+            </p>
+            <ul class="contact__channels">
+              <li>
+                <span>General enquiries</span>
+                <a href="mailto:hello@yashverma.design">hello@yashverma.design</a>
+              </li>
+              <li>
+                <span>Speaking &amp; mentoring</span>
+                <a href="mailto:events@yashverma.design">events@yashverma.design</a>
+              </li>
+              <li>
+                <span>Download resume</span>
+                <a href="assets/Yash-Verma-Resume.pdf" download>Resume.pdf</a>
+              </li>
+            </ul>
+          </div>
+          <form class="contact-form" action="#" method="post">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your full name" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="your@email.com" required />
+            </div>
+            <div class="form-group">
+              <label for="company">Company</label>
+              <input type="text" id="company" name="company" placeholder="Company or organisation" />
+            </div>
+            <div class="form-group">
+              <label for="budget">Estimated budget</label>
+              <select id="budget" name="budget">
+                <option value="" disabled selected>Select a range</option>
+                <option value="10-25">$10k – $25k</option>
+                <option value="25-50">$25k – $50k</option>
+                <option value="50-100">$50k – $100k</option>
+                <option value="100+">$100k+</option>
+              </select>
+            </div>
+            <div class="form-group form-group--full">
+              <label for="message">Project details</label>
+              <textarea id="message" name="message" rows="4" placeholder="Tell me about your goals"></textarea>
+            </div>
+            <button class="btn btn--primary" type="submit">Submit enquiry</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="faq">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">FAQ</p>
+            <h2>Frequently asked questions</h2>
+          </div>
+          <div class="faq__grid">
+            <article class="faq-item">
+              <h3>What is your typical project timeline?</h3>
+              <p>
+                Most engagements range between 8–12 weeks depending on the scope
+                and team size. We’ll align on milestones together.
+              </p>
+            </article>
+            <article class="faq-item">
+              <h3>Do you collaborate with development teams?</h3>
+              <p>
+                Absolutely. I partner closely with engineering and product to
+                ensure seamless delivery and clear documentation.
+              </p>
+            </article>
+            <article class="faq-item">
+              <h3>Are one-off consultations available?</h3>
+              <p>
+                Yes, I offer strategy sprints and design audits for teams looking
+                for rapid insights.
+              </p>
+            </article>
+            <article class="faq-item">
+              <h3>What if I just need design direction?</h3>
+              <p>
+                We can run workshops or design leadership sessions tailored to your
+                team’s needs.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta">
+        <div class="container cta__inner">
+          <div class="cta__text">
+            <p class="eyebrow">Stay connected</p>
+            <h2>Subscribe for design insights and updates.</h2>
+            <p>Receive occasional notes about product strategy, design ops, and events.</p>
+          </div>
+          <form class="newsletter" action="#" method="post">
+            <label for="newsletter-email" class="sr-only">Email</label>
+            <input
+              type="email"
+              id="newsletter-email"
+              name="newsletter-email"
+              placeholder="Enter your email"
+              required
+            />
+            <button class="btn btn--primary" type="submit">Subscribe</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer__inner">
+        <div>
+          <span class="logo">YV.</span>
+          <p>Designing inclusive digital experiences since 2016.</p>
+        </div>
+        <div class="site-footer__links">
+          <a href="https://www.linkedin.com" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a href="https://www.behance.net" target="_blank" rel="noreferrer">Behance</a>
+          <a href="mailto:hello@yashverma.design">Email</a>
+        </div>
+        <p class="site-footer__copy">© 2024 Yash Verma. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+  </body>
+</html>
