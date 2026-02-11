@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>bloc — Case Study | Yash Verma</title>
+    <meta name="description" content="How I built an iOS app + physical NFC product to solve phone addiction with real friction, not willpower. Full product strategy, unit economics, and business plan." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__inner container">
+        <a href="index.html" class="logo">yash<span>.</span></a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="nav" id="siteNav">
+          <a class="nav__link" href="index.html">Home</a>
+          <a class="nav__link" href="work.html">Work</a>
+          <a class="nav__link" href="about.html">About</a>
+          <a class="nav__link" href="contact.html">Contact</a>
+          <a class="nav__cta" href="assets/Yash-Verma-Resume.pdf" target="_blank">Resume</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="cs-hero">
+        <div class="container">
+          <a class="cs-hero__back" href="work.html">&larr; All work</a>
+          <div class="cs-hero__tags">
+            <span class="tag tag--strategy">Strategy</span>
+            <span class="tag tag--design">Design</span>
+            <span class="tag tag--growth">Growth</span>
+          </div>
+          <h1 class="cs-hero__title">bloc — the physical product that blocks your phone addiction</h1>
+          <p class="cs-hero__tldr">
+            Every screen time app fails because they rely on willpower. I built
+            something different: an iOS app paired with a physical NFC fridge
+            magnet. Want to unlock your apps? Walk to the fridge and scan. That
+            tiny bit of real-world friction changes everything. I designed the
+            product, wrote the code, modeled the unit economics, and it's now
+            live on TestFlight.
+          </p>
+          <div class="cs-hero__cta">
+            <a class="btn btn--primary" href="https://testflight.apple.com/join/MbEGxpmw" target="_blank" rel="noreferrer">Test Beta Version &rarr;</a>
+            <a class="btn btn--outline" href="https://github.com/yashverma38/Brickk" target="_blank" rel="noreferrer">View on GitHub</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="cs-meta">
+        <div class="container">
+          <div class="cs-meta__grid">
+            <div class="cs-meta__item">
+              <span class="cs-meta__label">Type</span>
+              <span class="cs-meta__value">Side Project (Solo)</span>
+            </div>
+            <div class="cs-meta__item">
+              <span class="cs-meta__label">Role</span>
+              <span class="cs-meta__value">Everything — PM, Dev, Design</span>
+            </div>
+            <div class="cs-meta__item">
+              <span class="cs-meta__label">Stage</span>
+              <span class="cs-meta__value">TestFlight Beta</span>
+            </div>
+            <div class="cs-meta__item">
+              <span class="cs-meta__label">Projection</span>
+              <span class="cs-meta__value">&#8377;2.1 Cr Year 2 revenue</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="cs-content">
+        <h2>The insight</h2>
+        <p>
+          I tried every screen time app out there. They all do the same thing —
+          show you a scary usage report, let you set limits, and then give you a
+          one-tap override when you inevitably want to ignore the limit. They're
+          designed to fail, because the unlock button is right there on the same
+          screen as the temptation.
+        </p>
+        <p>
+          The actual problem isn't information ("you spent 4 hours on Instagram
+          today"). People already know. The problem is that digital friction
+          isn't friction at all. Tapping "ignore limit" takes 0.5 seconds. It
+          doesn't feel like a decision — it feels like breathing.
+        </p>
+
+        <div class="cs-callout">
+          <p>
+            <strong>The core bet:</strong> If you make the override require
+            physical movement — actually getting up and walking somewhere — the
+            impulse dies before you get there. You don't need willpower if the
+            default action is hard enough.
+          </p>
+        </div>
+
+        <h2>The product</h2>
+        <p>
+          bloc is two things: an iOS app and a physical NFC-enabled fridge
+          magnet. Here's how it works:
+        </p>
+        <ol>
+          <li>
+            You pick the apps you want to block (Instagram, Twitter, whatever
+            your vice is). The app uses Apple's Screen Time API to enforce
+            real OS-level blocking — not some overlay you can dismiss.
+          </li>
+          <li>
+            When you want to unblock, you have to physically walk to wherever
+            you put the NFC magnet (your fridge, your front door, wherever is
+            inconvenient enough) and scan it with your phone.
+          </li>
+          <li>
+            That's it. There's no "snooze for 15 minutes" button. No override
+            code. No workaround. The only way through is physical movement.
+          </li>
+        </ol>
+        <p>
+          The magic is in the friction design. It takes about 20-30 seconds to
+          walk to your fridge and back. That's enough time for the dopamine
+          impulse to pass. Most of the time, you don't even bother.
+        </p>
+
+        <h3>The tech stack</h3>
+        <p>
+          I built everything from scratch — no templates, no boilerplate:
+        </p>
+        <ul>
+          <li><strong>SwiftUI</strong> for the entire iOS interface</li>
+          <li><strong>Screen Time API (FamilyControls)</strong> for real OS-level app blocking — the same API parents use, which means apps genuinely can't be opened</li>
+          <li><strong>Core NFC</strong> for reading the physical magnet</li>
+          <li><strong>Firebase</strong> for authentication and Firestore for user data</li>
+          <li><strong>Cloud Functions</strong> for backend logic and subscription validation</li>
+          <li><strong>StoreKit 2</strong> for in-app subscriptions and purchase management</li>
+        </ul>
+
+        <h2>The business plan</h2>
+        <p>
+          I didn't just build the app — I built a real business model around it.
+          This is a product I actually want to take to market, so the economics
+          needed to work.
+        </p>
+
+        <h3>Revenue model</h3>
+        <p>
+          Two revenue streams:
+        </p>
+        <ul>
+          <li><strong>Physical product:</strong> The NFC fridge magnet ships for &#8377;499. Production cost is around &#8377;110 per unit, giving a 78% gross margin on hardware.</li>
+          <li><strong>Subscription:</strong> The app itself is freemium. The free tier gives you basic blocking. Premium (&#8377;99/month or &#8377;799/year) unlocks scheduling, multiple NFC zones, focus modes, and usage analytics.</li>
+        </ul>
+
+        <h3>Unit economics</h3>
+        <div class="cs-metrics">
+          <div class="cs-metric">
+            <p class="cs-metric__number">78%</p>
+            <p class="cs-metric__label">Gross margin (hardware)</p>
+          </div>
+          <div class="cs-metric">
+            <p class="cs-metric__number">&#8377;2.1 Cr</p>
+            <p class="cs-metric__label">Projected Year 2 revenue</p>
+          </div>
+          <div class="cs-metric">
+            <p class="cs-metric__number">&#8377;499</p>
+            <p class="cs-metric__label">Hardware price point</p>
+          </div>
+        </div>
+
+        <p>
+          The model works because the physical product has high margins and the
+          subscription creates recurring revenue. Even at conservative conversion
+          rates (15% free-to-paid), the LTV math is strong because the physical
+          magnet creates real switching costs — once you've set it up, you're
+          invested.
+        </p>
+
+        <h3>Go-to-market</h3>
+        <p>
+          The GTM strategy is built around organic virality and community:
+        </p>
+        <ul>
+          <li><strong>Phase 1 (now):</strong> TestFlight beta with early adopters. Collect feedback, iterate on the blocking UX, and validate the NFC hardware experience.</li>
+          <li><strong>Phase 2:</strong> App Store launch with a referral program. The physical product is inherently shareable — when someone sees a magnet on your fridge and asks about it, that's a conversion moment.</li>
+          <li><strong>Phase 3:</strong> Expand to student communities, productivity influencers, and corporate wellness programs. The "put your phone down" narrative resonates everywhere.</li>
+        </ul>
+
+        <h2>Why this shows PM thinking</h2>
+        <p>
+          I'm including this project because it demonstrates the full range of
+          what I think product work should look like:
+        </p>
+        <ul>
+          <li><strong>User insight:</strong> Started from a real problem I had, validated with research on why existing solutions fail.</li>
+          <li><strong>Product design:</strong> The NFC magnet isn't a gimmick — it's the core differentiator. The entire product thesis rests on one behavioral insight about physical vs. digital friction.</li>
+          <li><strong>Technical execution:</strong> I wrote every line of code myself. SwiftUI, NFC integration, Firebase backend, subscription system — end to end.</li>
+          <li><strong>Business modeling:</strong> Real unit economics, pricing strategy, and a go-to-market plan that isn't "hope people find us."</li>
+          <li><strong>Shipping:</strong> It's not a pitch deck. It's a working product you can download and try right now.</li>
+        </ul>
+
+        <div class="cs-callout">
+          <p>
+            <strong>Try it yourself:</strong> bloc is live on TestFlight.
+            Download it, stick the magnet on your fridge, and see if you still
+            reach for Instagram at 11 PM.
+          </p>
+          <a class="btn btn--primary" href="https://testflight.apple.com/join/MbEGxpmw" target="_blank" rel="noreferrer" style="margin-top: 1rem; display: inline-block;">Test Beta Version &rarr;</a>
+        </div>
+
+        <h2>What I learned</h2>
+        <div class="cs-learnings">
+          <ul>
+            <li>
+              <strong>Hardware changes the game.</strong>
+              Adding a physical component to a software product creates real
+              switching costs and real differentiation. It also makes the
+              product tangible in a way that's inherently shareable — people
+              see the magnet and ask about it.
+            </li>
+            <li>
+              <strong>Apple's Screen Time API is powerful but opaque.</strong>
+              FamilyControls gives you real OS-level blocking, which is the
+              whole point. But the documentation is sparse and the review
+              process is strict. Getting the entitlements approved took more
+              iteration than writing the actual code.
+            </li>
+            <li>
+              <strong>Build the business plan before the product.</strong>
+              Knowing the unit economics upfront shaped every product decision —
+              the price point influenced the magnet material, the subscription
+              tiers influenced which features to gate, and the GTM plan
+              influenced the referral mechanics I built into the app.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <section class="cs-nav">
+        <div class="container cs-nav__inner">
+          <a class="cs-nav__link" href="case-study-3.html">
+            <span class="cs-nav__label">Previous</span>
+            <span class="cs-nav__title">&larr; Stolo UX Research</span>
+          </a>
+          <a class="cs-nav__link cs-nav__link--next" href="work.html">
+            <span class="cs-nav__label">Back to</span>
+            <span class="cs-nav__title">All Work</span>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <a href="index.html" class="logo">yash<span>.</span></a>
+        <div class="footer__links">
+          <a class="footer__link" href="https://www.linkedin.com/in/-yashverma" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a class="footer__link" href="mailto:yashverma.iitkgp@gmail.com">Email</a>
+        </div>
+        <p class="footer__copy">&copy; 2025 Yash Verma</p>
+      </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+  </body>
+</html>

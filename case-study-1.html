@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ads on Speaker — Case Study | Yash Verma</title>
+    <meta name="description" content="How I turned BharatPe's million sound boxes into an ad platform generating INR 2 Cr ARR from zero." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__inner container">
+        <a href="index.html" class="logo">yash<span>.</span></a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="nav" id="siteNav">
+          <a class="nav__link" href="index.html">Home</a>
+          <a class="nav__link" href="work.html">Work</a>
+          <a class="nav__link" href="about.html">About</a>
+          <a class="nav__link" href="contact.html">Contact</a>
+          <a class="nav__cta" href="assets/Yash-Verma-Resume.pdf" target="_blank">Resume</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="cs-hero">
+        <div class="container">
+          <a class="cs-hero__back" href="work.html">&larr; All work</a>
+          <div class="cs-hero__tags">
+            <span class="tag tag--strategy">Strategy</span>
+            <span class="tag tag--growth">Growth</span>
+          </div>
+          <h1 class="cs-hero__title">Ads on Speaker — from hackathon idea to &#8377;2 Cr ARR</h1>
+          <p class="cs-hero__tldr">
+            BharatPe has over a million payment sound boxes sitting in shops
+            across India. I realized they were an untapped ad surface, pitched
+            the idea at a company hackathon, and then led the product from
+            concept to launch. It's now generating &#8377;2 Cr in annual
+            revenue and projected to hit &#8377;4.5 Cr.
+          </p>
+        </div>
+      </section>
+
+      <section class="cs-meta">
+        <div class="container">
+          <div class="cs-meta__grid">
+            <div class="cs-meta__item">
+              <span class="cs-meta__label">Company</span>
+              <span class="cs-meta__value">BharatPe</span>
+            </div>
+            <div class="cs-meta__item">
+              <span class="cs-meta__label">Role</span>
+              <span class="cs-meta__value">Senior Product Analyst</span>
+            </div>
+            <div class="cs-meta__item">
+              <span class="cs-meta__label">Timeline</span>
+              <span class="cs-meta__value">Jan 2025 — Present</span>
+            </div>
+            <div class="cs-meta__item">
+              <span class="cs-meta__label">Impact</span>
+              <span class="cs-meta__value">&#8377;2 Cr ARR</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="cs-content">
+        <h2>The context</h2>
+        <p>
+          BharatPe runs one of the largest networks of payment sound boxes in
+          India — the little devices that sit at merchant counters and announce
+          "payment received" every time a transaction goes through. They're
+          always on, always within earshot, and activated dozens of times a day.
+        </p>
+        <p>
+          But that's all they did. Announce payments. Despite being a high-frequency
+          physical touchpoint with both merchants and customers, the sound boxes
+          had no monetization layer beyond transaction fees.
+        </p>
+
+        <div class="cs-callout">
+          <p>
+            <strong>The realization:</strong> Every BharatPe sound box is
+            essentially a tiny audio advertising channel — heard by merchants
+            and customers at the exact moment of purchase, dozens of times daily.
+          </p>
+        </div>
+
+        <h2>The problem</h2>
+        <p>
+          BharatPe needed new revenue streams beyond core transaction fees. The
+          sound box fleet was an obvious distribution channel, but nobody had
+          figured out how to use it without making merchants hate the experience.
+        </p>
+        <p>
+          A few specific challenges stood out:
+        </p>
+        <ul>
+          <li>How to run ads without annoying merchants or slowing down transactions</li>
+          <li>How to build an ad delivery system that works on low-powered hardware</li>
+          <li>How to price and sell this as a media channel to advertisers</li>
+          <li>How to measure ad effectiveness without traditional digital metrics</li>
+        </ul>
+
+        <h2>What I did</h2>
+
+        <h3>1. Found the opportunity and sized it</h3>
+        <p>
+          This started at BharatPe's i-nnovate hackathon. My hypothesis was
+          simple: if we could play short, relevant audio ads after transaction
+          confirmations, we'd create a new revenue stream without touching the
+          core payment experience.
+        </p>
+        <p>
+          To make the business case, I dug into the numbers:
+        </p>
+        <ul>
+          <li>Daily transaction volume across the entire sound box fleet</li>
+          <li>Average "audio impressions" per device per day</li>
+          <li>CPM rates for comparable in-store audio advertising</li>
+          <li>Merchant sentiment data to gauge how much they'd tolerate</li>
+        </ul>
+
+        <div class="cs-image">
+          Add: Opportunity sizing analysis, pitch deck slide, or
+          business case visualization
+        </div>
+
+        <h3>2. Built the product strategy and got buy-in</h3>
+        <p>
+          After winning the hackathon, I put together a detailed product strategy.
+          The key decisions:
+        </p>
+        <ul>
+          <li><strong>Ad format:</strong> 3-5 second audio clips after the transaction confirmation sound. Short enough that merchants wouldn't mind.</li>
+          <li><strong>Targeting:</strong> Geographic and merchant-category-based. A kirana store in South Delhi gets different ads than a restaurant in Mumbai.</li>
+          <li><strong>Frequency caps:</strong> Hard limits to prevent merchant fatigue — this was non-negotiable.</li>
+          <li><strong>Revenue model:</strong> CPM-based pricing for advertisers.</li>
+        </ul>
+        <p>
+          I then aligned engineering, sales, and business development on the
+          roadmap. Getting cross-functional buy-in early was critical — this
+          product touched firmware, ad-tech, and sales simultaneously.
+        </p>
+
+        <h3>3. Shipped it</h3>
+        <p>
+          I worked with engineering to design the ad delivery pipeline — from
+          ad ingestion and scheduling to OTA deployment on sound box firmware.
+          I also used Generative AI tools during the prototyping phase, which
+          compressed the design-to-development cycle from 8 days down to 1.
+          That speed made rapid A/B testing possible.
+        </p>
+
+        <div class="cs-image">
+          Add: Architecture diagram, product flow, or screenshots
+        </div>
+
+        <h2>Results</h2>
+
+        <div class="cs-metrics">
+          <div class="cs-metric">
+            <p class="cs-metric__number">&#8377;2 Cr</p>
+            <p class="cs-metric__label">Annual Recurring Revenue</p>
+          </div>
+          <div class="cs-metric">
+            <p class="cs-metric__number">&#8377;4.5 Cr</p>
+            <p class="cs-metric__label">Projected ARR</p>
+          </div>
+          <div class="cs-metric">
+            <p class="cs-metric__number">8 &rarr; 1 day</p>
+            <p class="cs-metric__label">Prototyping turnaround</p>
+          </div>
+        </div>
+
+        <p>
+          The feature went from a hackathon pitch to a live, revenue-generating
+          product. It created a completely new monetization channel for
+          BharatPe's hardware fleet and is now one of the Devices team's key
+          growth initiatives.
+        </p>
+
+        <h2>What I learned</h2>
+        <div class="cs-learnings">
+          <ul>
+            <li>
+              <strong>The biggest opportunities are often hiding in what you already have.</strong>
+              A million sound boxes were already out there — nobody had just thought
+              of them as ad inventory yet.
+            </li>
+            <li>
+              <strong>Prototype speed changes everything.</strong>
+              Going from 8-day cycles to 1-day cycles using Gen AI tools meant
+              we could test and iterate fast enough to find the right ad format
+              before anyone got impatient.
+            </li>
+            <li>
+              <strong>Merchant experience is the constraint, not a nice-to-have.</strong>
+              If merchants hate it, they'll mute the speaker or switch providers.
+              Frequency caps and short ad length weren't product features — they
+              were survival requirements.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <section class="cs-nav">
+        <div class="container cs-nav__inner">
+          <a class="cs-nav__link" href="work.html">
+            <span class="cs-nav__label">Back to</span>
+            <span class="cs-nav__title">All Work</span>
+          </a>
+          <a class="cs-nav__link cs-nav__link--next" href="case-study-2.html">
+            <span class="cs-nav__label">Next</span>
+            <span class="cs-nav__title">Credit Line on UPI &rarr;</span>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <a href="index.html" class="logo">yash<span>.</span></a>
+        <div class="footer__links">
+          <a class="footer__link" href="https://www.linkedin.com/in/-yashverma" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a class="footer__link" href="mailto:yashverma.iitkgp@gmail.com">Email</a>
+        </div>
+        <p class="footer__copy">&copy; 2025 Yash Verma</p>
+      </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+  </body>
+</html>
