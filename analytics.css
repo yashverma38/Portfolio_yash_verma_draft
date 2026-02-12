@@ -3,6 +3,126 @@
    All classes prefixed with dash-
    ============================================ */
 
+/* --- Header auth buttons --- */
+.nav__auth-btn {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--ocean);
+  padding: 0.45rem 1.1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--duration) var(--ease);
+}
+
+.nav__auth-btn:hover {
+  background: var(--ocean-deep);
+}
+
+.nav__profile {
+  position: relative;
+}
+
+.nav__profile-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 50px;
+  padding: 0.25rem 0.6rem 0.25rem 0.25rem;
+  cursor: pointer;
+  transition: all var(--duration) var(--ease);
+}
+
+.nav__profile-toggle:hover {
+  border-color: var(--border-hover);
+  background: var(--ocean-soft);
+}
+
+.nav__profile-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.nav__profile-chevron {
+  color: var(--text-tertiary);
+  transition: transform var(--duration) var(--ease);
+}
+
+.nav__profile-dropdown.is-open ~ .nav__profile-toggle .nav__profile-chevron,
+.nav__profile-toggle:focus .nav__profile-chevron {
+  transform: rotate(180deg);
+}
+
+.nav__profile-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: all 0.15s var(--ease);
+  z-index: 200;
+}
+
+.nav__profile-dropdown.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.nav__profile-info {
+  padding: 0.75rem 1rem;
+}
+
+.nav__profile-name {
+  display: block;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+.nav__profile-email {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  margin-top: 0.15rem;
+}
+
+.nav__profile-divider {
+  height: 1px;
+  background: var(--border);
+}
+
+.nav__profile-action {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.6rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all var(--duration) var(--ease);
+  border-radius: 0 0 10px 10px;
+}
+
+.nav__profile-action:hover {
+  background: var(--ocean-soft);
+  color: var(--ocean-deep);
+}
+
 /* --- Live stats bar --- */
 .dash-stats-grid {
   display: grid;
@@ -591,6 +711,28 @@ details[open] > .dash-taxonomy__summary::before {
 }
 
 @media (max-width: 768px) {
+  .nav__auth-btn {
+    width: 100%;
+    text-align: center;
+    padding: 0.6rem 1rem;
+  }
+
+  .nav__profile {
+    width: 100%;
+  }
+
+  .nav__profile-toggle {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .nav__profile-dropdown {
+    position: static;
+    margin-top: 0.5rem;
+    box-shadow: none;
+    border: 1px solid var(--border);
+  }
+
   .dash-chart-grid,
   .dash-activity-grid {
     grid-template-columns: 1fr;

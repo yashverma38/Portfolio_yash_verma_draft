@@ -52,6 +52,9 @@
   var paywall, paywallSignin, paywallPayment, paywallAvatar, paywallName;
   var gatedContent, fullTemplate;
   var lockedCards;
+  // Header auth elements
+  var headerSigninBtn, headerProfile, headerAvatar, headerName, headerEmail;
+  var headerProfileToggle, headerDropdown;
 
   function cacheDom() {
     paywall = document.getElementById('dash-paywall');
@@ -62,6 +65,26 @@
     gatedContent = document.getElementById('dash-gated-content');
     fullTemplate = document.getElementById('dash-full-content');
     lockedCards = document.querySelectorAll('.dash-stat-card--locked');
+    // Header auth
+    headerSigninBtn = document.getElementById('header-signin-btn');
+    headerProfile = document.getElementById('header-profile');
+    headerAvatar = document.getElementById('header-avatar');
+    headerName = document.getElementById('header-name');
+    headerEmail = document.getElementById('header-email');
+    headerProfileToggle = document.getElementById('header-profile-toggle');
+    headerDropdown = document.getElementById('header-dropdown');
+
+    // Toggle dropdown on click
+    if (headerProfileToggle) {
+      headerProfileToggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        headerDropdown.classList.toggle('is-open');
+      });
+    }
+    // Close dropdown when clicking elsewhere
+    document.addEventListener('click', function () {
+      if (headerDropdown) headerDropdown.classList.remove('is-open');
+    });
   }
 
   // --- Auth state listener ---
@@ -131,6 +154,17 @@
   function updateUI() {
     if (!paywall) return; // DOM not ready
 
+    // --- Header auth buttons ---
+    var isLoggedIn = currentState === STATE.LOGGED_IN_NOT_PAID || currentState === STATE.LOGGED_IN_PAID;
+    if (headerSigninBtn) headerSigninBtn.style.display = isLoggedIn ? 'none' : '';
+    if (headerProfile) headerProfile.style.display = isLoggedIn ? '' : 'none';
+    if (isLoggedIn && currentUser) {
+      if (headerAvatar) { headerAvatar.src = currentUser.photoURL || ''; headerAvatar.alt = currentUser.displayName || ''; }
+      if (headerName) headerName.textContent = currentUser.displayName || '';
+      if (headerEmail) headerEmail.textContent = currentUser.email || '';
+    }
+
+    // --- Main paywall / content ---
     switch (currentState) {
       case STATE.LOADING:
         paywall.style.display = 'block';
@@ -149,7 +183,7 @@
         paywall.style.display = 'block';
         paywallSignin.style.display = 'none';
         paywallPayment.style.display = '';
-        // Show user info
+        // Show user info in paywall card
         if (currentUser) {
           if (paywallAvatar) {
             paywallAvatar.src = currentUser.photoURL || '';

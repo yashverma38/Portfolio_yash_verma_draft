@@ -26,6 +26,25 @@
           <a class="nav__link" href="about.html">About</a>
           <a class="nav__link" href="contact.html">Contact</a>
           <a class="nav__cta" href="assets/Yash-Verma-Resume.pdf" target="_blank">Resume</a>
+
+          <!-- Auth: Sign-in button (shown when not logged in) -->
+          <button class="nav__auth-btn" id="header-signin-btn" onclick="portfolioAuth.signIn()" style="display:none">Sign In</button>
+
+          <!-- Auth: Profile dropdown (shown when logged in) -->
+          <div class="nav__profile" id="header-profile" style="display:none">
+            <button class="nav__profile-toggle" id="header-profile-toggle">
+              <img class="nav__profile-avatar" id="header-avatar" src="" alt="" />
+              <svg class="nav__profile-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 5l3 3 3-3"/></svg>
+            </button>
+            <div class="nav__profile-dropdown" id="header-dropdown">
+              <div class="nav__profile-info">
+                <span class="nav__profile-name" id="header-name"></span>
+                <span class="nav__profile-email" id="header-email"></span>
+              </div>
+              <div class="nav__profile-divider"></div>
+              <button class="nav__profile-action" onclick="portfolioAuth.signOut()">Sign Out</button>
+            </div>
+          </div>
         </nav>
       </div>
     </header>
