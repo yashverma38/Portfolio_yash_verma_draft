@@ -111,15 +111,18 @@
 
   // --- Check subscription status in Firestore ---
   function checkSubscription(uid) {
-    // DEV MODE: check localStorage for mock subscription first
+    // DEV MODE: check localStorage for mock subscription (per-user key)
     if (DEV_MODE) {
       try {
-        var devSub = JSON.parse(localStorage.getItem('__dev_subscription') || 'null');
+        var devKey = '__dev_subscription_' + uid;
+        var devSub = JSON.parse(localStorage.getItem(devKey) || 'null');
         if (devSub && devSub.expires_at > Date.now()) {
           setState(STATE.LOGGED_IN_PAID);
           return;
         }
-        if (devSub) localStorage.removeItem('__dev_subscription');
+        if (devSub) localStorage.removeItem(devKey);
+        // Clean up old global key if it exists
+        localStorage.removeItem('__dev_subscription');
       } catch (e) { /* ignore */ }
     }
 
@@ -325,8 +328,9 @@
         '<div style="font-weight:600;color:#333;font-size:1rem;">Payment Successful!</div>' +
         '<div style="font-size:0.8rem;color:#666;margin-top:0.25rem;">Payment ID: ' + mockPaymentId + '</div>';
 
-      // Store dev subscription in localStorage
-      localStorage.setItem('__dev_subscription', JSON.stringify({
+      // Store dev subscription in localStorage (per-user)
+      var devKey = '__dev_subscription_' + (currentUser ? currentUser.uid : 'anon');
+      localStorage.setItem(devKey, JSON.stringify({
         order_id: mockOrderId,
         payment_id: mockPaymentId,
         created_at: Date.now(),
@@ -535,6 +539,8 @@
   // DEV MODE: expose helper to clear mock subscription + log status
   if (DEV_MODE) {
     window.portfolioAuth.clearDevSub = function () {
+      // Clear per-user key for current user + old global key
+      if (currentUser) localStorage.removeItem('__dev_subscription_' + currentUser.uid);
       localStorage.removeItem('__dev_subscription');
       location.reload();
     };
