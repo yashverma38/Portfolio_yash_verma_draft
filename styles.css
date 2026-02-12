@@ -1468,6 +1468,114 @@ h1, h2, h3, h4 {
   color: var(--text-secondary);
 }
 
+/* App Showcase Gallery */
+.cs-app-showcase {
+  margin: 3rem 0;
+}
+
+.cs-app-showcase__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.cs-app-showcase__subtitle {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+.cs-app-showcase__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.cs-app-showcase__item {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #1a1a2e;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18), 0 2px 8px rgba(0, 0, 0, 0.12);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.cs-app-showcase__item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.cs-app-showcase__img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 20px;
+}
+
+.cs-app-showcase__label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2.5rem 1rem 1rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, transparent 100%);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-radius: 0 0 20px 20px;
+}
+
+/* Side project thumbnail */
+.side-project__thumb {
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.side-project__thumb-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+  transition: transform 0.35s ease;
+}
+
+.side-project__thumb:hover .side-project__thumb-img {
+  transform: scale(1.03);
+}
+
+@media (max-width: 900px) {
+  .cs-app-showcase__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .cs-app-showcase__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .cs-app-showcase__item {
+    border-radius: 14px;
+  }
+
+  .cs-app-showcase__img {
+    border-radius: 14px;
+  }
+
+  .cs-app-showcase__label {
+    font-size: 0.72rem;
+    padding: 1.5rem 0.75rem 0.75rem;
+    border-radius: 0 0 14px 14px;
+  }
+}
+
 /* ============================================
    CONTACT PAGE
    ============================================ */
