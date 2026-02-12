@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>75 Hard — Content Calendar | Yash Verma</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="75hard-calendar.css" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__inner container">
+        <a href="index.html" class="logo">yash<span>.</span></a>
+        <span class="cal-header__label">Content Calendar (Private)</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="cal-hero">
+        <div class="container">
+          <h1 class="cal-hero__title">75 Hard Content Calendar</h1>
+          <p class="cal-hero__subtitle">75 Hard content strategy. Daily scripts, threads, and posting schedule across Instagram and X.</p>
+          <div class="cal-progress">
+            <div class="cal-progress__bar">
+              <div class="cal-progress__fill" id="calProgressFill"></div>
+            </div>
+            <span class="cal-progress__text" id="calProgressText">0 of 21 days planned</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="cal-controls">
+        <div class="container cal-controls__inner">
+          <div class="cal-controls__views">
+            <button class="cal-view-btn cal-view-btn--active" data-view="month">All Days</button>
+            <button class="cal-view-btn" data-view="week">Week View</button>
+          </div>
+          <div class="cal-controls__filters">
+            <div class="cal-filter">
+              <label class="cal-filter__label" for="filterPillar">Category</label>
+              <select class="cal-filter__select" id="filterPillar">
+                <option value="all">All Categories</option>
+                <option value="discipline">Discipline</option>
+                <option value="productivity">Productivity</option>
+                <option value="startup">Startup</option>
+                <option value="books">Books</option>
+                <option value="personal">Personal</option>
+                <option value="reflection">Reflection</option>
+              </select>
+            </div>
+            <div class="cal-filter">
+              <label class="cal-filter__label" for="filterFormat">Format</label>
+              <select class="cal-filter__select" id="filterFormat">
+                <option value="all">All Formats</option>
+                <option value="reel">Reels</option>
+                <option value="carousel">Carousels</option>
+              </select>
+            </div>
+          </div>
+          <div class="cal-controls__week-nav" id="weekNav">
+            <button class="cal-week-arrow" id="weekPrev">&larr;</button>
+            <span class="cal-week-label" id="weekLabel">Week 1 (Days 1-7)</span>
+            <button class="cal-week-arrow" id="weekNext">&rarr;</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="cal-grid" id="calGrid"></div>
+        </div>
+      </section>
+
+      <!-- Modal -->
+      <div class="cal-modal" id="calModal" aria-hidden="true">
+        <div class="cal-modal__backdrop" id="calModalBackdrop"></div>
+        <div class="cal-modal__content" id="calModalContent">
+          <button class="cal-modal__close" id="calModalClose">&times;</button>
+
+          <div class="cal-modal__header">
+            <span class="cal-modal__day" id="modalDay"></span>
+            <span class="cal-modal__pillar" id="modalPillar"></span>
+            <span class="cal-modal__format" id="modalFormat"></span>
+          </div>
+          <h2 class="cal-modal__title" id="modalTitle"></h2>
+
+          <!-- Dynamic content rendered by JS -->
+          <div id="modalBody"></div>
+        </div>
+      </div>
+    </main>
+
+    <script src="75hard-calendar-data.js"></script>
+    <script src="75hard-calendar.js"></script>
+  </body>
+</html>

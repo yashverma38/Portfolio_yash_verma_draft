@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <script type="text/javascript">(function(e,c){if(!c.__SV){var l,h;window.mixpanel=c;c._i=[];c.init=function(q,r,f){function t(d,a){var g=a.split(".");2==g.length&&(d=d[g[0]],a=g[1]);d[a]=function(){d.push([a].concat(Array.prototype.slice.call(arguments,0)))}}var b=c;"undefined"!==typeof f?b=c[f]=[]:f="mixpanel";b.people=b.people||[];b.toString=function(d){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);d||(a+=" (stub)");return a};b.people.toString=function(){return b.toString(1)+".people (stub)"};l="disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking start_batch_senders start_session_recording stop_session_recording people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");for(h=0;h<l.length;h++)t(b,l[h]);var n="set set_once union unset remove delete".split(" ");b.get_group=function(){function d(p){a[p]=function(){b.push([g,[p].concat(Array.prototype.slice.call(arguments,0))])}}for(var a={},g=["get_group"].concat(Array.prototype.slice.call(arguments,0)),m=0;m<n.length;m++)d(n[m]);return a};c._i.push([q,r,f])};c.__SV=1.2;var k=e.createElement("script");k.type="text/javascript";k.async=!0;k.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";e=e.getElementsByTagName("script")[0];e.parentNode.insertBefore(k,e)}})(document,window.mixpanel||[]);mixpanel.init('e6cecc98fc0b1ccf469125b25363ab62',{autocapture:true,record_sessions_percent:100});</script>
   </head>
   <body>
     <header class="header">
@@ -47,7 +49,6 @@
           </p>
           <div class="cs-hero__cta">
             <a class="btn btn--primary" href="https://testflight.apple.com/join/MbEGxpmw" target="_blank" rel="noreferrer">Test Beta Version &rarr;</a>
-            <a class="btn btn--outline" href="https://github.com/yashverma38/Brickk" target="_blank" rel="noreferrer">View on GitHub</a>
           </div>
         </div>
       </section>
@@ -144,50 +145,210 @@
         <p>
           I didn't just build the app — I built a real business model around it.
           This is a product I actually want to take to market, so the economics
-          needed to work.
+          needed to work. Here's the full breakdown.
         </p>
+
+        <h3>The market</h3>
+        <p>
+          India has ~660M smartphone users
+          (<a href="https://datareportal.com/reports/digital-2025-india" target="_blank" rel="noreferrer">DataReportal, 2025</a>)
+          who collectively spent 1.12 trillion hours on mobile in 2024 — averaging
+          ~5 hours of screen time daily
+          (<a href="https://www.communicationstoday.co.in/india-tops-global-mobile-usage-with-1-12-trillion-hours-in-2024/" target="_blank" rel="noreferrer">EY report, 2024</a>).
+          Smartphone addiction prevalence among Indian adolescents ranges from
+          25-65% across studies
+          (<a href="https://bmcpublichealth.biomedcentral.com/articles/10.1186/s12889-024-19991-9" target="_blank" rel="noreferrer">BMC Public Health, 2024</a>),
+          and the India Economic Survey 2025-26 directly identifies digital addiction
+          as fueling a youth mental health crisis
+          (<a href="https://www.freepressjournal.in/tech/digital-addiction-fueling-youth-mental-health-crisis-economic-survey-2025-26" target="_blank" rel="noreferrer">FreePressJournal</a>).
+          And yet there's no serious competitor in this space in India.
+        </p>
+        <p>
+          Apple's iPhone user base in India stands at ~14M active users
+          (<a href="https://www.start.io/audience/iphone-users-in-india" target="_blank" rel="noreferrer">Start.io, 2024</a>),
+          with record 14M shipments in 2025 alone
+          (<a href="https://thetechportal.com/2026/01/24/apple-records-14mn-iphone-shipments-in-india-in-2025-captures-9-market-share-report/" target="_blank" rel="noreferrer">The Tech Portal</a>)
+          — the installed base is growing rapidly.
+        </p>
+        <div class="cs-metrics">
+          <div class="cs-metric">
+            <p class="cs-metric__number">&#8377;380 Cr</p>
+            <p class="cs-metric__label">TAM (14M iPhone users, ~30% addicted)</p>
+          </div>
+          <div class="cs-metric">
+            <p class="cs-metric__number">&#8377;95 Cr</p>
+            <p class="cs-metric__label">SAM (~1M in Tier 1/2, willing to pay)</p>
+          </div>
+          <div class="cs-metric">
+            <p class="cs-metric__number">&#8377;2.5 Cr</p>
+            <p class="cs-metric__label">SOM (~28K paying users, 3 years)</p>
+          </div>
+        </div>
+
+        <details class="cs-info-toggle">
+          <summary>How I calculated these numbers</summary>
+          <div class="cs-info-toggle__content">
+            <p><strong>Blended ARPU: ~&#8377;900/year</strong></p>
+            <p>
+              Kit buyers don't pay a separate subscription — the &#8377;899 Bloc Kit
+              includes 1 year of premium. So ARPU depends on the revenue mix:
+            </p>
+            <ul>
+              <li>Kit buyers (60% of paying users): &#8377;899 &rarr; 0.60 &times; 899 = &#8377;539</li>
+              <li>Annual subscribers (25%): &#8377;799/yr &rarr; 0.25 &times; 799 = &#8377;200</li>
+              <li>Monthly subscribers (15%): &#8377;99/mo &times; 12 = &#8377;1,188/yr &rarr; 0.15 &times; 1,188 = &#8377;178</li>
+              <li><strong>Year 1 blended ARPU = &#8377;539 + &#8377;200 + &#8377;178 ≈ &#8377;900</strong></li>
+            </ul>
+            <p><strong>TAM — &#8377;380 Cr</strong></p>
+            <ul>
+              <li>14M active iPhone users in India &times; 30% screen addiction prevalence = 4.2M addressable users</li>
+              <li>4.2M &times; &#8377;900 ARPU = &#8377;378 Cr ≈ <strong>&#8377;380 Cr</strong></li>
+            </ul>
+            <p><strong>SAM — &#8377;95 Cr</strong></p>
+            <ul>
+              <li>~25% of addressable in Tier 1/2 cities, digitally savvy, willing to pay for wellness tools ≈ 1.05M users</li>
+              <li>1.05M &times; &#8377;900 = <strong>&#8377;95 Cr</strong></li>
+            </ul>
+            <p><strong>SOM — &#8377;2.5 Cr</strong></p>
+            <ul>
+              <li>Realistic 3-year capture: ~28K paying users via organic, campus ambassadors, and performance marketing</li>
+              <li>28K &times; &#8377;900 = <strong>&#8377;2.5 Cr</strong></li>
+            </ul>
+          </div>
+        </details>
 
         <h3>Revenue model</h3>
         <p>
-          Two revenue streams:
+          Three revenue streams, anchored by the physical product:
         </p>
         <ul>
-          <li><strong>Physical product:</strong> The NFC fridge magnet ships for &#8377;499. Production cost is around &#8377;110 per unit, giving a 78% gross margin on hardware.</li>
-          <li><strong>Subscription:</strong> The app itself is freemium. The free tier gives you basic blocking. Premium (&#8377;99/month or &#8377;799/year) unlocks scheduling, multiple NFC zones, focus modes, and usage analytics.</li>
+          <li><strong>Bloc Kit (&#8377;899) — the hero product:</strong> Physical NFC magnet + 1 year of premium. This is the "obvious choice" — priced lower than a year of monthly subs (&#8377;1,188) while including a physical product. 60-70% of paying users are expected to choose this.</li>
+          <li><strong>Premium subscription (&#8377;99/month or &#8377;799/year):</strong> Unlimited sessions, scheduling, full analytics. The monthly option serves as the price anchor that makes the Bloc Kit feel like a deal.</li>
+          <li><strong>Bloc Kit renewal (&#8377;499/year):</strong> Loyalty pricing for existing magnet owners. Targeting 60%+ renewal rate — the physical magnet sitting on your fridge is a daily reminder.</li>
         </ul>
+        <p>
+          The free tier gives you 2 sessions/day with a 45-minute cap — enough to build
+          the habit, not enough for heavy users checking their phone hundreds of times daily
+          (<a href="https://www.asurion.com/connect/news/tech-usage/" target="_blank" rel="noreferrer">Asurion, 2022</a>
+          found the average is 352 times/day).
+        </p>
+
+        <div class="cs-callout">
+          <p>
+            <strong>The pricing insight:</strong> At &#8377;99/month, bloc is cheaper
+            than a Starbucks coffee. The &#8377;899 Bloc Kit is positioned as a
+            physical product you own, not "another app subscription" — and Indians
+            pay for physical goods more readily than software. The magnet is also
+            the highest-margin item, the best retention mechanism, AND the best
+            organic marketing channel. Every fridge it sits on is a billboard.
+          </p>
+        </div>
 
         <h3>Unit economics</h3>
+        <p>
+          Per Bloc Kit sale — the full COGS breakdown:
+        </p>
+        <ul>
+          <li>Selling price: <strong>&#8377;899</strong></li>
+          <li>Manufacturing (NFC chip + magnet + finish): -&#8377;80</li>
+          <li>Packaging (branded box + quick-start card): -&#8377;30</li>
+          <li>Shipping (pan-India via
+            <a href="https://www.shiprocket.in/pricing/" target="_blank" rel="noreferrer">Shiprocket</a>/Delhivery):
+            -&#8377;70</li>
+          <li>Payment processing
+            (<a href="https://razorpay.com/blog/upi-charges-explained-mdr-vs-platform-fees/" target="_blank" rel="noreferrer">Razorpay ~2%</a>):
+            -&#8377;18</li>
+          <li>Total COGS: <strong>-&#8377;198</strong></li>
+          <li>Gross margin: <strong>&#8377;701 (78%)</strong></li>
+        </ul>
+
         <div class="cs-metrics">
           <div class="cs-metric">
             <p class="cs-metric__number">78%</p>
-            <p class="cs-metric__label">Gross margin (hardware)</p>
+            <p class="cs-metric__label">Gross margin (Bloc Kit)</p>
           </div>
           <div class="cs-metric">
-            <p class="cs-metric__number">&#8377;2.1 Cr</p>
-            <p class="cs-metric__label">Projected Year 2 revenue</p>
+            <p class="cs-metric__number">&#8377;1,497</p>
+            <p class="cs-metric__label">3-year LTV (Kit buyer)</p>
           </div>
           <div class="cs-metric">
-            <p class="cs-metric__number">&#8377;499</p>
-            <p class="cs-metric__label">Hardware price point</p>
+            <p class="cs-metric__number">&#8377;899</p>
+            <p class="cs-metric__label">Bloc Kit price</p>
           </div>
         </div>
 
         <p>
-          The model works because the physical product has high margins and the
-          subscription creates recurring revenue. Even at conservative conversion
-          rates (15% free-to-paid), the LTV math is strong because the physical
-          magnet creates real switching costs — once you've set it up, you're
-          invested.
+          The key insight: selling the Bloc Kit directly (website/Amazon) nets
+          higher margin than an App Store subscription — &#8377;699 net vs &#8377;559
+          net on annual sub — while also creating a physical retention anchor.
+          Kit buyers have 20-30% annual churn vs 50-60% for subscription-only
+          users, and they generate organic referrals that subscribers don't. Over
+          3 years, Kit buyers are 18% more valuable.
+        </p>
+
+        <h3>Revenue projections</h3>
+        <p>
+          Year 1 quarterly breakdown with conservative conversion assumptions:
+        </p>
+        <ul>
+          <li><strong>Q1:</strong> 5,000 downloads, 5% conversion, 150 kit sales → &#8377;1.85L</li>
+          <li><strong>Q2:</strong> 15,000 downloads, 7% conversion, 600 kit sales → &#8377;7.4L</li>
+          <li><strong>Q3:</strong> 30,000 downloads, 8% conversion, 1,500 kit sales → &#8377;18.5L</li>
+          <li><strong>Q4:</strong> 50,000 downloads, 10% conversion, 3,000 kit sales → &#8377;37L</li>
+        </ul>
+
+        <div class="cs-metrics">
+          <div class="cs-metric">
+            <p class="cs-metric__number">&#8377;64L</p>
+            <p class="cs-metric__label">Year 1 revenue (100K downloads)</p>
+          </div>
+          <div class="cs-metric">
+            <p class="cs-metric__number">&#8377;2.1 Cr</p>
+            <p class="cs-metric__label">Year 2 revenue (300K downloads)</p>
+          </div>
+          <div class="cs-metric">
+            <p class="cs-metric__number">&#8377;6-8 Cr</p>
+            <p class="cs-metric__label">Year 3 revenue (1M+ cumulative)</p>
+          </div>
+        </div>
+
+        <h3>Competitive landscape</h3>
+        <p>
+          I mapped every competitor. The gap is clear:
+        </p>
+        <ul>
+          <li><strong>iOS Screen Time (built-in):</strong> One tap to bypass. "Ignore for 15 minutes" = zero friction.</li>
+          <li><strong>Forest / Flora (gamification):</strong> Primarily motivation-based — a virtual tree dies if you leave. Forest does offer some app blocking on iOS via Screen Time API, but the core mechanic is psychological, not enforceable. Users can dismiss it when motivation dips.</li>
+          <li><strong>one sec (pause-based):</strong> Inserts a ~5-10 second breathing exercise before opening blocked apps. Research-backed
+            (<a href="https://one-sec.app/blog/how-one-sec-works/" target="_blank" rel="noreferrer">Max Planck Institute study</a>,
+            reduces usage ~57%) — but the pause is still software-only. No physical barrier.</li>
+          <li><strong>Opal
+            (<a href="https://www.opal.so/pricing" target="_blank" rel="noreferrer">$99.99/year</a>,
+            ~&#8377;8,400/year):</strong> OS-level blocking, well-designed, but software-only and 10x too expensive for India.</li>
+          <li><strong>Unpluq (EU,
+            <a href="https://www.unpluq.com/products/unpluq-tag" target="_blank" rel="noreferrer">$79 for tag + 1yr sub</a>,
+            ~&#8377;6,600):</strong> Proved the NFC model in Europe with a key fob.
+            But it has zero India presence — and shipping to India costs &#8377;6,000+,
+            making the effective price &#8377;12,600+. Completely unviable for the
+            Indian market.</li>
+        </ul>
+        <p>
+          bloc is the <strong>only player in India</strong> with OS-level blocking + physical NFC,
+          at a price point that works for the market. At &#8377;899 for the Bloc Kit vs.
+          &#8377;12,600+ for an Unpluq shipped to India or &#8377;8,400/year for Opal,
+          the pricing gap is massive. The fridge magnet is also a better form factor
+          than Unpluq's key fob — it's always visible, it's a conversation starter,
+          and it has dual utility as an actual magnet.
         </p>
 
         <h3>Go-to-market</h3>
         <p>
-          The GTM strategy is built around organic virality and community:
+          Three phases, each with a clear target:
         </p>
         <ul>
-          <li><strong>Phase 1 (now):</strong> TestFlight beta with early adopters. Collect feedback, iterate on the blocking UX, and validate the NFC hardware experience.</li>
-          <li><strong>Phase 2:</strong> App Store launch with a referral program. The physical product is inherently shareable — when someone sees a magnet on your fridge and asks about it, that's a conversion moment.</li>
-          <li><strong>Phase 3:</strong> Expand to student communities, productivity influencers, and corporate wellness programs. The "put your phone down" narrative resonates everywhere.</li>
+          <li><strong>Phase 1 — Community launch (Month 1-3):</strong> Target 1,000 kit sales. Build in public on Twitter/X, Instagram Reels showing the shield screen in action, 3-5 Indian productivity YouTuber partnerships, Product Hunt launch. The "reality check" onboarding screen (showing % of waking life on phone) is designed to be screenshot-worthy — each share is organic acquisition.</li>
+          <li><strong>Phase 2 — Campus strategy (Month 3-6):</strong> Target 5,000 kit sales. 50 college ambassadors (free Kit + &#8377;100 per referral), exam season campaigns, study group partnerships. Students are the most phone-addicted AND most social — hostel common rooms create viral loops.</li>
+          <li><strong>Phase 3 — Scale (Month 6-12):</strong> Target 25,000+ kit sales. Amazon India listing, Meta ads retargeting app downloaders (&#8377;150 target CAC), corporate wellness bulk orders, Flipkart expansion.</li>
         </ul>
 
         <h2>Why this shows PM thinking</h2>
@@ -235,6 +396,50 @@
               the price point influenced the magnet material, the subscription
               tiers influenced which features to gate, and the GTM plan
               influenced the referral mechanics I built into the app.
+            </li>
+          </ul>
+        </div>
+
+        <h2>Sources</h2>
+        <div class="cs-learnings">
+          <ul>
+            <li><strong>Smartphone users in India (~660M):</strong>
+              <a href="https://datareportal.com/reports/digital-2025-india" target="_blank" rel="noreferrer">DataReportal — Digital 2025: India</a>;
+              <a href="https://www.grabon.in/indulge/tech/smartphone-usage-statistics/" target="_blank" rel="noreferrer">GrabOn/Statista</a>
+            </li>
+            <li><strong>Screen time (1.12T hours, ~5 hrs/day):</strong>
+              <a href="https://www.communicationstoday.co.in/india-tops-global-mobile-usage-with-1-12-trillion-hours-in-2024/" target="_blank" rel="noreferrer">Communications Today / EY Report, 2024</a>;
+              <a href="https://www.statista.com/statistics/1380416/apac-daily-mobile-usage-hours-per-user-by-country/" target="_blank" rel="noreferrer">Statista — APAC Daily Mobile Usage</a>
+            </li>
+            <li><strong>Smartphone addiction prevalence (25-65%):</strong>
+              <a href="https://bmcpublichealth.biomedcentral.com/articles/10.1186/s12889-024-19991-9" target="_blank" rel="noreferrer">BMC Public Health, 2024</a>
+            </li>
+            <li><strong>Digital addiction &amp; youth mental health:</strong>
+              <a href="https://www.freepressjournal.in/tech/digital-addiction-fueling-youth-mental-health-crisis-economic-survey-2025-26" target="_blank" rel="noreferrer">India Economic Survey 2025-26</a>;
+              <a href="https://www.insightsonindia.com/2026/01/30/rising-digital-addiction-and-mental-health-problems/" target="_blank" rel="noreferrer">Insights on India</a>
+            </li>
+            <li><strong>iPhone users in India (~14M active):</strong>
+              <a href="https://www.start.io/audience/iphone-users-in-india" target="_blank" rel="noreferrer">Start.io — 13.4M users</a>;
+              <a href="https://thetechportal.com/2026/01/24/apple-records-14mn-iphone-shipments-in-india-in-2025-captures-9-market-share-report/" target="_blank" rel="noreferrer">The Tech Portal — 14M shipments in 2025</a>;
+              <a href="https://gs.statcounter.com/os-market-share/mobile/india" target="_blank" rel="noreferrer">StatCounter — iOS market share India</a>
+            </li>
+            <li><strong>Phone check frequency (352 times/day):</strong>
+              <a href="https://www.asurion.com/connect/news/tech-usage/" target="_blank" rel="noreferrer">Asurion, 2022</a>
+            </li>
+            <li><strong>Opal pricing ($99.99/year):</strong>
+              <a href="https://www.opal.so/pricing" target="_blank" rel="noreferrer">Opal — Pricing</a>
+            </li>
+            <li><strong>Unpluq pricing ($79 tag + 1yr sub):</strong>
+              <a href="https://www.unpluq.com/products/unpluq-tag" target="_blank" rel="noreferrer">Unpluq — Tag + Premium</a>
+            </li>
+            <li><strong>one sec research (57% usage reduction):</strong>
+              <a href="https://one-sec.app/blog/how-one-sec-works/" target="_blank" rel="noreferrer">one sec — How It Works</a>
+            </li>
+            <li><strong>Shipping costs (Shiprocket &#8377;20-65):</strong>
+              <a href="https://www.shiprocket.in/pricing/" target="_blank" rel="noreferrer">Shiprocket — Pricing</a>
+            </li>
+            <li><strong>Payment processing (Razorpay ~2%):</strong>
+              <a href="https://razorpay.com/blog/upi-charges-explained-mdr-vs-platform-fees/" target="_blank" rel="noreferrer">Razorpay — UPI Charges Explained</a>
             </li>
           </ul>
         </div>
