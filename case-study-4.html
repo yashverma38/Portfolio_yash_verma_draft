@@ -38,7 +38,7 @@
             <span class="tag tag--design">Design</span>
             <span class="tag tag--growth">Growth</span>
           </div>
-          <h1 class="cs-hero__title">bloc — the physical product that blocks your phone addiction</h1>
+          <h1 class="cs-hero__title">bloc: the physical product that blocks your phone addiction</h1>
           <p class="cs-hero__tldr">
             Every screen time app fails because they rely on willpower. I built
             something different: an iOS app paired with a physical NFC fridge
@@ -49,6 +49,9 @@
           </p>
           <div class="cs-hero__cta">
             <a class="btn btn--primary" href="https://testflight.apple.com/join/MbEGxpmw" target="_blank" rel="noreferrer">Test Beta Version &rarr;</a>
+          </div>
+          <div class="cs-hero__phone">
+            <img src="assets/bloc/bloc-home.png" alt="bloc app — focus session screen" width="1170" height="2532" loading="eager" />
           </div>
         </div>
       </section>
@@ -62,7 +65,7 @@
             </div>
             <div class="cs-meta__item">
               <span class="cs-meta__label">Role</span>
-              <span class="cs-meta__value">Everything — PM, Dev, Design</span>
+              <span class="cs-meta__value">Everything: PM, Dev, Design</span>
             </div>
             <div class="cs-meta__item">
               <span class="cs-meta__label">Stage</span>
@@ -79,7 +82,7 @@
       <div class="cs-content">
         <h2>The insight</h2>
         <p>
-          I tried every screen time app out there. They all do the same thing —
+          I tried every screen time app out there. They all do the same thing:
           show you a scary usage report, let you set limits, and then give you a
           one-tap override when you inevitably want to ignore the limit. They're
           designed to fail, because the unlock button is right there on the same
@@ -89,13 +92,13 @@
           The actual problem isn't information ("you spent 4 hours on Instagram
           today"). People already know. The problem is that digital friction
           isn't friction at all. Tapping "ignore limit" takes 0.5 seconds. It
-          doesn't feel like a decision — it feels like breathing.
+          doesn't feel like a decision. It feels like breathing.
         </p>
 
         <div class="cs-callout">
           <p>
             <strong>The core bet:</strong> If you make the override require
-            physical movement — actually getting up and walking somewhere — the
+            physical movement, actually getting up and walking somewhere, the
             impulse dies before you get there. You don't need willpower if the
             default action is hard enough.
           </p>
@@ -110,7 +113,7 @@
           <li>
             You pick the apps you want to block (Instagram, Twitter, whatever
             your vice is). The app uses Apple's Screen Time API to enforce
-            real OS-level blocking — not some overlay you can dismiss.
+            real OS-level blocking, not some overlay you can dismiss.
           </li>
           <li>
             When you want to unblock, you have to physically walk to wherever
@@ -130,11 +133,11 @@
 
         <h3>The tech stack</h3>
         <p>
-          I built everything from scratch — no templates, no boilerplate:
+          I built everything from scratch. No templates, no boilerplate:
         </p>
         <ul>
           <li><strong>SwiftUI</strong> for the entire iOS interface</li>
-          <li><strong>Screen Time API (FamilyControls)</strong> for real OS-level app blocking — the same API parents use, which means apps genuinely can't be opened</li>
+          <li><strong>Screen Time API (FamilyControls)</strong> for real OS-level app blocking (the same API parents use, which means apps genuinely can't be opened)</li>
           <li><strong>Core NFC</strong> for reading the physical magnet</li>
           <li><strong>Firebase</strong> for authentication and Firestore for user data</li>
           <li><strong>Cloud Functions</strong> for backend logic and subscription validation</li>
@@ -143,7 +146,7 @@
 
         <div class="cs-app-showcase">
           <h2 class="cs-app-showcase__title">The app in action</h2>
-          <p class="cs-app-showcase__subtitle">Built entirely in SwiftUI — every screen, animation, and interaction from scratch.</p>
+          <p class="cs-app-showcase__subtitle">Built entirely in SwiftUI: every screen, animation, and interaction from scratch.</p>
           <div class="cs-app-showcase__grid">
             <div class="cs-app-showcase__item">
               <img class="cs-app-showcase__img" src="assets/bloc/bloc-onboarding.png" alt="bloc onboarding — Less phone. More life." width="1170" height="2532" loading="lazy" />
@@ -166,7 +169,7 @@
 
         <h2>The business plan</h2>
         <p>
-          I didn't just build the app — I built a real business model around it.
+          I didn't just build the app. I built a real business model around it.
           This is a product I actually want to take to market, so the economics
           needed to work. Here's the full breakdown.
         </p>
@@ -175,7 +178,7 @@
         <p>
           India has ~660M smartphone users
           (<a href="https://datareportal.com/reports/digital-2025-india" target="_blank" rel="noreferrer">DataReportal, 2025</a>)
-          who collectively spent 1.12 trillion hours on mobile in 2024 — averaging
+          who collectively spent 1.12 trillion hours on mobile in 2024, averaging
           ~5 hours of screen time daily
           (<a href="https://www.communicationstoday.co.in/india-tops-global-mobile-usage-with-1-12-trillion-hours-in-2024/" target="_blank" rel="noreferrer">EY report, 2024</a>).
           Smartphone addiction prevalence among Indian adolescents ranges from
@@ -191,7 +194,7 @@
           (<a href="https://www.start.io/audience/iphone-users-in-india" target="_blank" rel="noreferrer">Start.io, 2024</a>),
           with record 14M shipments in 2025 alone
           (<a href="https://thetechportal.com/2026/01/24/apple-records-14mn-iphone-shipments-in-india-in-2025-captures-9-market-share-report/" target="_blank" rel="noreferrer">The Tech Portal</a>)
-          — the installed base is growing rapidly.
+          ; the installed base is growing rapidly.
         </p>
         <div class="cs-metrics">
           <div class="cs-metric">
@@ -213,7 +216,7 @@
           <div class="cs-info-toggle__content">
             <p><strong>Blended ARPU: ~&#8377;900/year</strong></p>
             <p>
-              Kit buyers don't pay a separate subscription — the &#8377;899 Bloc Kit
+              Kit buyers don't pay a separate subscription; the &#8377;899 Bloc Kit
               includes 1 year of premium. So ARPU depends on the revenue mix:
             </p>
             <ul>
@@ -222,17 +225,17 @@
               <li>Monthly subscribers (15%): &#8377;99/mo &times; 12 = &#8377;1,188/yr &rarr; 0.15 &times; 1,188 = &#8377;178</li>
               <li><strong>Year 1 blended ARPU = &#8377;539 + &#8377;200 + &#8377;178 ≈ &#8377;900</strong></li>
             </ul>
-            <p><strong>TAM — &#8377;380 Cr</strong></p>
+            <p><strong>TAM: &#8377;380 Cr</strong></p>
             <ul>
               <li>14M active iPhone users in India &times; 30% screen addiction prevalence = 4.2M addressable users</li>
               <li>4.2M &times; &#8377;900 ARPU = &#8377;378 Cr ≈ <strong>&#8377;380 Cr</strong></li>
             </ul>
-            <p><strong>SAM — &#8377;95 Cr</strong></p>
+            <p><strong>SAM: &#8377;95 Cr</strong></p>
             <ul>
               <li>~25% of addressable in Tier 1/2 cities, digitally savvy, willing to pay for wellness tools ≈ 1.05M users</li>
               <li>1.05M &times; &#8377;900 = <strong>&#8377;95 Cr</strong></li>
             </ul>
-            <p><strong>SOM — &#8377;2.5 Cr</strong></p>
+            <p><strong>SOM: &#8377;2.5 Cr</strong></p>
             <ul>
               <li>Realistic 3-year capture: ~28K paying users via organic, campus ambassadors, and performance marketing</li>
               <li>28K &times; &#8377;900 = <strong>&#8377;2.5 Cr</strong></li>
@@ -245,12 +248,12 @@
           Three revenue streams, anchored by the physical product:
         </p>
         <ul>
-          <li><strong>Bloc Kit (&#8377;899) — the hero product:</strong> Physical NFC magnet + 1 year of premium. This is the "obvious choice" — priced lower than a year of monthly subs (&#8377;1,188) while including a physical product. 60-70% of paying users are expected to choose this.</li>
+          <li><strong>Bloc Kit (&#8377;899), the hero product:</strong> Physical NFC magnet + 1 year of premium. This is the "obvious choice," priced lower than a year of monthly subs (&#8377;1,188) while including a physical product. 60-70% of paying users are expected to choose this.</li>
           <li><strong>Premium subscription (&#8377;99/month or &#8377;799/year):</strong> Unlimited sessions, scheduling, full analytics. The monthly option serves as the price anchor that makes the Bloc Kit feel like a deal.</li>
-          <li><strong>Bloc Kit renewal (&#8377;499/year):</strong> Loyalty pricing for existing magnet owners. Targeting 60%+ renewal rate — the physical magnet sitting on your fridge is a daily reminder.</li>
+          <li><strong>Bloc Kit renewal (&#8377;499/year):</strong> Loyalty pricing for existing magnet owners. Targeting 60%+ renewal rate; the physical magnet sitting on your fridge is a daily reminder.</li>
         </ul>
         <p>
-          The free tier gives you 2 sessions/day with a 45-minute cap — enough to build
+          The free tier gives you 2 sessions/day with a 45-minute cap: enough to build
           the habit, not enough for heavy users checking their phone hundreds of times daily
           (<a href="https://www.asurion.com/connect/news/tech-usage/" target="_blank" rel="noreferrer">Asurion, 2022</a>
           found the average is 352 times/day).
@@ -260,7 +263,7 @@
           <p>
             <strong>The pricing insight:</strong> At &#8377;99/month, bloc is cheaper
             than a Starbucks coffee. The &#8377;899 Bloc Kit is positioned as a
-            physical product you own, not "another app subscription" — and Indians
+            physical product you own, not "another app subscription," and Indians
             pay for physical goods more readily than software. The magnet is also
             the highest-margin item, the best retention mechanism, AND the best
             organic marketing channel. Every fridge it sits on is a billboard.
@@ -269,7 +272,7 @@
 
         <h3>Unit economics</h3>
         <p>
-          Per Bloc Kit sale — the full COGS breakdown:
+          Per Bloc Kit sale, the full COGS breakdown:
         </p>
         <ul>
           <li>Selling price: <strong>&#8377;899</strong></li>
@@ -302,8 +305,8 @@
 
         <p>
           The key insight: selling the Bloc Kit directly (website/Amazon) nets
-          higher margin than an App Store subscription — &#8377;699 net vs &#8377;559
-          net on annual sub — while also creating a physical retention anchor.
+          higher margin than an App Store subscription (&#8377;699 net vs &#8377;559
+          net on annual sub) while also creating a physical retention anchor.
           Kit buyers have 20-30% annual churn vs 50-60% for subscription-only
           users, and they generate organic referrals that subscribers don't. Over
           3 years, Kit buyers are 18% more valuable.
@@ -330,8 +333,8 @@
             <p class="cs-metric__label">Year 2 revenue (300K downloads)</p>
           </div>
           <div class="cs-metric">
-            <p class="cs-metric__number">&#8377;6-8 Cr</p>
-            <p class="cs-metric__label">Year 3 revenue (1M+ cumulative)</p>
+            <p class="cs-metric__number">&#8377;2.5 Cr</p>
+            <p class="cs-metric__label">Year 3 revenue (SOM ceiling)</p>
           </div>
         </div>
 
@@ -341,17 +344,17 @@
         </p>
         <ul>
           <li><strong>iOS Screen Time (built-in):</strong> One tap to bypass. "Ignore for 15 minutes" = zero friction.</li>
-          <li><strong>Forest / Flora (gamification):</strong> Primarily motivation-based — a virtual tree dies if you leave. Forest does offer some app blocking on iOS via Screen Time API, but the core mechanic is psychological, not enforceable. Users can dismiss it when motivation dips.</li>
+          <li><strong>Forest / Flora (gamification):</strong> Primarily motivation-based: a virtual tree dies if you leave. Forest does offer some app blocking on iOS via Screen Time API, but the core mechanic is psychological, not enforceable. Users can dismiss it when motivation dips.</li>
           <li><strong>one sec (pause-based):</strong> Inserts a ~5-10 second breathing exercise before opening blocked apps. Research-backed
             (<a href="https://one-sec.app/blog/how-one-sec-works/" target="_blank" rel="noreferrer">Max Planck Institute study</a>,
-            reduces usage ~57%) — but the pause is still software-only. No physical barrier.</li>
+            reduces usage ~57%). But the pause is still software-only. No physical barrier.</li>
           <li><strong>Opal
             (<a href="https://www.opal.so/pricing" target="_blank" rel="noreferrer">$99.99/year</a>,
             ~&#8377;8,400/year):</strong> OS-level blocking, well-designed, but software-only and 10x too expensive for India.</li>
           <li><strong>Unpluq (EU,
             <a href="https://www.unpluq.com/products/unpluq-tag" target="_blank" rel="noreferrer">$79 for tag + 1yr sub</a>,
             ~&#8377;6,600):</strong> Proved the NFC model in Europe with a key fob.
-            But it has zero India presence — and shipping to India costs &#8377;6,000+,
+            But it has zero India presence, and shipping to India costs &#8377;6,000+,
             making the effective price &#8377;12,600+. Completely unviable for the
             Indian market.</li>
         </ul>
@@ -360,7 +363,7 @@
           at a price point that works for the market. At &#8377;899 for the Bloc Kit vs.
           &#8377;12,600+ for an Unpluq shipped to India or &#8377;8,400/year for Opal,
           the pricing gap is massive. The fridge magnet is also a better form factor
-          than Unpluq's key fob — it's always visible, it's a conversation starter,
+          than Unpluq's key fob: it's always visible, it's a conversation starter,
           and it has dual utility as an actual magnet.
         </p>
 
@@ -369,9 +372,9 @@
           Three phases, each with a clear target:
         </p>
         <ul>
-          <li><strong>Phase 1 — Community launch (Month 1-3):</strong> Target 1,000 kit sales. Build in public on Twitter/X, Instagram Reels showing the shield screen in action, 3-5 Indian productivity YouTuber partnerships, Product Hunt launch. The "reality check" onboarding screen (showing % of waking life on phone) is designed to be screenshot-worthy — each share is organic acquisition.</li>
-          <li><strong>Phase 2 — Campus strategy (Month 3-6):</strong> Target 5,000 kit sales. 50 college ambassadors (free Kit + &#8377;100 per referral), exam season campaigns, study group partnerships. Students are the most phone-addicted AND most social — hostel common rooms create viral loops.</li>
-          <li><strong>Phase 3 — Scale (Month 6-12):</strong> Target 25,000+ kit sales. Amazon India listing, Meta ads retargeting app downloaders (&#8377;150 target CAC), corporate wellness bulk orders, Flipkart expansion.</li>
+          <li><strong>Phase 1: Community launch (Month 1-3).</strong> Target 1,000 kit sales. Build in public on Twitter/X, Instagram Reels showing the shield screen in action, 3-5 Indian productivity YouTuber partnerships, Product Hunt launch. The "reality check" onboarding screen (showing % of waking life on phone) is designed to be screenshot-worthy; each share is organic acquisition.</li>
+          <li><strong>Phase 2: Campus strategy (Month 3-6).</strong> Target 5,000 kit sales. 50 college ambassadors (free Kit + &#8377;100 per referral), exam season campaigns, study group partnerships. Students are the most phone-addicted AND most social; hostel common rooms create viral loops.</li>
+          <li><strong>Phase 3: Scale (Month 6-12).</strong> Target 25,000+ kit sales. Amazon India listing, Meta ads retargeting app downloaders (&#8377;150 target CAC), corporate wellness bulk orders, Flipkart expansion.</li>
         </ul>
 
         <h2>Why this shows PM thinking</h2>
@@ -381,8 +384,8 @@
         </p>
         <ul>
           <li><strong>User insight:</strong> Started from a real problem I had, validated with research on why existing solutions fail.</li>
-          <li><strong>Product design:</strong> The NFC magnet isn't a gimmick — it's the core differentiator. The entire product thesis rests on one behavioral insight about physical vs. digital friction.</li>
-          <li><strong>Technical execution:</strong> I wrote every line of code myself. SwiftUI, NFC integration, Firebase backend, subscription system — end to end.</li>
+          <li><strong>Product design:</strong> The NFC magnet isn't a gimmick. It's the core differentiator. The entire product thesis rests on one behavioral insight about physical vs. digital friction.</li>
+          <li><strong>Technical execution:</strong> I wrote every line of code myself. SwiftUI, NFC integration, Firebase backend, subscription system, end to end.</li>
           <li><strong>Business modeling:</strong> Real unit economics, pricing strategy, and a go-to-market plan that isn't "hope people find us."</li>
           <li><strong>Shipping:</strong> It's not a pitch deck. It's a working product you can download and try right now.</li>
         </ul>
@@ -403,7 +406,7 @@
               <strong>Hardware changes the game.</strong>
               Adding a physical component to a software product creates real
               switching costs and real differentiation. It also makes the
-              product tangible in a way that's inherently shareable — people
+              product tangible in a way that's inherently shareable; people
               see the magnet and ask about it.
             </li>
             <li>
@@ -415,7 +418,7 @@
             </li>
             <li>
               <strong>Build the business plan before the product.</strong>
-              Knowing the unit economics upfront shaped every product decision —
+              Knowing the unit economics upfront shaped every product decision:
               the price point influenced the magnet material, the subscription
               tiers influenced which features to gate, and the GTM plan
               influenced the referral mechanics I built into the app.
