@@ -21,7 +21,7 @@
   // --- DEV MODE ---
   // Set to true to use mock Razorpay checkout (no real payments, no Cloud Functions needed)
   // Set to false for production with real Razorpay
-  var DEV_MODE = true;
+  var DEV_MODE = false;
 
   // --- Razorpay Config ---
   // TODO: Replace with your live key_id from Razorpay Dashboard > Settings > API Keys

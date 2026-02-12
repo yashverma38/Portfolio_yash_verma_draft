@@ -2,7 +2,10 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
-const cors = require('cors')({ origin: true });
+const cors = require('cors')({
+  origin: ['https://www.yash-v.in', 'https://yash-v.in'],
+  methods: ['POST']
+});
 
 admin.initializeApp();
 const db = admin.firestore();
@@ -51,6 +54,12 @@ exports.createOrder = functions.https.onRequest((req, res) => {
         }
       });
 
+      // Store order→uid mapping for verification
+      await db.collection('pending_orders').doc(order.id).set({
+        uid: uid,
+        created_at: admin.firestore.Timestamp.now()
+      });
+
       return res.status(200).json({
         order_id: order.id,
         amount: order.amount,
@@ -90,6 +99,12 @@ exports.verifyPayment = functions.https.onRequest((req, res) => {
         return res.status(400).json({ success: false, error: 'Missing payment details' });
       }
 
+      // Verify order belongs to this user
+      const orderDoc = await db.collection('pending_orders').doc(razorpay_order_id).get();
+      if (!orderDoc.exists || orderDoc.data().uid !== uid) {
+        return res.status(403).json({ success: false, error: 'Order not found or unauthorized' });
+      }
+
       // Verify HMAC-SHA256 signature
       const body = razorpay_order_id + '|' + razorpay_payment_id;
       const expectedSignature = crypto
@@ -116,6 +131,9 @@ exports.verifyPayment = functions.https.onRequest((req, res) => {
         expires_at: expiresAt,
         status: 'active'
       });
+
+      // Clean up pending order
+      await db.collection('pending_orders').doc(razorpay_order_id).delete();
 
       return res.status(200).json({ success: true });
     } catch (error) {

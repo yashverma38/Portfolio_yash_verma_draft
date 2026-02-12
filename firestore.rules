@@ -13,6 +13,11 @@ service cloud.firestore {
       }
     }
 
+    // Pending orders: only Admin SDK (Cloud Functions) — no client access
+    match /pending_orders/{orderId} {
+      allow read, write: if false;
+    }
+
     // Default deny
     match /{document=**} {
       allow read, write: if false;

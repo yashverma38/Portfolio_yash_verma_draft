@@ -545,13 +545,24 @@
       pagesList.innerHTML = '';
       sortedPages.forEach(function (page) {
         var count = data.pages[page];
-        var pct = Math.round((count / maxViews) * 100);
+        var pct = Math.max(0, Math.min(100, Math.round((count / maxViews) * 100)));
         var label = PAGE_LABELS[page] || page;
         var li = document.createElement('li');
-        li.innerHTML =
-          '<span class="dash-activity-pages__name">' + label + '</span>' +
-          '<span class="dash-activity-pages__bar"><span class="dash-activity-pages__bar-fill" style="width:' + pct + '%"></span></span>' +
-          '<span class="dash-activity-pages__count">' + count + '</span>';
+        var nameSpan = document.createElement('span');
+        nameSpan.className = 'dash-activity-pages__name';
+        nameSpan.textContent = label;
+        var barOuter = document.createElement('span');
+        barOuter.className = 'dash-activity-pages__bar';
+        var barFill = document.createElement('span');
+        barFill.className = 'dash-activity-pages__bar-fill';
+        barFill.style.width = pct + '%';
+        barOuter.appendChild(barFill);
+        var countSpan = document.createElement('span');
+        countSpan.className = 'dash-activity-pages__count';
+        countSpan.textContent = count;
+        li.appendChild(nameSpan);
+        li.appendChild(barOuter);
+        li.appendChild(countSpan);
         pagesList.appendChild(li);
       });
     }
@@ -564,13 +575,24 @@
       });
       scrollList.innerHTML = '';
       scrollPages.forEach(function (page) {
-        var depth = data.maxScroll[page];
+        var depth = Math.max(0, Math.min(100, data.maxScroll[page]));
         var label = PAGE_LABELS[page] || page;
         var li = document.createElement('li');
-        li.innerHTML =
-          '<span class="dash-activity-pages__name">' + label + '</span>' +
-          '<span class="dash-activity-pages__bar"><span class="dash-activity-pages__bar-fill" style="width:' + depth + '%"></span></span>' +
-          '<span class="dash-activity-pages__count">' + depth + '%</span>';
+        var nameSpan = document.createElement('span');
+        nameSpan.className = 'dash-activity-pages__name';
+        nameSpan.textContent = label;
+        var barOuter = document.createElement('span');
+        barOuter.className = 'dash-activity-pages__bar';
+        var barFill = document.createElement('span');
+        barFill.className = 'dash-activity-pages__bar-fill';
+        barFill.style.width = depth + '%';
+        barOuter.appendChild(barFill);
+        var countSpan = document.createElement('span');
+        countSpan.className = 'dash-activity-pages__count';
+        countSpan.textContent = depth + '%';
+        li.appendChild(nameSpan);
+        li.appendChild(barOuter);
+        li.appendChild(countSpan);
         scrollList.appendChild(li);
       });
       if (scrollPages.length === 0) {
@@ -588,13 +610,20 @@
         var pageName = PAGE_LABELS[evt.page] || evt.page || '';
         var time = evt.ts ? timeAgo(evt.ts) : '';
         var li = document.createElement('li');
-        li.innerHTML =
-          '<span class="dash-activity-timeline__dot"></span>' +
-          '<span class="dash-activity-timeline__event"><strong>' + label + '</strong>' +
-          (pageName ? ' on ' + pageName : '') +
-          (evt.extra ? ' — ' + evt.extra : '') +
-          '</span>' +
-          '<span class="dash-activity-timeline__time">' + time + '</span>';
+        var dot = document.createElement('span');
+        dot.className = 'dash-activity-timeline__dot';
+        var eventSpan = document.createElement('span');
+        eventSpan.className = 'dash-activity-timeline__event';
+        var strong = document.createElement('strong');
+        strong.textContent = label;
+        eventSpan.appendChild(strong);
+        if (pageName) eventSpan.appendChild(document.createTextNode(' on ' + pageName));
+        var timeSpan = document.createElement('span');
+        timeSpan.className = 'dash-activity-timeline__time';
+        timeSpan.textContent = time;
+        li.appendChild(dot);
+        li.appendChild(eventSpan);
+        li.appendChild(timeSpan);
         timeline.appendChild(li);
       });
       if (recent.length === 0) {
