@@ -1,4 +1,8 @@
 {
   "buildCommand": "",
-  "outputDirectory": "."
+  "outputDirectory": ".",
+  "rewrites": [
+    { "source": "/case-study-4.html", "destination": "/404.html" },
+    { "source": "/case-study-4", "destination": "/404.html" }
+  ]
 }
