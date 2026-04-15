@@ -21,7 +21,10 @@ service cloud.firestore {
     // Bloc Ghostwriter — only the owner email can read/write.
     // Server-side writes come via Admin SDK (service account), which bypasses these rules.
     function isOwner() {
-      return request.auth != null && request.auth.token.email == 'yashverma.iitkgp@gmail.com';
+      return request.auth != null && request.auth.token.email in [
+        'yashverma.iitkgp@gmail.com',
+        'yashverma38@gmail.com'
+      ];
     }
     match /drafts/{id}    { allow read, write: if isOwner(); }
     match /posts/{id}     { allow read, write: if isOwner(); }
