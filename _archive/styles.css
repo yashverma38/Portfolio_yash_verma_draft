@@ -284,6 +284,18 @@ h1, h2, h3, h4 {
 /* --- Homepage Hero --- */
 .hero {
   padding: 6rem 0 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, var(--ocean-soft), transparent 70%),
+              radial-gradient(ellipse 60% 50% at 80% 60%, var(--sunrise-soft), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+  transition: background-position 0.3s ease;
 }
 
 .hero__grid {
@@ -291,6 +303,8 @@ h1, h2, h3, h4 {
   grid-template-columns: 1fr auto;
   gap: 3rem;
   align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
 .hero__content {
@@ -320,8 +334,20 @@ h1, h2, h3, h4 {
   align-items: center;
 }
 
-.hero__photo {
+/* Photo wrapper with orbs */
+.hero__photo-wrapper {
+  position: relative;
+  width: 300px;
+  height: 300px;
   flex-shrink: 0;
+}
+
+.hero__photo {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  margin: 10px;
+  will-change: transform;
 }
 
 .hero__photo img {
@@ -330,8 +356,145 @@ h1, h2, h3, h4 {
   border-radius: 50%;
   object-fit: cover;
   object-position: center 20%;
-  border: 4px solid var(--bg-warm);
+  border: 4px solid transparent;
   box-shadow: var(--shadow-md);
+  position: relative;
+  z-index: 2;
+}
+
+/* Rotating gradient border ring */
+.hero__photo::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--sunrise),
+    var(--ocean),
+    var(--sage),
+    var(--sunrise)
+  );
+  opacity: 0.2;
+  animation: borderRotate 12s linear infinite;
+  z-index: 1;
+}
+
+@keyframes borderRotate {
+  to { transform: rotate(360deg); }
+}
+
+/* Idle floating animation */
+.hero__photo {
+  animation: heroFloat 4s ease-in-out infinite;
+}
+
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Floating gradient orbs */
+.hero__orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+  z-index: 0;
+}
+
+.hero__orb--sunrise {
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, var(--sunrise-glow), transparent 70%);
+  top: -20px;
+  right: -30px;
+  animation: orbDrift1 6s ease-in-out infinite;
+}
+
+.hero__orb--ocean {
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(45, 106, 138, 0.15), transparent 70%);
+  bottom: -10px;
+  left: -20px;
+  animation: orbDrift2 8s ease-in-out infinite;
+}
+
+.hero__orb--sage {
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, rgba(90, 143, 107, 0.12), transparent 70%);
+  top: 50%;
+  right: -40px;
+  animation: orbDrift3 7s ease-in-out infinite;
+}
+
+@keyframes orbDrift1 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(8px, -12px); }
+  66% { transform: translate(-6px, 6px); }
+}
+
+@keyframes orbDrift2 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(-10px, 8px); }
+  66% { transform: translate(6px, -10px); }
+}
+
+@keyframes orbDrift3 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(12px, 6px); }
+  66% { transform: translate(-8px, -8px); }
+}
+
+/* Staggered entrance animation — only when JS adds the class */
+.js-hero-animated .hero__title,
+.js-hero-animated .hero__subtitle,
+.js-hero-animated .hero__actions {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: heroEntrance 0.7s var(--ease) forwards;
+}
+
+.js-hero-animated .hero__title { animation-delay: 0.1s; }
+.js-hero-animated .hero__subtitle { animation-delay: 0.3s; }
+.js-hero-animated .hero__actions { animation-delay: 0.5s; }
+
+.js-hero-animated .hero__photo-wrapper {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: heroEntrance 0.7s var(--ease) 0.2s forwards;
+}
+
+@keyframes heroEntrance {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Reduced motion: no animations */
+@media (prefers-reduced-motion: reduce) {
+  .js-hero-animated .hero__title,
+  .js-hero-animated .hero__subtitle,
+  .js-hero-animated .hero__actions,
+  .js-hero-animated .hero__photo-wrapper {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .hero__photo {
+    animation: none;
+  }
+
+  .hero__photo::before {
+    animation: none;
+  }
+
+  .hero__orb {
+    animation: none;
+  }
 }
 
 /* --- Section Headers --- */
@@ -1480,6 +1643,157 @@ h1, h2, h3, h4 {
   color: var(--text-secondary);
 }
 
+/* --- Case Study Content Gate --- */
+.cs-gated-wrapper {
+  position: relative;
+}
+
+.cs-gated-wrapper--locked .cs-gated-content {
+  position: relative;
+  max-height: 300px;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  filter: blur(2px);
+}
+
+.cs-gated-wrapper--locked .cs-gated-content::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 300px;
+  background: linear-gradient(
+    to bottom,
+    rgba(250, 247, 242, 0) 0%,
+    rgba(250, 247, 242, 0.7) 40%,
+    rgba(250, 247, 242, 1) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cs-gate {
+  position: relative;
+  z-index: 2;
+  max-width: 520px;
+  margin: -2rem auto 3rem;
+  padding: 2.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+
+.cs-gate__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--ocean-soft);
+  color: var(--ocean);
+  margin-bottom: 1.25rem;
+  font-size: 1.3rem;
+}
+
+.cs-gate__title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--ocean-deep);
+  margin-bottom: 0.6rem;
+}
+
+.cs-gate__text {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.cs-gate__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  text-align: left;
+}
+
+.cs-gate__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.cs-gate__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+}
+
+.cs-gate__input {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--border-hover);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  transition: border-color var(--duration) var(--ease);
+}
+
+.cs-gate__input:focus {
+  outline: none;
+  border-color: var(--ocean);
+  box-shadow: 0 0 0 3px var(--ocean-soft);
+}
+
+.cs-gate__submit {
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.cs-gate__fine-print {
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+  margin-top: 0.75rem;
+  text-align: center;
+}
+
+.cs-gated-wrapper--unlocked .cs-gate {
+  display: none;
+}
+
+.cs-gated-wrapper--unlocked .cs-gated-content {
+  max-height: none;
+  overflow: visible;
+  pointer-events: auto;
+  user-select: auto;
+  filter: none;
+}
+
+.cs-gated-content--revealing {
+  animation: gateReveal 0.6s var(--ease) forwards;
+}
+
+@keyframes gateReveal {
+  from {
+    max-height: 300px;
+    filter: blur(2px);
+    opacity: 0.5;
+  }
+  to {
+    max-height: 4000px;
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
 /* App Showcase Gallery */
 .cs-app-showcase {
   margin: 3rem 0;
@@ -1799,15 +2113,27 @@ h1, h2, h3, h4 {
     order: 2;
   }
 
-  .hero__photo {
+  .hero__photo-wrapper {
     order: 1;
     justify-self: center;
+    width: 240px;
+    height: 240px;
+  }
+
+  .hero__photo {
+    width: 220px;
+    height: 220px;
+    margin: 10px;
   }
 
   .hero__photo img {
-    width: 200px;
-    height: 200px;
+    width: 220px;
+    height: 220px;
   }
+
+  .hero__orb--sunrise { width: 80px; height: 80px; }
+  .hero__orb--ocean { width: 50px; height: 50px; }
+  .hero__orb--sage { width: 40px; height: 40px; }
 
   .hero__title {
     max-width: 100%;
@@ -1885,9 +2211,20 @@ h1, h2, h3, h4 {
     align-items: center;
   }
 
+  .hero__photo-wrapper {
+    width: 200px;
+    height: 200px;
+  }
+
+  .hero__photo {
+    width: 180px;
+    height: 180px;
+    margin: 10px;
+  }
+
   .hero__photo img {
-    width: 160px;
-    height: 160px;
+    width: 180px;
+    height: 180px;
   }
 
   .about__group-photo img {

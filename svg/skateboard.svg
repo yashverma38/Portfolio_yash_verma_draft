@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 80" fill="none">
+  <g id="skateboard">
+    <!-- Deck -->
+    <path d="M40 30 Q10 30 8 25 Q5 18 15 15 Q25 12 40 15 L260 15 Q275 12 285 15 Q295 18 292 25 Q290 30 260 30 Z" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1.5"/>
+    <!-- Grip tape -->
+    <rect x="45" y="16" width="210" height="12" rx="2" fill="#111" opacity="0.5"/>
+    <!-- Deck stripe -->
+    <line x1="50" y1="22" x2="250" y2="22" stroke="#f59e0b" stroke-width="1.2" opacity="0.5">
+      <animate attributeName="opacity" values="0.3;0.6;0.3" dur="4s" repeatCount="indefinite"/>
+    </line>
+    <!-- Left truck -->
+    <rect x="55" y="30" width="40" height="6" rx="2" fill="#333"/>
+    <rect x="60" y="36" width="30" height="3" rx="1" fill="#3a3a3a"/>
+    <!-- Right truck -->
+    <rect x="205" y="30" width="40" height="6" rx="2" fill="#333"/>
+    <rect x="210" y="36" width="30" height="3" rx="1" fill="#3a3a3a"/>
+    <!-- Wheels with amber glow -->
+    <circle cx="62" cy="48" r="9" fill="#1f1f1f" stroke="#f59e0b" stroke-width="0.8" opacity="0.6"/>
+    <circle cx="62" cy="48" r="4" fill="#2a2a2a"/>
+    <circle cx="88" cy="48" r="9" fill="#1f1f1f" stroke="#f59e0b" stroke-width="0.8" opacity="0.6"/>
+    <circle cx="88" cy="48" r="4" fill="#2a2a2a"/>
+    <circle cx="212" cy="48" r="9" fill="#1f1f1f" stroke="#f59e0b" stroke-width="0.8" opacity="0.6"/>
+    <circle cx="212" cy="48" r="4" fill="#2a2a2a"/>
+    <circle cx="238" cy="48" r="9" fill="#1f1f1f" stroke="#f59e0b" stroke-width="0.8" opacity="0.6"/>
+    <circle cx="238" cy="48" r="4" fill="#2a2a2a"/>
+    <!-- Kick tail glow -->
+    <ellipse cx="25" cy="32" rx="12" ry="2" fill="#f59e0b" opacity="0.04"/>
+    <ellipse cx="275" cy="32" rx="12" ry="2" fill="#f59e0b" opacity="0.04"/>
+  </g>
+</svg>

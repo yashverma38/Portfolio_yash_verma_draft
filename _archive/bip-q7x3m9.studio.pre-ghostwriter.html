@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>yash. — build in public</title>
+    <meta name="description" content="private content studio" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="content-styles.css" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+    <style>
+        /* ============================================
+           BIP PAGE — Build in Public Studio
+           ============================================ */
+
+        /* Auth wall override for Google sign-in */
+        .login-card__avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            margin: 0 auto 0.75rem;
+            border: 2px solid var(--border);
+        }
+
+        .btn--google {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            width: 100%;
+            padding: 0.75rem 1.3rem;
+            background: var(--bg-elevated);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all var(--duration) var(--ease);
+            margin-top: 1rem;
+        }
+
+        .btn--google:hover {
+            border-color: var(--border-hover);
+            background: var(--bg-card);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn--google svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        /* Studio layout */
+        .studio {
+            padding: 2rem 0 var(--section-pad);
+        }
+
+        .studio__header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .studio__day {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3rem);
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            margin-bottom: 0.35rem;
+        }
+
+        .studio__day-num {
+            color: var(--accent);
+        }
+
+        .studio__date {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+            letter-spacing: 0.04em;
+        }
+
+        .studio__streak {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--workout);
+            margin-top: 0.5rem;
+            padding: 0.3rem 0.75rem;
+            background: rgba(34, 197, 94, 0.08);
+            border: 1px solid rgba(34, 197, 94, 0.15);
+            border-radius: 20px;
+        }
+
+        /* Tab navigation */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.25rem;
+            margin-bottom: 2rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 0.3rem;
+            max-width: 420px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tab {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.6rem 1rem;
+            font-family: var(--font-body);
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            background: none;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--duration) var(--ease);
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            color: var(--text-secondary);
+            background: var(--bg-elevated);
+        }
+
+        .tab.is-active {
+            color: var(--text);
+            background: var(--bg-elevated);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tab__icon {
+            font-size: 0.9rem;
+            line-height: 1;
+        }
+
+        /* Platform colors */
+        .tab[data-platform="linkedin"].is-active {
+            color: #0a66c2;
+            border: 1px solid rgba(10, 102, 194, 0.2);
+        }
+
+        .tab[data-platform="instagram"].is-active {
+            color: #e1306c;
+            border: 1px solid rgba(225, 48, 108, 0.2);
+        }
+
+        .tab[data-platform="x"].is-active {
+            color: var(--text);
+            border: 1px solid var(--border-hover);
+        }
+
+        .tab[data-platform="reddit"].is-active {
+            color: #ff4500;
+            border: 1px solid rgba(255, 69, 0, 0.2);
+        }
+
+        /* Subreddit picker */
+        .subreddit-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            margin-bottom: 1.25rem;
+            padding: 0.75rem 1rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+        }
+
+        .subreddit-bar__label {
+            width: 100%;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .subreddit-chip {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.3rem 0.65rem;
+            border-radius: 20px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-family: var(--font-mono);
+            transition: all var(--duration) var(--ease);
+        }
+
+        .subreddit-chip:hover {
+            border-color: #ff4500;
+            color: #ff4500;
+        }
+
+        .subreddit-chip.is-active {
+            background: rgba(255, 69, 0, 0.1);
+            border-color: rgba(255, 69, 0, 0.3);
+            color: #ff4500;
+        }
+
+        /* Reddit title input */
+        .composer__title-input {
+            width: 100%;
+            padding: 0.7rem 0;
+            background: none;
+            border: none;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+            font-family: var(--font-body);
+            font-size: 1.05rem;
+            font-weight: 600;
+            outline: none;
+            margin-bottom: 1rem;
+            transition: border-color var(--duration) var(--ease);
+        }
+
+        .composer__title-input:focus {
+            border-color: var(--accent);
+        }
+
+        .composer__title-input::placeholder {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* Tab panels */
+        .tab-panel {
+            display: none;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .tab-panel.is-active {
+            display: block;
+        }
+
+        /* Composer card */
+        .composer {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .composer__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .composer__platform {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .composer__platform-icon {
+            font-size: 1.1rem;
+        }
+
+        .composer__platform-name {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+        }
+
+        .composer__char-count {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--text-tertiary);
+            transition: color var(--duration) var(--ease);
+        }
+
+        .composer__char-count.is-warn {
+            color: var(--accent);
+        }
+
+        .composer__char-count.is-over {
+            color: var(--building);
+        }
+
+        .composer__body {
+            padding: 1.5rem;
+        }
+
+        .composer__textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 0;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-family: var(--font-body);
+            font-size: 0.92rem;
+            line-height: 1.7;
+            resize: vertical;
+            outline: none;
+        }
+
+        .composer__textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .composer__footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.85rem 1.5rem;
+            border-top: 1px solid var(--border);
+            background: var(--bg-surface);
+        }
+
+        .composer__actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .composer__tip {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .btn--copy {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.45rem 0.85rem;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-family: var(--font-body);
+            transition: all var(--duration) var(--ease);
+        }
+
+        .btn--copy:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .btn--copy.is-copied {
+            border-color: var(--workout);
+            color: var(--workout);
+        }
+
+        /* Inspiration / template section */
+        .inspiration {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .inspiration__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+
+        .inspiration__title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-tertiary);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .inspiration__toggle {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            transition: transform var(--duration) var(--ease);
+        }
+
+        .inspiration.is-collapsed .inspiration__content {
+            display: none;
+        }
+
+        .inspiration.is-collapsed .inspiration__toggle {
+            transform: rotate(-90deg);
+        }
+
+        .inspiration__content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .template-card {
+            padding: 1rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--duration) var(--ease);
+        }
+
+        .template-card:hover {
+            border-color: var(--border-accent);
+            transform: translateX(4px);
+        }
+
+        .template-card__label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--accent);
+            margin-bottom: 0.35rem;
+        }
+
+        .template-card__preview {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+            white-space: pre-line;
+            max-height: 4.5em;
+            overflow: hidden;
+        }
+
+        /* Thread builder (for X) */
+        .thread {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .thread__tweet {
+            position: relative;
+            padding: 1.25rem 1.5rem 1.25rem 2.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .thread__tweet:last-child {
+            border-bottom: none;
+        }
+
+        .thread__tweet::before {
+            content: '';
+            position: absolute;
+            left: 1.25rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .thread__tweet:first-child::before {
+            top: 50%;
+        }
+
+        .thread__tweet:last-child::before {
+            bottom: 50%;
+        }
+
+        .thread__tweet::after {
+            content: '';
+            position: absolute;
+            left: calc(1.25rem - 4px);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--bg-elevated);
+            border: 2px solid var(--text-tertiary);
+        }
+
+        .thread__num {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            color: var(--text-muted);
+            position: absolute;
+            left: 0.35rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .thread__textarea {
+            width: 100%;
+            min-height: 60px;
+            padding: 0;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-family: var(--font-body);
+            font-size: 0.92rem;
+            line-height: 1.6;
+            resize: none;
+            outline: none;
+        }
+
+        .thread__textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .thread__meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 0.35rem;
+        }
+
+        .thread__add {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            width: 100%;
+            padding: 0.6rem;
+            background: none;
+            border: 1px dashed var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-muted);
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--duration) var(--ease);
+        }
+
+        .thread__add:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Saved entries */
+        .entries {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .entries__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+        }
+
+        .entries__title {
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-tertiary);
+        }
+
+        .entries__count {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--text-muted);
+        }
+
+        .entry-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 0.75rem;
+            transition: all var(--duration) var(--ease);
+        }
+
+        .entry-card:hover {
+            border-color: var(--border-hover);
+        }
+
+        .entry-card__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .entry-card__day {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .entry-card__date {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-tertiary);
+        }
+
+        .entry-card__text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            white-space: pre-line;
+            max-height: 6em;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .entry-card__text::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2em;
+            background: linear-gradient(transparent, var(--bg-card));
+        }
+
+        .entry-card__actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .entry-card__btn {
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.2rem 0;
+            font-family: var(--font-body);
+            transition: color var(--duration) var(--ease);
+        }
+
+        .entry-card__btn:hover {
+            color: var(--accent);
+        }
+
+        .entry-card__btn--delete:hover {
+            color: var(--building);
+        }
+
+        /* User bar */
+        .user-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 1rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            margin-bottom: 2rem;
+            max-width: 680px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .user-bar__info {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .user-bar__avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1.5px solid var(--border);
+        }
+
+        .user-bar__name {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .user-bar__email {
+            font-size: 0.65rem;
+            color: var(--text-tertiary);
+            font-family: var(--font-mono);
+        }
+
+        .btn--signout {
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0.3rem 0.65rem;
+            cursor: pointer;
+            font-family: var(--font-body);
+            transition: all var(--duration) var(--ease);
+        }
+
+        .btn--signout:hover {
+            border-color: var(--building);
+            color: var(--building);
+        }
+
+        /* Day input */
+        .day-input {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .day-input__field {
+            width: 60px;
+            padding: 0.3rem 0.5rem;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--accent);
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            text-align: center;
+            outline: none;
+            transition: border-color var(--duration) var(--ease);
+        }
+
+        .day-input__field:focus {
+            border-color: var(--accent);
+        }
+
+        /* Hide number input spinners */
+        .day-input__field::-webkit-inner-spin-button,
+        .day-input__field::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .day-input__field {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header__inner container">
+            <a href="index.html" class="logo">yash<span>.</span></a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="nav" id="siteNav">
+                <a class="nav__link" href="index.html">Feed</a>
+                <a class="nav__link nav__link--active" href="bip-q7x3m9.html">Studio</a>
+                <a class="nav__link" href="log.html">Log</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Auth Wall -->
+        <section class="login-wall" id="loginWall">
+            <div class="login-card">
+                <div class="login-card__icon">🔒</div>
+                <h1 class="login-card__title">Build in Public Studio</h1>
+                <p class="login-card__subtitle">Private workspace for Bloc content. Sign in with Google to continue.</p>
+                <p class="login-card__error" id="loginError"></p>
+                <button class="btn--google" id="googleSignIn">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
+                        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                    </svg>
+                    Sign in with Google
+                </button>
+            </div>
+        </section>
+
+        <!-- Studio (hidden until auth) -->
+        <section class="studio" id="studioSection" style="display: none;">
+            <div class="container">
+
+                <!-- User bar -->
+                <div class="user-bar" id="userBar">
+                    <div class="user-bar__info">
+                        <img class="user-bar__avatar" id="userAvatar" src="" alt="" />
+                        <div>
+                            <div class="user-bar__name" id="userName"></div>
+                            <div class="user-bar__email" id="userEmail"></div>
+                        </div>
+                    </div>
+                    <button class="btn--signout" id="signOutBtn">Sign out</button>
+                </div>
+
+                <!-- Day header -->
+                <div class="studio__header">
+                    <div class="studio__day">
+                        Day <span class="day-input">
+                            <input type="number" class="day-input__field" id="dayNumber" value="1" min="1" max="999" />
+                        </span> of building <span class="studio__day-num">Bloc</span>
+                    </div>
+                    <div class="studio__date" id="todayDate"></div>
+                    <div class="studio__streak" id="streakBadge">
+                        <span>🔥</span> <span id="streakCount">0</span> day streak
+                    </div>
+                </div>
+
+                <!-- Platform tabs -->
+                <div class="tabs" id="tabBar">
+                    <button class="tab is-active" data-platform="linkedin">
+                        <span class="tab__icon">💼</span> LinkedIn
+                    </button>
+                    <button class="tab" data-platform="instagram">
+                        <span class="tab__icon">📸</span> Instagram
+                    </button>
+                    <button class="tab" data-platform="x">
+                        <span class="tab__icon">𝕏</span> X
+                    </button>
+                    <button class="tab" data-platform="reddit">
+                        <span class="tab__icon">🤖</span> Reddit
+                    </button>
+                </div>
+
+                <!-- LinkedIn Panel -->
+                <div class="tab-panel is-active" id="panel-linkedin">
+                    <div class="composer">
+                        <div class="composer__header">
+                            <div class="composer__platform">
+                                <span class="composer__platform-icon">💼</span>
+                                <span class="composer__platform-name">LinkedIn Post</span>
+                            </div>
+                            <span class="composer__char-count" id="liCharCount">0 / 3,000</span>
+                        </div>
+                        <div class="composer__body">
+                            <textarea class="composer__textarea" id="liTextarea"
+                                placeholder="Day X of building Bloc...&#10;&#10;Today I talked to [who] about [what].&#10;&#10;Here's what I learned:&#10;&#10;1. ...&#10;2. ...&#10;3. ...&#10;&#10;Tomorrow I'm going to [next step].&#10;&#10;Follow along as I build this in public.&#10;&#10;#buildinpublic #startups #bloc"></textarea>
+                        </div>
+                        <div class="composer__footer">
+                            <span class="composer__tip">Long-form storytelling works best here</span>
+                            <div class="composer__actions">
+                                <button class="btn--copy" data-target="liTextarea">📋 Copy</button>
+                                <button class="btn btn--primary btn--sm" data-save="linkedin">Save</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Templates -->
+                    <div class="inspiration" id="liTemplates">
+                        <div class="inspiration__header">
+                            <span class="inspiration__title">💡 Templates</span>
+                            <span class="inspiration__toggle">▼</span>
+                        </div>
+                        <div class="inspiration__content">
+                            <div class="template-card" data-template="linkedin" data-content="Day {day} of building Bloc.&#10;&#10;Today I had a conversation with [name/role] that completely shifted my perspective on [topic].&#10;&#10;They said something I can't stop thinking about:&#10;&quot;[quote]&quot;&#10;&#10;Here's what I'm taking away from it:&#10;&#10;→ [Insight 1]&#10;→ [Insight 2]&#10;→ [Insight 3]&#10;&#10;Building a product is 20% code and 80% conversations like this one.&#10;&#10;Tomorrow: [what's next]&#10;&#10;#buildinpublic #startups #bloc #productmanagement">
+                                <div class="template-card__label">Conversation Recap</div>
+                                <div class="template-card__preview">Day {day} of building Bloc.
+
+Today I had a conversation with [name/role] that completely shifted my perspective...</div>
+                            </div>
+                            <div class="template-card" data-template="linkedin" data-content="Day {day} of building Bloc.&#10;&#10;Numbers from this week:&#10;&#10;📊 [Metric 1]: [value]&#10;📊 [Metric 2]: [value]&#10;📊 [Metric 3]: [value]&#10;&#10;What's working:&#10;• [thing that's working]&#10;&#10;What's not:&#10;• [thing that's not working]&#10;&#10;The hardest part of building in public isn't showing the wins. It's being honest about what isn't working yet.&#10;&#10;Here's what I'm changing next week: [plan]&#10;&#10;#buildinpublic #bloc #startups #growth">
+                                <div class="template-card__label">Weekly Numbers</div>
+                                <div class="template-card__preview">Day {day} of building Bloc.
+
+Numbers from this week:
+📊 [Metric 1]: [value]...</div>
+                            </div>
+                            <div class="template-card" data-template="linkedin" data-content="Day {day} of building Bloc.&#10;&#10;I almost quit today.&#10;&#10;Here's what happened: [the struggle]&#10;&#10;But then I [what pulled you back].&#10;&#10;The unsexy truth about building a startup:&#10;&#10;It's not the big moments that define the journey. It's showing up on the days when nothing is working and doing the work anyway.&#10;&#10;Tomorrow I'm [next action].&#10;&#10;If you're building something too, I see you. Keep going.&#10;&#10;#buildinpublic #founderlife #bloc">
+                                <div class="template-card__label">Raw / Vulnerable</div>
+                                <div class="template-card__preview">Day {day} of building Bloc.
+
+I almost quit today.
+Here's what happened...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Saved entries -->
+                    <div class="entries">
+                        <div class="entries__header">
+                            <span class="entries__title">Saved Posts</span>
+                            <span class="entries__count" id="liCount">0 entries</span>
+                        </div>
+                        <div id="liEntries"></div>
+                    </div>
+                </div>
+
+                <!-- Instagram Panel -->
+                <div class="tab-panel" id="panel-instagram">
+                    <div class="composer">
+                        <div class="composer__header">
+                            <div class="composer__platform">
+                                <span class="composer__platform-icon">📸</span>
+                                <span class="composer__platform-name">Instagram Caption</span>
+                            </div>
+                            <span class="composer__char-count" id="igCharCount">0 / 2,200</span>
+                        </div>
+                        <div class="composer__body">
+                            <textarea class="composer__textarea" id="igTextarea"
+                                placeholder="Day X of building Bloc 🧱&#10;&#10;Talked to [who] today. One thing that stuck:&#10;&#10;[the insight]&#10;&#10;Here's what I did today:&#10;→ [action 1]&#10;→ [action 2]&#10;&#10;Small wins > big plans.&#10;&#10;.&#10;.&#10;.&#10;#buildinpublic #startuplife #bloc #founderstory #day1"></textarea>
+                        </div>
+                        <div class="composer__footer">
+                            <span class="composer__tip">Carousel posts get 3x more reach</span>
+                            <div class="composer__actions">
+                                <button class="btn--copy" data-target="igTextarea">📋 Copy</button>
+                                <button class="btn btn--primary btn--sm" data-save="instagram">Save</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Templates -->
+                    <div class="inspiration" id="igTemplates">
+                        <div class="inspiration__header">
+                            <span class="inspiration__title">💡 Templates</span>
+                            <span class="inspiration__toggle">▼</span>
+                        </div>
+                        <div class="inspiration__content">
+                            <div class="template-card" data-template="instagram" data-content="Day {day} of building Bloc 🧱&#10;&#10;Had a call with [who] today and they dropped this gem:&#10;&#10;&quot;[quote]&quot;&#10;&#10;3 things I did today:&#10;1. [action]&#10;2. [action]&#10;3. [action]&#10;&#10;Building something from scratch is messy, ugly, and the most alive I've felt in a while.&#10;&#10;See you tomorrow ✌️&#10;&#10;.&#10;.&#10;.&#10;#buildinpublic #startuplife #bloc #founderstory #productbuilder #day{day}">
+                                <div class="template-card__label">Daily Update</div>
+                                <div class="template-card__preview">Day {day} of building Bloc 🧱
+
+Had a call with [who] today and they dropped this gem...</div>
+                            </div>
+                            <div class="template-card" data-template="instagram" data-content="Building in public, day {day} 📍&#10;&#10;What most people see: the polished product.&#10;What they don't see: [the behind-the-scenes]&#10;&#10;Today's reality:&#10;☕ [morning]&#10;💻 [afternoon]&#10;📞 [evening]&#10;&#10;The truth? Some days the most productive thing you do is one good conversation.&#10;&#10;Today that was with [who]. We talked about [what].&#10;&#10;#buildinpublic #behindthescenes #bloc #startupjourney #realtalk">
+                                <div class="template-card__label">Behind the Scenes</div>
+                                <div class="template-card__preview">Building in public, day {day} 📍
+
+What most people see: the polished product...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="entries">
+                        <div class="entries__header">
+                            <span class="entries__title">Saved Captions</span>
+                            <span class="entries__count" id="igCount">0 entries</span>
+                        </div>
+                        <div id="igEntries"></div>
+                    </div>
+                </div>
+
+                <!-- X Panel -->
+                <div class="tab-panel" id="panel-x">
+                    <div class="composer">
+                        <div class="composer__header">
+                            <div class="composer__platform">
+                                <span class="composer__platform-icon">𝕏</span>
+                                <span class="composer__platform-name">Thread</span>
+                            </div>
+                            <span class="composer__char-count" id="xCharCount">Tweet 1: 0 / 280</span>
+                        </div>
+                        <div class="composer__body" style="padding: 0;">
+                            <div class="thread" id="xThread">
+                                <div class="thread__tweet">
+                                    <span class="thread__num">1</span>
+                                    <textarea class="thread__textarea" data-tweet="0"
+                                        placeholder="Day X of building @bloc_app 🧵&#10;&#10;Today I [did what].&#10;&#10;Here's the story ↓"></textarea>
+                                    <div class="thread__meta">
+                                        <span class="composer__char-count" data-tweet-count="0">0 / 280</span>
+                                    </div>
+                                </div>
+                                <div class="thread__tweet">
+                                    <span class="thread__num">2</span>
+                                    <textarea class="thread__textarea" data-tweet="1"
+                                        placeholder="Talked to [who] — [role at company].&#10;&#10;The one thing they said that hit different:&#10;&#10;&quot;[quote]&quot;"></textarea>
+                                    <div class="thread__meta">
+                                        <span class="composer__char-count" data-tweet-count="1">0 / 280</span>
+                                    </div>
+                                </div>
+                                <div class="thread__tweet">
+                                    <span class="thread__num">3</span>
+                                    <textarea class="thread__textarea" data-tweet="2"
+                                        placeholder="What I'm doing about it:&#10;&#10;→ [action 1]&#10;→ [action 2]&#10;→ [action 3]&#10;&#10;Tomorrow: [teaser]&#10;&#10;Follow along if you're building too."></textarea>
+                                    <div class="thread__meta">
+                                        <span class="composer__char-count" data-tweet-count="2">0 / 280</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="composer__footer">
+                            <span class="composer__tip">Threads with a hook in tweet 1 get 2x reach</span>
+                            <div class="composer__actions">
+                                <button class="thread__add" id="addTweet">+ Add tweet</button>
+                                <button class="btn--copy" id="copyThread">📋 Copy thread</button>
+                                <button class="btn btn--primary btn--sm" data-save="x">Save</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Templates -->
+                    <div class="inspiration" id="xTemplates">
+                        <div class="inspiration__header">
+                            <span class="inspiration__title">💡 Templates</span>
+                            <span class="inspiration__toggle">▼</span>
+                        </div>
+                        <div class="inspiration__content">
+                            <div class="template-card" data-template="x" data-content="Day {day} of building @bloc_app 🧵\n\nI talked to [X] people this week about [topic].\n\nHere's what I learned (thread) ↓|Most founders skip customer conversations.\n\nI used to be one of them.\n\nBut [person] told me something that changed how I think about [topic]:|The insight:\n\n\"[quote]\"\n\nThis means [implication for Bloc].|So here's what I'm changing:\n\n→ [change 1]\n→ [change 2]\n→ [change 3]|If you're building something and not talking to users weekly, you're guessing.\n\nFollow along as I build @bloc_app in public.\n\nDay {day} ✅">
+                                <div class="template-card__label">Customer Insight Thread</div>
+                                <div class="template-card__preview">Day {day} of building @bloc_app 🧵
+I talked to [X] people this week...</div>
+                            </div>
+                            <div class="template-card" data-template="x" data-content="Day {day} — the honest update 🧵\n\nBuilding @bloc_app in public means sharing the ugly parts too.\n\nHere's what actually happened today ↓|What I planned to do:\n- [plan 1]\n- [plan 2]\n- [plan 3]|What actually happened:\n- [reality 1]\n- [reality 2]\n- [reality 3]\n\nYeah.|The lesson:\n\n[Key takeaway]\n\nStartups aren't a straight line. They're a squiggle with occasional moments of clarity.|Tomorrow's plan:\n→ [next step]\n\nSee you then 🫡\n\nDay {day}/365 of building in public.">
+                                <div class="template-card__label">Honest Update</div>
+                                <div class="template-card__preview">Day {day} — the honest update 🧵
+Building @bloc_app in public means sharing the ugly parts too...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="entries">
+                        <div class="entries__header">
+                            <span class="entries__title">Saved Threads</span>
+                            <span class="entries__count" id="xCount">0 entries</span>
+                        </div>
+                        <div id="xEntries"></div>
+                    </div>
+                </div>
+
+                <!-- Reddit Panel -->
+                <div class="tab-panel" id="panel-reddit">
+
+                    <!-- Subreddit picker -->
+                    <div class="subreddit-bar">
+                        <span class="subreddit-bar__label">Post to subreddit</span>
+                        <button class="subreddit-chip is-active" data-sub="r/IndianTeenagers">r/IndianTeenagers</button>
+                        <button class="subreddit-chip" data-sub="r/JEENEETards">r/JEENEETards</button>
+                        <button class="subreddit-chip" data-sub="r/Btechtards">r/Btechtards</button>
+                        <button class="subreddit-chip" data-sub="r/indian_academia">r/indian_academia</button>
+                        <button class="subreddit-chip" data-sub="r/delhi">r/delhi</button>
+                        <button class="subreddit-chip" data-sub="r/bangalore">r/bangalore</button>
+                        <button class="subreddit-chip" data-sub="r/mumbai">r/mumbai</button>
+                        <button class="subreddit-chip" data-sub="r/developersIndia">r/developersIndia</button>
+                        <button class="subreddit-chip" data-sub="r/IndianEngineeringStudents">r/IndianEngineeringStudents</button>
+                    </div>
+
+                    <div class="composer">
+                        <div class="composer__header">
+                            <div class="composer__platform">
+                                <span class="composer__platform-icon">🤖</span>
+                                <span class="composer__platform-name" id="redditSubLabel">r/IndianTeenagers</span>
+                            </div>
+                            <span class="composer__char-count" id="rdCharCount">0 / 40,000</span>
+                        </div>
+                        <div class="composer__body">
+                            <input class="composer__title-input" type="text" id="rdTitle" placeholder="Post title..." />
+                            <textarea class="composer__textarea" id="rdTextarea" style="min-height: 280px;"
+                                placeholder="Write your confession page story here...&#10;&#10;Make it chatpati, dramatic, relatable — and let Bloc show up casually in the narrative."></textarea>
+                        </div>
+                        <div class="composer__footer">
+                            <span class="composer__tip">Confession-style stories with drama get the most engagement</span>
+                            <div class="composer__actions">
+                                <button class="btn--copy" data-target="rdTextarea">📋 Copy</button>
+                                <button class="btn btn--primary btn--sm" data-save="reddit">Save</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Story Templates — the 10 plots -->
+                    <div class="inspiration" id="rdTemplates">
+                        <div class="inspiration__header">
+                            <span class="inspiration__title">🎭 Story Templates (10 Plots)</span>
+                            <span class="inspiration__toggle">▼</span>
+                        </div>
+                        <div class="inspiration__content">
+
+                            <div class="template-card" data-template="reddit" data-rd-title="My roommate's 5am alarm ruined my life... and then saved it" data-content="So my roommate. This guy. Sets a 5am alarm. EVERY. SINGLE. DAY.&#10;&#10;I'm talking full volume, some nasrani bhajan type ringtone, and this mf just springs out of bed like he's been waiting for it. Meanwhile I'm lying there plotting his murder.&#10;&#10;This went on for 3 weeks. I tried earplugs. I tried sleeping with my pillow over my head. I even considered filing a hostel complaint.&#10;&#10;But then something weird happened.&#10;&#10;One morning, I just... got up. Out of spite. Pure spite. &quot;If this idiot can wake up at 5, so can I.&quot;&#10;&#10;I started going to the gym with him (still hated him). He showed me this app called Bloc where he tracks his daily streaks — gym, study, everything. I thought it was cringe at first. Like bhai tu kya CEO hai?&#10;&#10;But then I started using it too. Just to prove I could be more consistent than him.&#10;&#10;It's been 4 months.&#10;&#10;My CGPA went from 6.8 to 8.2. I lost 7 kgs. I wake up before the alarm now.&#10;&#10;And the roommate? We're best friends now. We have a streak competition on Bloc and neither of us wants to lose.&#10;&#10;His alarm still annoys me tho. Some things never change.">
+                                <div class="template-card__label">1. The Roommate's Alarm</div>
+                                <div class="template-card__preview">My roommate sets a 5am alarm every day. I wanted to kill him. Then I started waking up out of spite...</div>
+                            </div>
+
+                            <div class="template-card" data-template="reddit" data-rd-title="Confession: I lied to my parents about placement prep for 4 months" data-content="I need to get this off my chest.&#10;&#10;For 4 months, my parents thought I was grinding DSA and doing mock interviews. &quot;Haan mummy, aaj 3 problems solve kiye. Companies aa rahi hain campus pe.&quot;&#10;&#10;Reality? I was watching Breaking Bad for the third time and ordering midnight biryani on Swiggy.&#10;&#10;Then one night, 2am, I had this massive panic attack. Like chest tight, hands shaking, the works. I called my best friend crying. He didn't judge me. He just said — &quot;Bhai, ek kaam kar. Kal se ek problem daily. Bas ek. Track kar.&quot;&#10;&#10;He sent me this app called Bloc. Said he uses it to track his daily stuff.&#10;&#10;I thought chalo, ek try dete hain.&#10;&#10;Day 1: One Striver sheet problem. Took me 2 hours for an easy one.&#10;Day 7: Started doing 2 a day.&#10;Day 30: The streak on Bloc was the only thing keeping me going. Breaking it felt worse than the problems themselves.&#10;Day 60: I could solve mediums in 30 mins.&#10;&#10;Long story short — I cracked Amazon SDE-1. On campus.&#10;&#10;Mummy cried. Papa didn't say anything, just hugged me.&#10;&#10;They still don't know about those 4 months. And honestly? They don't need to. What matters is I showed up when it mattered.&#10;&#10;That streak counter on Bloc saved my career. No joke.&#10;&#10;To anyone reading this in their own &quot;4 month lie&quot; phase — it's not too late. Start with one thing. Track it. Don't break the chain.">
+                                <div class="template-card__label">2. The Placement Lie</div>
+                                <div class="template-card__preview">For 4 months, my parents thought I was grinding DSA. Reality? Breaking Bad third rewatch and midnight biryani...</div>
+                            </div>
+
+                            <div class="template-card" data-template="reddit" data-rd-title="My ex posted a gym selfie and I chose violence (on myself)" data-content="Breakup. Mutual. &quot;Let's be mature about this.&quot; Sure.&#10;&#10;Two weeks later, this person posts a gym selfie looking like they're training for the Olympics. Caption: &quot;Best version loading 💪&quot;&#10;&#10;I stared at that photo for 45 minutes. Then I ate an entire pizza. Then I spiraled.&#10;&#10;My best friend (the real MVP of this story) came over, looked at me lying on the floor surrounded by pizza boxes, and said: &quot;Revenge body nahi, revenge LIFE bana. Get up.&quot;&#10;&#10;She made me install this app called Bloc. Said &quot;track what you do every day. Gym, study, eating right, whatever. Just don't break the streak.&quot;&#10;&#10;Week 1: Went to gym 3 times. Felt terrible. Logged it anyway.&#10;Week 4: Started enjoying mornings. What is happening to me.&#10;Week 8: Could see actual abs. Also cleared a certification I'd been putting off for months.&#10;Day 90: Ex's best friend sent me a follow request.&#10;&#10;I didn't accept it.&#10;&#10;Not because I'm petty (okay, maybe a little). But because somewhere around day 40, I stopped doing this for my ex. The streak became mine. The 5am alarm became mine. The discipline became mine.&#10;&#10;Now I'm on day 127. I don't check my ex's profile anymore. I check my Bloc streak.&#10;&#10;Funny how a breakup can break you, and then you can just... build yourself back. One day at a time.">
+                                <div class="template-card__label">3. The Breakup Glow-Up</div>
+                                <div class="template-card__preview">Ex posted a gym selfie two weeks after the breakup. I stared at it for 45 minutes. Then ate an entire pizza...</div>
+                            </div>
+
+                            <div class="template-card" data-template="reddit" data-rd-title="The bet that accidentally transformed our entire hostel floor" data-content="This started as a joke and I still can't believe what happened.&#10;&#10;Someone on our floor (3rd floor, boys hostel, you know the type) suggested a bet: whoever maintains the longest daily streak on this app called Bloc wins free mess food for a month. Loser buys.&#10;&#10;14 guys signed up. FOURTEEN. Most of them hadn't seen a gym since orientation day.&#10;&#10;Week 1: Everyone's logging stuff. Gym, study hours, running, whatever. Group chat is on fire. &quot;Bhai tune aaj kya kiya?&quot; &quot;2 chapters + gym. You?&quot;&#10;&#10;Week 2: Three guys dropped. Couldn't keep the streak. Massive roasting in the group. One guy said &quot;yaar mujhe raat ko 11:50 pe yaad aaya, I did 20 pushups in the bathroom just to not break the streak.&quot;&#10;&#10;Week 3: The warden called a meeting because our floor was &quot;suspiciously quiet after 11pm.&quot; He thought we were planning something. Bhai we were SLEEPING. On time. Like adults.&#10;&#10;One guy's mom called the hostel landline asking if her son was sick. &quot;Wo subah 6 baje utha? Kuch toh gadbad hai.&quot;&#10;&#10;Week 6: 8 guys still in. Two of them are in the gym together every morning. One guy started a study group. My CGPA went up by 0.7 points just from the peer pressure.&#10;&#10;Week 10: Final three standing. The winner had a 72-day streak. He got his free mess food.&#10;&#10;But honestly? We all won. Half the floor now wakes up by 7am. The group chat turned into an accountability group. We're starting a new bet next semester.&#10;&#10;All because someone said &quot;bhai bet lagaate hain&quot; over chai at 1am.&#10;&#10;If you're in a hostel, try this. Get Bloc, start a streak bet, and watch chaos turn into discipline. It's beautiful.">
+                                <div class="template-card__label">4. The Hostel Bet</div>
+                                <div class="template-card__preview">Someone suggested a bet: longest daily streak wins free mess food. 14 guys signed up. What happened next was chaos...</div>
+                            </div>
+
+                            <div class="template-card" data-template="reddit" data-rd-title="I fell for a girl because of her streak on an app. Yes, I know how that sounds." data-content="Before you judge me, hear me out.&#10;&#10;There's this girl in our college library. Same seat, same corner, every single day. 9am sharp. Like clockwork. I noticed because I'm there too (fine, I started going to the library because of her, sue me).&#10;&#10;One day I'm sitting close enough to see her phone screen. She's got this app open with a massive green streak counter. 120 something days.&#10;&#10;I'm curious but also terrified. So I do what any normal person would do — I ask my friend to ask her friend what app that is.&#10;&#10;Turns out it's called Bloc. She tracks everything — study hours, workout, reading. Every. Single. Day. 120+ days without missing.&#10;&#10;Now look. I've had crushes before. But something about seeing someone so quietly, consistently disciplined? Different breed man. Different breed.&#10;&#10;So I downloaded Bloc. Started my own streak. Gym, DSA, reading. Figured if she ever talks to me, at least I won't be a complete loser.&#10;&#10;Day 15: I accidentally made eye contact in the library. She smiled. I forgot my own name.&#10;&#10;Day 30: We ended up at the same chai stall. I casually mentioned &quot;I've been trying this streak app.&quot; Her eyes lit up. &quot;Bloc?? I use that!&quot;&#10;&#10;Day 45: We're study accountability partners now. She checks my streak. I check hers. It's the most romantic thing that's ever happened to me and NOTHING HAS EVEN HAPPENED.&#10;&#10;Day 60: Okay fine we went for coffee. But she said &quot;let's go after we both log our study hours.&quot;&#10;&#10;I'm in love with someone who won't let me skip a day. Mujhe ladki se pehle uski consistency se pyaar ho gaya.&#10;&#10;Update coming if anything actually happens. Pray for me.">
+                                <div class="template-card__label">5. The Library Crush</div>
+                                <div class="template-card__preview">There's this girl in our library. Same seat, 9am, every single day. Then I saw her phone — a 120-day streak counter...</div>
+                            </div>
+
+                            <div class="template-card" data-template="reddit" data-rd-title="Confession: I was the 'startup bro' everyone made fun of. Here's what shut them up." data-content="Every college has one. The guy who says &quot;bhai mera ek idea hai&quot; at every chai break. Who shares Gary Vee reels unironically. Who's always &quot;working on something&quot; but has literally nothing to show.&#10;&#10;Yeah. That was me.&#10;&#10;I talked about starting up for 2 years straight. No code written. No customers talked to. No product. Just vibes and LinkedIn posts.&#10;&#10;Then one day at a party, someone said — loudly, in front of everyone — &quot;Bhai tu bas bolta hai, karta kuch nahi.&quot;&#10;&#10;Room went quiet. I laughed it off. Went back to my room. Stared at the ceiling for 3 hours.&#10;&#10;He was right.&#10;&#10;Next morning I deleted Instagram, Twitter, everything. Kept WhatsApp for family. Downloaded this app called Bloc that my senior told me about — it just tracks what you actually DO each day.&#10;&#10;Day 1: &quot;Talked to 1 potential user.&quot; That's it. That's all I logged.&#10;Day 7: &quot;Built landing page. Talked to 3 more people.&quot;&#10;Day 30: &quot;50 signups. First user feedback.&quot;&#10;Day 60: &quot;Working MVP. 12 active users.&quot;&#10;Day 120: &quot;200 users. First paying customer.&quot;&#10;&#10;I showed up every single day. Not because I'm special. Because the Bloc streak scared me. One red day meant I actually did nothing. And after being the &quot;talks but doesn't do&quot; guy, that wasn't an option anymore.&#10;&#10;Last week, that same guy who roasted me? He DM'd me: &quot;Bhai, tere product ke baare mein sun raha hun. Sach mein bana diya?&quot;&#10;&#10;I just sent him a screenshot of my 120-day streak. No words needed.&#10;&#10;If you're in your &quot;startup bro&quot; phase, I'm not going to tell you to stop dreaming. I'm going to tell you to start LOGGING. One real task a day. Track it. That's the entire secret.">
+                                <div class="template-card__label">6. The Startup Bro</div>
+                                <div class="template-card__preview">I was the guy who said "bhai mera ek idea hai" at every chai break. Then someone publicly called me out...</div>
+                            </div>
+
+                            <div class="template-card" data-template="reddit" data-rd-title="Moved to Bangalore for internship. PG life humbled me in 14 days flat." data-content="Context: I'm from a small town. Mummy ka laadla. Never cooked, never cleaned, never had to think about food timing because ghar pe sab set tha.&#10;&#10;Then I got a Bangalore internship. Packed my bags. &quot;Main toh bohot independent hun.&quot;&#10;&#10;Day 1: PG room is the size of my bathroom at home. Roommate snores.&#10;Day 3: Ate Maggi for dinner. Third time in 3 days.&#10;Day 5: Slept at 4am watching reels. Missed standup meeting. Manager not happy.&#10;Day 8: Ate Maggi for lunch AND dinner. My body is 40% Maggi at this point.&#10;Day 10: Manager pulls me aside. &quot;Tu theek hai? Performance drop ho raha hai.&quot;&#10;Day 12: Almost cried in the PG bathroom. Called mummy. She said &quot;routine bana.&quot; Thanks mummy very helpful.&#10;&#10;Day 14: My flatmate (a senior dev, 3 years experience, absolute machine of a human) noticed I was struggling. He sat me down.&#10;&#10;&quot;Dekh,&quot; he said, showing me his phone. He had this app called Bloc with a streak counter. Sleep by 11. Gym at 7. Cook once. Study 1 hour. &quot;Pehle mera bhi yahi haal tha. Ye app use kar. Bas daily track kar. Streak mat todna.&quot;&#10;&#10;Day 15: I logged &quot;Slept by 12. Cooked dal chawal.&quot; Baby steps.&#10;Day 30: Full routine. Sleep 11. Gym 7am. Cook dinner. Study after work. Streak: 16 days.&#10;Day 60: Manager said &quot;I can see the improvement.&quot; Got a pre-placement offer.&#10;&#10;Pehle mummy ka routine follow karta tha, ab Bloc ka. Dono mein farak bas notification ka hai.&#10;&#10;If you're about to move to a new city for the first time — install Bloc before you move. Trust me. Your Maggi intake will thank you.">
+                                <div class="template-card__label">7. The PG Life Reality</div>
+                                <div class="template-card__preview">Moved to Bangalore. PG room the size of my bathroom. Day 8: my body was 40% Maggi...</div>
+                            </div>
+
+                            <div class="template-card" data-template="reddit" data-rd-title="How I cleared 5 backlogs in one semester. The ugly truth nobody tells you." data-content="Everyone thinks I'm smart. &quot;Arre ye toh intelligent hai, easily ho jaayega.&quot;&#10;&#10;Plot twist: I had 5 KTs.&#10;&#10;FIVE.&#10;&#10;DSA. DBMS. OS. Maths-III. And Digital Electronics because apparently I forgot that subject existed.&#10;&#10;Parents found out in December. Papa didn't yell. He just went quiet. That's worse. So much worse.&#10;&#10;Mummy said &quot;tera engineering ka sapna tha, toh pura kar.&quot; Then she left the room. I heard her crying from the kitchen.&#10;&#10;That night I made a decision. Not a dramatic, movie-style decision. Just a quiet one: &quot;I'm going to fix this. One day at a time.&quot;&#10;&#10;I wiped my phone clean. Deleted everything except WhatsApp and this app called Bloc that a topper in my branch used. He said &quot;bro just log 4 hours of study daily. Don't think about clearing all 5. Think about today.&quot;&#10;&#10;Day 1: Studied 2 hours. Felt like 20. Logged it on Bloc.&#10;Day 7: 4 hours daily. Streak: 7. Can't break it now.&#10;Day 14: Started understanding OS concepts I'd slept through in class.&#10;Day 30: Streak of 30. First time in my life I did ANYTHING for 30 straight days.&#10;Day 60: Walked into the first re-exam calm. Not confident. Just calm.&#10;&#10;Result: Cleared all 5. Not with great marks. Not with any awards. Just... cleared.&#10;&#10;Papa called when results came out. Didn't say much. Just &quot;proud of you.&quot; Three words. I lost it.&#10;&#10;Log poochte hain kya trick thi. Trick nahi thi bhai. Sirf consistency thi. Aur ek app jo mujhe daily yaad dilata tha ki aaj bhi kuch karna hai.&#10;&#10;If you're staring at backlogs right now feeling like it's over — it's not. Start today. Log one hour. Then do it again tomorrow. That's the whole formula.">
+                                <div class="template-card__label">8. The 5 Backlogs</div>
+                                <div class="template-card__preview">Everyone thinks I'm smart. Plot twist: I had 5 KTs. Papa went quiet. That's worse than yelling...</div>
+                            </div>
+
+                            <div class="template-card" data-template="reddit" data-rd-title="My crush thinks I'm disciplined. I'm actually just scared of breaking my streak." data-content="This is embarrassing but I need to tell someone.&#10;&#10;I started going to the college gym in January. The reason? There's this person who goes every morning at 7am. Yes, I'm that person. Judge me.&#10;&#10;Problem: I'm extremely lazy. Like, &quot;set 5 alarms and sleep through all of them&quot; lazy. How do I suddenly become a gym person?&#10;&#10;My friend told me about Bloc. &quot;Start a streak. You won't want to break it.&quot;&#10;&#10;Day 1: Went to gym. Died. Logged it.&#10;Day 5: Crush nodded at me. NODDED. I did 3 extra sets that day.&#10;Day 14: Started tracking other stuff too. Study, reading, sleeping on time. The streak was growing and I COULD NOT break it. The anxiety of seeing a red day was worse than waking up early.&#10;Day 30: Crush said — actual words — &quot;You're so consistent yaar, I wish I could be like that.&quot;&#10;&#10;I ALMOST SAID &quot;it's because of you&quot; but instead I said &quot;haha thanks, there's this app...&quot;&#10;&#10;She's now on Bloc too. We compare streaks.&#10;&#10;But here's the thing nobody knows: I'm not disciplined. I'm TERRIFIED. Every morning my brain says &quot;skip today&quot; and then I open Bloc, see that beautiful green streak, and think &quot;I'd rather die than see a red box here.&quot;&#10;&#10;Day 100: She brought me coffee after a workout. &quot;For the most consistent person I know.&quot;&#10;&#10;I am SCREAMING internally.&#10;&#10;My entire personality is now built on a fear of breaking a streak on an app.&#10;&#10;And honestly? Fake it till you make it actually works. The habits are real now. The 7am alarm doesn't hurt anymore. I actually like the gym.&#10;&#10;I just can't tell her the origin story. Some secrets should die with you.">
+                                <div class="template-card__label">9. The Streak Fear</div>
+                                <div class="template-card__preview">Started going to the gym because of a crush. The only thing keeping me going is the fear of breaking my Bloc streak...</div>
+                            </div>
+
+                            <div class="template-card" data-template="reddit" data-rd-title="The night before GATE, I almost had a panic attack. Then I opened an app." data-content="GATE exam tomorrow. 2am. Can't sleep.&#10;&#10;Every doubt I've ever had came flooding in at once. &quot;Tu nahi kar paayega.&quot; &quot;Sab tujhse better prepared hain.&quot; &quot;What if I blank out?&quot; &quot;What if 11 months of prep meant nothing?&quot;&#10;&#10;Hands shaking. Heart racing. Sitting on the bathroom floor because I didn't want my roommate to see me like this.&#10;&#10;I picked up my phone to text my mom. But before WhatsApp opened, I saw Bloc on my home screen.&#10;&#10;I opened it.&#10;&#10;180 days. 180 green boxes staring back at me.&#10;&#10;Every single day for 6 months. Not all good days. Some days I logged &quot;studied 1 hour, couldn't focus.&quot; Some days just &quot;revised formulas for 30 min.&quot; Some days &quot;took a break but did 10 problems.&quot;&#10;&#10;But every single day. 180 of them. Without a gap.&#10;&#10;I scrolled through. Day 1: &quot;Started Signals &amp; Systems. 0 idea what's happening.&quot; Day 45: &quot;Finally understood Laplace transforms lol.&quot; Day 100: &quot;Mock test: 52 marks. Need 60+.&quot; Day 150: &quot;Mock test: 71. LET'S GOOO.&quot;&#10;&#10;By the time I reached day 180, my hands had stopped shaking.&#10;&#10;I thought: &quot;If I could show up for 180 days, I can show up for one more.&quot;&#10;&#10;Went back to bed. Slept.&#10;&#10;Next day: GATE score — 98.5 percentile.&#10;&#10;I didn't post about it on LinkedIn. I didn't make an Instagram story. I just opened Bloc and logged: &quot;Day 181. Done.&quot;&#10;&#10;My juniors now ask me for GATE tips. I show them my Bloc history. 180 days of showing up. That's the tip.&#10;&#10;The night before your exam, don't look at notes. Look at how far you've come. The proof is in the streak.">
+                                <div class="template-card__label">10. The Night Before GATE</div>
+                                <div class="template-card__preview">GATE exam tomorrow. 2am. Sitting on the bathroom floor, hands shaking. Then I opened an app and saw 180 green boxes...</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="entries">
+                        <div class="entries__header">
+                            <span class="entries__title">Saved Posts</span>
+                            <span class="entries__count" id="rdCount">0 entries</span>
+                        </div>
+                        <div id="rdEntries"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">Saved!</div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer__inner">
+            <a href="index.html" class="logo">yash<span>.</span></a>
+            <p class="footer__copy">&copy; 2026 yash &middot; build in public studio</p>
+        </div>
+    </footer>
+
+    <!-- Firebase Auth SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+    <script>
+        /* ============================================
+           BUILD IN PUBLIC STUDIO
+           Firebase Google Auth + Content Composer
+           ============================================ */
+
+        // --- Firebase ---
+        const firebaseConfig = {
+            apiKey: 'AIzaSyDoTbp91LlARVdzfrjArv8_qvKKpmr8ct4',
+            authDomain: 'profile-analytics-tracker.firebaseapp.com',
+            projectId: 'profile-analytics-tracker',
+            storageBucket: 'profile-analytics-tracker.firebasestorage.app',
+            messagingSenderId: '5287005463',
+            appId: '1:5287005463:web:fdd0885eb48981f4b47b52'
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // --- Whitelist: only your email can access ---
+        const ALLOWED_EMAILS = ['yashverma38@gmail.com'];
+
+        // --- Storage keys ---
+        const STORAGE_PREFIX = 'yv_bip_';
+        const DAY_KEY = STORAGE_PREFIX + 'day';
+
+        // --- DOM refs ---
+        const loginWall = document.getElementById('loginWall');
+        const studioSection = document.getElementById('studioSection');
+        const loginError = document.getElementById('loginError');
+        const googleSignInBtn = document.getElementById('googleSignIn');
+        const signOutBtn = document.getElementById('signOutBtn');
+        const userAvatar = document.getElementById('userAvatar');
+        const userName = document.getElementById('userName');
+        const userEmail = document.getElementById('userEmail');
+        const dayNumber = document.getElementById('dayNumber');
+        const todayDate = document.getElementById('todayDate');
+        const streakCount = document.getElementById('streakCount');
+
+        // --- Mobile nav ---
+        const menuToggle = document.getElementById('menuToggle');
+        const siteNav = document.getElementById('siteNav');
+        if (menuToggle && siteNav) {
+            menuToggle.addEventListener('click', () => siteNav.classList.toggle('is-open'));
+            siteNav.querySelectorAll('a').forEach(l => l.addEventListener('click', () => siteNav.classList.remove('is-open')));
+            document.addEventListener('click', e => {
+                if (!menuToggle.contains(e.target) && !siteNav.contains(e.target)) siteNav.classList.remove('is-open');
+            });
+        }
+
+        // --- Auth ---
+        googleSignInBtn.addEventListener('click', async () => {
+            try {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                const result = await auth.signInWithPopup(provider);
+                const email = result.user.email;
+                if (!ALLOWED_EMAILS.includes(email)) {
+                    await auth.signOut();
+                    loginError.textContent = 'Access denied. This studio is private.';
+                }
+            } catch (err) {
+                if (err.code !== 'auth/popup-closed-by-user') {
+                    loginError.textContent = 'Sign-in failed. Try again.';
+                }
+            }
+        });
+
+        signOutBtn.addEventListener('click', async () => {
+            await auth.signOut();
+        });
+
+        auth.onAuthStateChanged(user => {
+            if (user && ALLOWED_EMAILS.includes(user.email)) {
+                loginWall.style.display = 'none';
+                studioSection.style.display = 'block';
+                userAvatar.src = user.photoURL || '';
+                userName.textContent = user.displayName || 'Yash';
+                userEmail.textContent = user.email;
+                initStudio();
+            } else {
+                loginWall.style.display = '';
+                studioSection.style.display = 'none';
+            }
+        });
+
+        // --- Studio init ---
+        function initStudio() {
+            // Set today's date
+            const today = new Date();
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            todayDate.textContent = `${days[today.getDay()]}, ${months[today.getMonth()]} ${today.getDate()}, ${today.getFullYear()}`;
+
+            // Load day number
+            const savedDay = localStorage.getItem(DAY_KEY);
+            if (savedDay) dayNumber.value = savedDay;
+
+            // Load drafts
+            loadDraft('linkedin');
+            loadDraft('instagram');
+            loadDraft('reddit');
+            loadXDraft();
+
+            // Render saved entries
+            renderEntries('linkedin');
+            renderEntries('instagram');
+            renderEntries('x');
+            renderEntries('reddit');
+
+            // Update streak
+            updateStreak();
+        }
+
+        // --- Day number persistence ---
+        dayNumber.addEventListener('change', () => {
+            localStorage.setItem(DAY_KEY, dayNumber.value);
+        });
+
+        // --- Toast ---
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('is-visible');
+            setTimeout(() => toast.classList.remove('is-visible'), 2200);
+        }
+
+        // --- Tabs ---
+        const tabs = document.querySelectorAll('.tab');
+        const panels = document.querySelectorAll('.tab-panel');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('is-active'));
+                panels.forEach(p => p.classList.remove('is-active'));
+                tab.classList.add('is-active');
+                document.getElementById('panel-' + tab.dataset.platform).classList.add('is-active');
+            });
+        });
+
+        // --- Character counts ---
+        const LIMITS = { linkedin: 3000, instagram: 2200, x: 280, reddit: 40000 };
+
+        function updateCharCount(textareaId, countId, limit) {
+            const textarea = document.getElementById(textareaId);
+            const counter = document.getElementById(countId);
+            if (!textarea || !counter) return;
+
+            const update = () => {
+                const len = textarea.value.length;
+                counter.textContent = `${len.toLocaleString()} / ${limit.toLocaleString()}`;
+                counter.classList.toggle('is-warn', len > limit * 0.9);
+                counter.classList.toggle('is-over', len > limit);
+            };
+
+            textarea.addEventListener('input', update);
+            update();
+        }
+
+        updateCharCount('liTextarea', 'liCharCount', LIMITS.linkedin);
+        updateCharCount('igTextarea', 'igCharCount', LIMITS.instagram);
+        updateCharCount('rdTextarea', 'rdCharCount', LIMITS.reddit);
+
+        // X thread character counts
+        function updateTweetCounts() {
+            const textareas = document.querySelectorAll('.thread__textarea');
+            textareas.forEach(ta => {
+                const idx = ta.dataset.tweet;
+                const counter = document.querySelector(`[data-tweet-count="${idx}"]`);
+                if (counter) {
+                    const len = ta.value.length;
+                    counter.textContent = `${len} / 280`;
+                    counter.classList.toggle('is-warn', len > 252);
+                    counter.classList.toggle('is-over', len > 280);
+                }
+            });
+            // Update header count
+            const first = document.querySelector('.thread__textarea');
+            if (first) {
+                document.getElementById('xCharCount').textContent = `Tweet 1: ${first.value.length} / 280`;
+            }
+        }
+
+        document.getElementById('xThread').addEventListener('input', updateTweetCounts);
+
+        // --- Add tweet to thread ---
+        document.getElementById('addTweet').addEventListener('click', () => {
+            const thread = document.getElementById('xThread');
+            const count = thread.querySelectorAll('.thread__tweet').length;
+            const tweet = document.createElement('div');
+            tweet.className = 'thread__tweet';
+            tweet.innerHTML = `
+                <span class="thread__num">${count + 1}</span>
+                <textarea class="thread__textarea" data-tweet="${count}" placeholder="Continue the thread..."></textarea>
+                <div class="thread__meta">
+                    <span class="composer__char-count" data-tweet-count="${count}">0 / 280</span>
+                </div>
+            `;
+            thread.appendChild(tweet);
+            tweet.querySelector('textarea').focus();
+            updateTweetCounts();
+        });
+
+        // --- Copy buttons ---
+        document.querySelectorAll('.btn--copy[data-target]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const textarea = document.getElementById(btn.dataset.target);
+                if (!textarea || !textarea.value.trim()) return;
+                navigator.clipboard.writeText(textarea.value).then(() => {
+                    btn.classList.add('is-copied');
+                    const orig = btn.innerHTML;
+                    btn.innerHTML = '✓ Copied';
+                    setTimeout(() => {
+                        btn.classList.remove('is-copied');
+                        btn.innerHTML = orig;
+                    }, 1500);
+                });
+            });
+        });
+
+        // Copy X thread
+        document.getElementById('copyThread').addEventListener('click', () => {
+            const textareas = document.querySelectorAll('.thread__textarea');
+            const thread = Array.from(textareas).map((ta, i) => ta.value.trim()).filter(Boolean);
+            if (thread.length === 0) return;
+            const full = thread.map((t, i) => `${i + 1}/ ${t}`).join('\n\n');
+            navigator.clipboard.writeText(full).then(() => {
+                const btn = document.getElementById('copyThread');
+                btn.classList.add('is-copied');
+                const orig = btn.innerHTML;
+                btn.innerHTML = '✓ Copied';
+                setTimeout(() => {
+                    btn.classList.remove('is-copied');
+                    btn.innerHTML = orig;
+                }, 1500);
+            });
+        });
+
+        // --- Templates ---
+        document.querySelectorAll('.inspiration__header').forEach(header => {
+            header.addEventListener('click', () => {
+                header.closest('.inspiration').classList.toggle('is-collapsed');
+            });
+        });
+
+        document.querySelectorAll('.template-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const platform = card.dataset.template;
+                let content = card.dataset.content.replace(/\{day\}/g, dayNumber.value);
+                // Decode HTML entities
+                const tmp = document.createElement('textarea');
+                tmp.innerHTML = content;
+                content = tmp.value;
+
+                if (platform === 'linkedin') {
+                    document.getElementById('liTextarea').value = content;
+                    document.getElementById('liTextarea').dispatchEvent(new Event('input'));
+                    saveDraft('linkedin');
+                } else if (platform === 'instagram') {
+                    document.getElementById('igTextarea').value = content;
+                    document.getElementById('igTextarea').dispatchEvent(new Event('input'));
+                    saveDraft('instagram');
+                } else if (platform === 'reddit') {
+                    const rdTitle = card.dataset.rdTitle || '';
+                    document.getElementById('rdTitle').value = rdTitle;
+                    document.getElementById('rdTextarea').value = content;
+                    document.getElementById('rdTextarea').dispatchEvent(new Event('input'));
+                    saveDraft('reddit');
+                } else if (platform === 'x') {
+                    // Split by | for multi-tweet templates
+                    const tweets = content.split('|');
+                    const thread = document.getElementById('xThread');
+                    // Ensure enough tweet boxes
+                    while (thread.querySelectorAll('.thread__tweet').length < tweets.length) {
+                        document.getElementById('addTweet').click();
+                    }
+                    const textareas = thread.querySelectorAll('.thread__textarea');
+                    tweets.forEach((t, i) => {
+                        if (textareas[i]) textareas[i].value = t.trim();
+                    });
+                    updateTweetCounts();
+                    saveXDraft();
+                }
+                showToast('Template loaded');
+            });
+        });
+
+        // --- Subreddit picker ---
+        const subredditChips = document.querySelectorAll('.subreddit-chip');
+        const redditSubLabel = document.getElementById('redditSubLabel');
+
+        subredditChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                subredditChips.forEach(c => c.classList.remove('is-active'));
+                chip.classList.add('is-active');
+                redditSubLabel.textContent = chip.dataset.sub;
+                localStorage.setItem(STORAGE_PREFIX + 'subreddit', chip.dataset.sub);
+            });
+        });
+
+        // Restore last-used subreddit
+        const savedSub = localStorage.getItem(STORAGE_PREFIX + 'subreddit');
+        if (savedSub) {
+            subredditChips.forEach(c => {
+                c.classList.toggle('is-active', c.dataset.sub === savedSub);
+            });
+            redditSubLabel.textContent = savedSub;
+        }
+
+        // --- Draft auto-save ---
+        function saveDraft(platform) {
+            if (platform === 'linkedin') {
+                localStorage.setItem(STORAGE_PREFIX + 'draft_li', document.getElementById('liTextarea').value);
+            } else if (platform === 'instagram') {
+                localStorage.setItem(STORAGE_PREFIX + 'draft_ig', document.getElementById('igTextarea').value);
+            } else if (platform === 'reddit') {
+                localStorage.setItem(STORAGE_PREFIX + 'draft_rd', document.getElementById('rdTextarea').value);
+                localStorage.setItem(STORAGE_PREFIX + 'draft_rd_title', document.getElementById('rdTitle').value);
+            }
+        }
+
+        function loadDraft(platform) {
+            if (platform === 'linkedin') {
+                const draft = localStorage.getItem(STORAGE_PREFIX + 'draft_li');
+                if (draft) {
+                    document.getElementById('liTextarea').value = draft;
+                    document.getElementById('liTextarea').dispatchEvent(new Event('input'));
+                }
+            } else if (platform === 'instagram') {
+                const draft = localStorage.getItem(STORAGE_PREFIX + 'draft_ig');
+                if (draft) {
+                    document.getElementById('igTextarea').value = draft;
+                    document.getElementById('igTextarea').dispatchEvent(new Event('input'));
+                }
+            } else if (platform === 'reddit') {
+                const draft = localStorage.getItem(STORAGE_PREFIX + 'draft_rd');
+                const title = localStorage.getItem(STORAGE_PREFIX + 'draft_rd_title');
+                if (draft) {
+                    document.getElementById('rdTextarea').value = draft;
+                    document.getElementById('rdTextarea').dispatchEvent(new Event('input'));
+                }
+                if (title) document.getElementById('rdTitle').value = title;
+            }
+        }
+
+        function saveXDraft() {
+            const textareas = document.querySelectorAll('.thread__textarea');
+            const tweets = Array.from(textareas).map(ta => ta.value);
+            localStorage.setItem(STORAGE_PREFIX + 'draft_x', JSON.stringify(tweets));
+        }
+
+        function loadXDraft() {
+            const raw = localStorage.getItem(STORAGE_PREFIX + 'draft_x');
+            if (!raw) return;
+            try {
+                const tweets = JSON.parse(raw);
+                const thread = document.getElementById('xThread');
+                while (thread.querySelectorAll('.thread__tweet').length < tweets.length) {
+                    document.getElementById('addTweet').click();
+                }
+                const textareas = thread.querySelectorAll('.thread__textarea');
+                tweets.forEach((t, i) => {
+                    if (textareas[i]) textareas[i].value = t;
+                });
+                updateTweetCounts();
+            } catch (e) { }
+        }
+
+        // Auto-save drafts on input
+        document.getElementById('liTextarea').addEventListener('input', () => saveDraft('linkedin'));
+        document.getElementById('igTextarea').addEventListener('input', () => saveDraft('instagram'));
+        document.getElementById('rdTextarea').addEventListener('input', () => saveDraft('reddit'));
+        document.getElementById('rdTitle').addEventListener('input', () => saveDraft('reddit'));
+        document.getElementById('xThread').addEventListener('input', saveXDraft);
+
+        // --- Save entries ---
+        function getEntries(platform) {
+            try { return JSON.parse(localStorage.getItem(STORAGE_PREFIX + 'entries_' + platform)) || []; }
+            catch (e) { return []; }
+        }
+
+        function saveEntry(platform) {
+            const day = dayNumber.value;
+            const date = new Date().toISOString().split('T')[0];
+            let content = '';
+
+            if (platform === 'linkedin') {
+                content = document.getElementById('liTextarea').value.trim();
+            } else if (platform === 'instagram') {
+                content = document.getElementById('igTextarea').value.trim();
+            } else if (platform === 'x') {
+                const textareas = document.querySelectorAll('.thread__textarea');
+                const tweets = Array.from(textareas).map(ta => ta.value.trim()).filter(Boolean);
+                content = tweets.join('\n---\n');
+            } else if (platform === 'reddit') {
+                const title = document.getElementById('rdTitle').value.trim();
+                const body = document.getElementById('rdTextarea').value.trim();
+                const sub = document.querySelector('.subreddit-chip.is-active')?.dataset.sub || 'r/IndianTeenagers';
+                content = `[${sub}] ${title}\n---\n${body}`;
+            }
+
+            if (!content) return;
+
+            const entry = {
+                id: Date.now().toString(36) + Math.random().toString(36).substr(2, 5),
+                day: day,
+                date: date,
+                content: content,
+                platform: platform,
+                createdAt: new Date().toISOString()
+            };
+
+            const entries = getEntries(platform);
+            entries.unshift(entry);
+            localStorage.setItem(STORAGE_PREFIX + 'entries_' + platform, JSON.stringify(entries));
+
+            renderEntries(platform);
+            updateStreak();
+            showToast('Saved! ✅');
+
+            // Increment day number
+            dayNumber.value = parseInt(dayNumber.value) + 1;
+            localStorage.setItem(DAY_KEY, dayNumber.value);
+        }
+
+        // Wire up save buttons
+        document.querySelectorAll('[data-save]').forEach(btn => {
+            btn.addEventListener('click', () => saveEntry(btn.dataset.save));
+        });
+
+        // --- Render entries ---
+        function renderEntries(platform) {
+            const entries = getEntries(platform);
+            const containerMap = { linkedin: 'liEntries', instagram: 'igEntries', x: 'xEntries', reddit: 'rdEntries' };
+            const countMap = { linkedin: 'liCount', instagram: 'igCount', x: 'xCount', reddit: 'rdCount' };
+            const containerId = containerMap[platform];
+            const countId = countMap[platform];
+            const container = document.getElementById(containerId);
+            const counter = document.getElementById(countId);
+
+            counter.textContent = `${entries.length} ${entries.length === 1 ? 'entry' : 'entries'}`;
+
+            if (entries.length === 0) {
+                container.innerHTML = `
+                    <div class="feed__empty">
+                        <div class="feed__empty-icon">✍️</div>
+                        <p>No saved posts yet. Write your first one above!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = entries.map(entry => `
+                <div class="entry-card">
+                    <div class="entry-card__header">
+                        <span class="entry-card__day">Day ${entry.day}</span>
+                        <span class="entry-card__date">${entry.date}</span>
+                    </div>
+                    <div class="entry-card__text">${escapeHtml(entry.content)}</div>
+                    <div class="entry-card__actions">
+                        <button class="entry-card__btn" data-load="${entry.id}" data-platform="${platform}">Load into editor</button>
+                        <button class="entry-card__btn entry-card__btn--delete" data-delete="${entry.id}" data-platform="${platform}">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Wire up load buttons
+            container.querySelectorAll('[data-load]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const entry = entries.find(e => e.id === btn.dataset.load);
+                    if (!entry) return;
+                    if (platform === 'linkedin') {
+                        document.getElementById('liTextarea').value = entry.content;
+                        document.getElementById('liTextarea').dispatchEvent(new Event('input'));
+                    } else if (platform === 'instagram') {
+                        document.getElementById('igTextarea').value = entry.content;
+                        document.getElementById('igTextarea').dispatchEvent(new Event('input'));
+                    } else if (platform === 'x') {
+                        const tweets = entry.content.split('\n---\n');
+                        const thread = document.getElementById('xThread');
+                        while (thread.querySelectorAll('.thread__tweet').length < tweets.length) {
+                            document.getElementById('addTweet').click();
+                        }
+                        const textareas = thread.querySelectorAll('.thread__textarea');
+                        tweets.forEach((t, i) => {
+                            if (textareas[i]) textareas[i].value = t;
+                        });
+                        updateTweetCounts();
+                    } else if (platform === 'reddit') {
+                        const parts = entry.content.split('\n---\n');
+                        const header = parts[0] || '';
+                        const body = parts.slice(1).join('\n---\n');
+                        const titleMatch = header.match(/^\[.*?\]\s*(.*)/);
+                        document.getElementById('rdTitle').value = titleMatch ? titleMatch[1] : header;
+                        document.getElementById('rdTextarea').value = body;
+                        document.getElementById('rdTextarea').dispatchEvent(new Event('input'));
+                    }
+                    dayNumber.value = entry.day;
+                    showToast('Loaded into editor');
+                });
+            });
+
+            // Wire up delete buttons
+            container.querySelectorAll('[data-delete]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const filtered = entries.filter(e => e.id !== btn.dataset.delete);
+                    localStorage.setItem(STORAGE_PREFIX + 'entries_' + platform, JSON.stringify(filtered));
+                    renderEntries(platform);
+                    showToast('Deleted');
+                });
+            });
+        }
+
+        // --- Streak ---
+        function updateStreak() {
+            const all = [
+                ...getEntries('linkedin'),
+                ...getEntries('instagram'),
+                ...getEntries('x'),
+                ...getEntries('reddit')
+            ];
+
+            const dates = [...new Set(all.map(e => e.date))].sort().reverse();
+            let streak = 0;
+            const today = new Date().toISOString().split('T')[0];
+
+            for (let i = 0; i < dates.length; i++) {
+                const expected = new Date();
+                expected.setDate(expected.getDate() - i);
+                const exp = expected.toISOString().split('T')[0];
+                if (dates.includes(exp)) {
+                    streak++;
+                } else {
+                    break;
+                }
+            }
+
+            streakCount.textContent = streak;
+            document.getElementById('streakBadge').style.display = streak > 0 ? '' : 'none';
+        }
+
+        // --- Helpers ---
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML.replace(/\n/g, '<br>');
+        }
+
+        // --- Keyboard shortcut: Cmd+S to save ---
+        document.addEventListener('keydown', e => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+                e.preventDefault();
+                const activeTab = document.querySelector('.tab.is-active');
+                if (activeTab) saveEntry(activeTab.dataset.platform);
+            }
+        });
+    </script>
+</body>
+
+</html>

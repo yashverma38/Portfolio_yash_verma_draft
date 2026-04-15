@@ -26,6 +26,133 @@ if (menuToggle && siteNav) {
   });
 }
 
+// ==============================
+// Hero entrance animation + parallax
+// ==============================
+(function () {
+  var hero = document.querySelector('.hero');
+  if (!hero) return;
+
+  // Reduced motion check
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Gate entrance animations behind JS class (progressive enhancement)
+  if (!prefersReduced) {
+    document.documentElement.classList.add('js-hero-animated');
+  }
+
+  var photoWrapper = hero.querySelector('.hero__photo-wrapper');
+  var photo = hero.querySelector('.hero__photo');
+  var bg = hero.querySelector('.hero__bg');
+  var parallaxEls = hero.querySelectorAll('[data-parallax-depth]');
+
+  if (!photoWrapper || prefersReduced || parallaxEls.length === 0) return;
+
+  // Lerp state
+  var mouseX = 0, mouseY = 0;
+  var currentX = 0, currentY = 0;
+  var isMouseInHero = false;
+  var rafId = null;
+  var LERP = 0.08;
+  var THRESHOLD = 0.5; // stop loop when close enough
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  function update() {
+    currentX = lerp(currentX, mouseX, LERP);
+    currentY = lerp(currentY, mouseY, LERP);
+
+    // Apply parallax to each element
+    parallaxEls.forEach(function (el) {
+      var depth = parseFloat(el.getAttribute('data-parallax-depth')) || 0.02;
+      var x = currentX * depth * 100;
+      var y = currentY * depth * 100;
+      el.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+    });
+
+    // Subtle background gradient shift
+    if (bg) {
+      var bgX = 50 + currentX * 8;
+      var bgY = 40 + currentY * 6;
+      bg.style.background =
+        'radial-gradient(ellipse 80% 60% at ' + bgX + '% ' + bgY + '%, var(--ocean-soft), transparent 70%), ' +
+        'radial-gradient(ellipse 60% 50% at ' + (80 + currentX * 5) + '% ' + (60 + currentY * 4) + '%, var(--sunrise-soft), transparent 60%)';
+    }
+
+    // Check if we need to keep looping
+    var dist = Math.abs(currentX - mouseX) + Math.abs(currentY - mouseY);
+    if (dist > THRESHOLD || isMouseInHero) {
+      rafId = requestAnimationFrame(update);
+    } else {
+      rafId = null;
+    }
+  }
+
+  function startLoop() {
+    if (!rafId) rafId = requestAnimationFrame(update);
+  }
+
+  // Desktop: mouse tracking
+  hero.addEventListener('mousemove', function (e) {
+    var rect = hero.getBoundingClientRect();
+    mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;  // -1 to 1
+    mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+    isMouseInHero = true;
+
+    // Pause CSS float animation while mouse is active
+    if (photo) photo.style.animationPlayState = 'paused';
+
+    startLoop();
+  });
+
+  hero.addEventListener('mouseleave', function () {
+    mouseX = 0;
+    mouseY = 0;
+    isMouseInHero = false;
+
+    // Resume CSS float animation after a delay
+    setTimeout(function () {
+      if (!isMouseInHero && photo) {
+        photo.style.animationPlayState = 'running';
+      }
+    }, 600);
+
+    startLoop();
+  });
+
+  // Mobile: DeviceOrientation tilt-based parallax
+  if ('DeviceOrientationEvent' in window && 'ontouchstart' in window) {
+    var orientationGranted = false;
+
+    function handleOrientation(e) {
+      if (!orientationGranted) return;
+      var gamma = (e.gamma || 0) / 45; // left-right tilt, normalize to -1..1
+      var beta = ((e.beta || 0) - 45) / 45; // front-back tilt, normalize
+      gamma = Math.max(-1, Math.min(1, gamma));
+      beta = Math.max(-1, Math.min(1, beta));
+      mouseX = gamma;
+      mouseY = beta;
+      startLoop();
+    }
+
+    // iOS 13+ requires permission
+    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+      document.addEventListener('touchstart', function requestPerm() {
+        DeviceOrientationEvent.requestPermission().then(function (state) {
+          if (state === 'granted') {
+            orientationGranted = true;
+            window.addEventListener('deviceorientation', handleOrientation, { passive: true });
+          }
+        }).catch(function () {});
+        document.removeEventListener('touchstart', requestPerm);
+      }, { once: true });
+    } else {
+      orientationGranted = true;
+      window.addEventListener('deviceorientation', handleOrientation, { passive: true });
+    }
+  }
+})();
+
 // Scroll reveal animation using IntersectionObserver
 const revealElements = document.querySelectorAll('.reveal');
 
@@ -453,6 +580,102 @@ if (revealElements.length > 0 && 'IntersectionObserver' in window) {
         });
       });
     }
+
+    // ==============================
+    // Content gate (lead capture)
+    // ==============================
+    var csGate = document.getElementById('csGate');
+    var csGateForm = document.getElementById('csGateForm');
+    var ACCESS_KEY = 'yv_case_study_access';
+
+    if (csGate) {
+      var accessData = null;
+      try { accessData = JSON.parse(localStorage.getItem(ACCESS_KEY)); } catch (e) {}
+
+      if (accessData) {
+        // Already unlocked — remove gate immediately
+        csGate.classList.remove('cs-gated-wrapper--locked');
+        csGate.classList.add('cs-gated-wrapper--unlocked');
+      } else {
+        // Track gate view when it scrolls into view
+        if ('IntersectionObserver' in window) {
+          var gateObserver = new IntersectionObserver(function (entries) {
+            if (entries[0].isIntersecting) {
+              var ge = evt('view', 'section', 'content_gate', screen, 'engagement');
+              mixpanel.track(ge);
+              logLocal(ge, screen);
+              gateObserver.disconnect();
+            }
+          }, { threshold: 0.3 });
+          gateObserver.observe(csGate);
+        }
+
+        // Track first form field focus
+        var gateFocused = false;
+        if (csGateForm) {
+          csGateForm.querySelectorAll('input').forEach(function (field) {
+            field.addEventListener('focus', function () {
+              if (!gateFocused) {
+                gateFocused = true;
+                var fe = evt('focus', 'form', 'content_gate', screen, 'lead_capture');
+                mixpanel.track(fe);
+                logLocal(fe, screen);
+              }
+            });
+          });
+
+          // Form submission
+          csGateForm.addEventListener('submit', function (ev) {
+            ev.preventDefault();
+
+            var name = csGateForm.querySelector('[name="name"]').value.trim();
+            var email = csGateForm.querySelector('[name="email"]').value.trim();
+            var company = csGateForm.querySelector('[name="company"]').value.trim();
+            if (!name || !email || !company) return;
+
+            var emailDomain = email.split('@')[1] || '';
+
+            // Save to localStorage (primary access store — one unlock = all case studies)
+            var leadData = {
+              name: name,
+              email: email,
+              company: company,
+              timestamp: new Date().toISOString(),
+              source_page: screen
+            };
+            localStorage.setItem(ACCESS_KEY, JSON.stringify(leadData));
+
+            // Write to Firestore (fire-and-forget, non-blocking)
+            try {
+              firebase.firestore().collection('recruiter_leads').add({
+                name: name,
+                email: email,
+                company: company,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                source_page: screen,
+                user_agent: navigator.userAgent
+              });
+            } catch (err) { /* Firestore failure is non-blocking */ }
+
+            // Track submission
+            var se = evt('submit', 'form', 'content_gate', screen, 'lead_capture');
+            mixpanel.track(se, { email_domain: emailDomain, company: company });
+            logLocal(se, screen, { email_domain: emailDomain });
+
+            // Unlock content with animation
+            csGate.classList.remove('cs-gated-wrapper--locked');
+            csGate.classList.add('cs-gated-wrapper--unlocked');
+            var gatedContent = csGate.querySelector('.cs-gated-content');
+            if (gatedContent) gatedContent.classList.add('cs-gated-content--revealing');
+
+            // Track unlock
+            var ue = evt('unlock', 'content', 'content_gate', screen, 'lead_capture');
+            mixpanel.track(ue);
+            logLocal(ue, screen);
+          });
+        }
+      }
+    }
   }
 
   // ==============================
@@ -511,6 +734,7 @@ if (revealElements.length > 0 && 'IntersectionObserver' in window) {
     '.contact-grid': 'contact_form',
     '.cs-metrics': 'metrics',
     '.cs-learnings': 'learnings',
+    '.cs-gated-wrapper': 'content_gate',
     '.about__group-photo': 'group_photo',
     '.personality': 'personality'
   };

@@ -18,6 +18,30 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
+    // Recruiter leads: anyone can create (no auth needed), no read/update/delete
+    match /recruiter_leads/{leadId} {
+      allow create: if request.resource.data.keys().hasAll(['name', 'email', 'company', 'timestamp', 'source_page', 'user_agent'])
+        && request.resource.data.name is string
+        && request.resource.data.email is string
+        && request.resource.data.company is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.email.size() > 0;
+      allow read, update, delete: if false;
+    }
+
+    // Bloc Ghostwriter — only the owner email can read/write.
+    // Server-side writes come via Admin SDK (service account), which bypasses these rules.
+    function isOwner() {
+      return request.auth != null && request.auth.token.email == 'yashverma38@gmail.com';
+    }
+    match /drafts/{id}    { allow read, write: if isOwner(); }
+    match /posts/{id}     { allow read, write: if isOwner(); }
+    match /schedule/{id}  { allow read, write: if isOwner(); }
+    match /persona/{id}   { allow read, write: if isOwner(); }
+    match /subreddits/{id}{ allow read, write: if isOwner(); }
+    match /retros/{id}    { allow read, write: if isOwner(); }
+    match /config/{id}    { allow read, write: if isOwner(); }
+
     // Default deny
     match /{document=**} {
       allow read, write: if false;

@@ -1,0 +1,14 @@
+[
+    {
+        "id": "entry-001",
+        "date": "2026-02-20",
+        "type": "building",
+        "title": "Shipped the Content Hub v2",
+        "description": "Rebuilt yash-v.in with a proper timeline layout, video embed for Instagram reels, and a cleaner warm amber design. Vanilla HTML/CSS/JS — no frameworks.",
+        "tags": [
+            "code",
+            "web",
+            "shipped"
+        ]
+    }
+]

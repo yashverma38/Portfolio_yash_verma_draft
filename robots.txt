@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /_archive/
+Disallow: /bip-q7x3m9.html
+Disallow: /log.html
+
+Sitemap: https://yash-v.in/sitemap.xml

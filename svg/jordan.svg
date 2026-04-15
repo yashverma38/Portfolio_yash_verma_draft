@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180" fill="none">
+  <g id="jordan-shoe">
+    <!-- Sole -->
+    <path d="M20 140 Q10 140 8 135 L5 125 Q3 120 8 118 L45 110 L160 108 Q175 108 180 115 L185 125 Q188 132 180 138 L170 142 Z" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1.5"/>
+    <!-- Midsole -->
+    <path d="M15 125 L45 112 L160 110 L180 118 L175 128 L165 135 L25 138 Z" fill="#1f1f1f"/>
+    <!-- Air unit -->
+    <ellipse cx="155" cy="122" rx="18" ry="6" fill="none" stroke="#f59e0b" stroke-width="1" opacity="0.5"/>
+    <!-- Upper -->
+    <path d="M40 112 L38 75 Q37 60 50 55 L80 45 Q90 42 100 45 L130 55 L160 65 Q170 70 168 80 L165 110 Z" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1"/>
+    <!-- Swoosh -->
+    <path d="M55 95 Q80 75 120 70 Q140 68 160 72 L145 78 Q120 82 95 88 L70 96 Z" fill="#f59e0b" opacity="0.9">
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite"/>
+    </path>
+    <!-- Collar -->
+    <path d="M38 75 Q37 55 55 48 L85 40 Q100 37 110 42 L95 50 Q80 55 65 58 L48 65 Z" fill="#1f1f1f" stroke="#2a2a2a" stroke-width="0.5"/>
+    <!-- Tongue -->
+    <path d="M70 55 L75 25 Q78 15 88 14 L95 14 Q105 15 107 25 L110 50 Q100 45 85 44 Z" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="0.5"/>
+    <!-- Logo circle -->
+    <circle cx="90" cy="30" r="5" fill="none" stroke="#f59e0b" stroke-width="0.7" opacity="0.4"/>
+    <!-- Lace holes -->
+    <circle cx="78" cy="48" r="1.2" fill="#2a2a2a"/>
+    <circle cx="85" cy="43" r="1.2" fill="#2a2a2a"/>
+    <circle cx="92" cy="40" r="1.2" fill="#2a2a2a"/>
+    <circle cx="99" cy="43" r="1.2" fill="#2a2a2a"/>
+    <!-- Laces -->
+    <path d="M78 48 L92 40 M85 43 L99 43" stroke="#3a3a3a" stroke-width="0.8" fill="none"/>
+    <!-- Heel tab -->
+    <path d="M38 75 L35 82 Q34 88 38 90 L42 88 L43 80 Z" fill="#f59e0b" opacity="0.7">
+      <animate attributeName="opacity" values="0.5;0.8;0.5" dur="4s" repeatCount="indefinite"/>
+    </path>
+    <!-- Subtle accent lines -->
+    <line x1="60" y1="108" x2="60" y2="100" stroke="#f59e0b" stroke-width="0.4" opacity="0.15"/>
+    <line x1="80" y1="108" x2="80" y2="94" stroke="#f59e0b" stroke-width="0.4" opacity="0.15"/>
+    <line x1="100" y1="108" x2="100" y2="90" stroke="#f59e0b" stroke-width="0.4" opacity="0.15"/>
+    <line x1="120" y1="108" x2="120" y2="87" stroke="#f59e0b" stroke-width="0.4" opacity="0.15"/>
+    <line x1="140" y1="108" x2="140" y2="84" stroke="#f59e0b" stroke-width="0.4" opacity="0.15"/>
+  </g>
+</svg>

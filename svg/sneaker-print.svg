@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" fill="none" opacity="0.5">
+  <!-- Sneaker sole print pattern tile -->
+  <g fill="#f5f5f4" opacity="0.3">
+    <!-- Sole outline -->
+    <path d="M50 20 Q30 25 25 45 L22 70 Q20 90 25 110 Q28 125 40 140 L55 155 Q65 162 80 165 L100 165 Q115 162 125 155 L140 140 Q152 125 155 110 Q160 90 158 70 L155 45 Q150 25 130 20 Z" stroke="#f5f5f4" stroke-width="0.8" fill="none"/>
+    <!-- Tread pattern -->
+    <line x1="40" y1="60" x2="140" y2="60" stroke="#f5f5f4" stroke-width="0.5" opacity="0.3"/>
+    <line x1="38" y1="75" x2="142" y2="75" stroke="#f5f5f4" stroke-width="0.5" opacity="0.25"/>
+    <line x1="35" y1="90" x2="145" y2="90" stroke="#f5f5f4" stroke-width="0.5" opacity="0.3"/>
+    <line x1="38" y1="105" x2="142" y2="105" stroke="#f5f5f4" stroke-width="0.5" opacity="0.25"/>
+    <line x1="42" y1="120" x2="138" y2="120" stroke="#f5f5f4" stroke-width="0.5" opacity="0.3"/>
+    <line x1="50" y1="135" x2="130" y2="135" stroke="#f5f5f4" stroke-width="0.5" opacity="0.2"/>
+    <!-- Heel circle -->
+    <circle cx="90" cy="145" r="10" stroke="#f5f5f4" stroke-width="0.4" fill="none" opacity="0.2"/>
+    <!-- Toe area dots -->
+    <circle cx="75" cy="35" r="2" fill="none" stroke="#f5f5f4" stroke-width="0.3" opacity="0.2"/>
+    <circle cx="90" cy="32" r="2" fill="none" stroke="#f5f5f4" stroke-width="0.3" opacity="0.2"/>
+    <circle cx="105" cy="35" r="2" fill="none" stroke="#f5f5f4" stroke-width="0.3" opacity="0.2"/>
+  </g>
+</svg>

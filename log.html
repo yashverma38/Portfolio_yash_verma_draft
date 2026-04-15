@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>yash. — activity log</title>
+    <meta name="description" content="private activity dashboard" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="content-styles.css" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header__inner container">
+            <a href="index.html" class="logo">yash<span>.</span></a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="nav" id="siteNav">
+                <a class="nav__link" href="index.html">Feed</a>
+                <a class="nav__link nav__link--active" href="log.html">Log</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Login Wall -->
+        <section class="login-wall" id="loginWall">
+            <div class="login-card">
+                <div class="login-card__icon">🔐</div>
+                <h1 class="login-card__title">Private Dashboard</h1>
+                <p class="login-card__subtitle">Enter your password to log activities.</p>
+                <form id="loginForm">
+                    <input class="form-input" type="password" id="loginPassword" placeholder="password"
+                        autocomplete="off" autofocus />
+                    <p class="login-card__error" id="loginError"></p>
+                    <button class="btn btn--primary" type="submit" style="width: 100%; margin-top: 1rem;">
+                        Unlock →
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Logger (hidden until auth) -->
+        <section class="logger" id="loggerSection" style="display: none;">
+            <div class="container">
+
+                <!-- Today's Video URL -->
+                <div class="logger__form" style="margin-bottom: 1.5rem;">
+                    <h2 class="logger__title">📹 Today's Video</h2>
+                    <form id="videoForm">
+                        <div class="form-group">
+                            <label class="form-label" for="videoUrl">Instagram Reel URL</label>
+                            <input class="form-input" type="url" id="videoUrl"
+                                placeholder="https://www.instagram.com/reel/..." />
+                        </div>
+                        <div class="form-actions" style="justify-content: flex-start;">
+                            <button class="btn btn--primary" type="submit">Save Video →</button>
+                            <button class="btn btn--outline" type="button" id="clearVideo">Clear</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Activity Logger -->
+                <div class="logger__form">
+                    <h2 class="logger__title">📝 Log Activity</h2>
+                    <form id="activityForm">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                            <div class="form-group">
+                                <label class="form-label" for="actDate">Date</label>
+                                <input class="form-input" type="date" id="actDate" />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="actType">Type</label>
+                                <select class="form-select" id="actType">
+                                    <option value="workout">💪 Workout</option>
+                                    <option value="learning">📚 Learning</option>
+                                    <option value="building">🛠️ Building</option>
+                                    <option value="reading">📖 Reading</option>
+                                    <option value="misc">🎲 Misc</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="actTitle">Title</label>
+                            <input class="form-input" type="text" id="actTitle" placeholder="what did you do?" />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="actDesc">Description</label>
+                            <textarea class="form-textarea" id="actDesc" placeholder="tell the story..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Tags</label>
+                            <div class="form-tags-input" id="tagsContainer">
+                                <input type="text" id="tagInput" placeholder="type + enter" />
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn btn--primary" type="submit">Save Entry →</button>
+                            <button class="btn btn--outline" type="reset">Clear</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- History -->
+                <div class="history">
+                    <h2 class="history__title">Past Entries</h2>
+                    <div id="historyList"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">Saved! ✅</div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer__inner">
+            <a href="index.html" class="logo">yash<span>.</span></a>
+            <p class="footer__copy">&copy; 2026 yash · private dashboard</p>
+        </div>
+    </footer>
+
+    <script>
+        /* ============================================
+           LOG PAGE — Auth, Video URL, Activity CRUD
+           ============================================ */
+
+        const AUTH_KEY = 'yv_log_auth';
+        const ACTIVITIES_KEY = 'yv_activities';
+        const VIDEO_KEY = 'yv_today_video';
+        const PASSWORD = 'yash2026';
+
+        // --- Mobile nav ---
+        const menuToggle = document.getElementById('menuToggle');
+        const siteNav = document.getElementById('siteNav');
+        if (menuToggle && siteNav) {
+            menuToggle.addEventListener('click', () => siteNav.classList.toggle('is-open'));
+            siteNav.querySelectorAll('a').forEach(l => l.addEventListener('click', () => siteNav.classList.remove('is-open')));
+            document.addEventListener('click', e => {
+                if (!menuToggle.contains(e.target) && !siteNav.contains(e.target)) siteNav.classList.remove('is-open');
+            });
+        }
+
+        // --- Auth ---
+        const loginWall = document.getElementById('loginWall');
+        const loggerSection = document.getElementById('loggerSection');
+        const loginForm = document.getElementById('loginForm');
+        const loginPassword = document.getElementById('loginPassword');
+        const loginError = document.getElementById('loginError');
+
+        function isAuthed() { return localStorage.getItem(AUTH_KEY) === 'true'; }
+
+        function showLogger() {
+            loginWall.style.display = 'none';
+            loggerSection.style.display = 'block';
+            loadVideoForm();
+            renderHistory();
+        }
+
+        if (isAuthed()) showLogger();
+
+        loginForm.addEventListener('submit', e => {
+            e.preventDefault();
+            if (loginPassword.value === PASSWORD) {
+                localStorage.setItem(AUTH_KEY, 'true');
+                showLogger();
+            } else {
+                loginError.textContent = 'wrong password';
+                loginPassword.value = '';
+                loginPassword.focus();
+            }
+        });
+
+        // --- Toast ---
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('is-visible');
+            setTimeout(() => toast.classList.remove('is-visible'), 2200);
+        }
+
+        // --- Video URL ---
+        const videoForm = document.getElementById('videoForm');
+        const videoUrl = document.getElementById('videoUrl');
+        const clearVideoBtn = document.getElementById('clearVideo');
+
+        function loadVideoForm() {
+            try {
+                const v = JSON.parse(localStorage.getItem(VIDEO_KEY));
+                if (v && v.url) videoUrl.value = v.url;
+            } catch (e) { }
+        }
+
+        videoForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const url = videoUrl.value.trim();
+            if (!url) return;
+            localStorage.setItem(VIDEO_KEY, JSON.stringify({
+                url: url,
+                date: new Date().toISOString().split('T')[0],
+                updatedAt: new Date().toISOString()
+            }));
+            showToast('Video saved! 📹');
+        });
+
+        clearVideoBtn.addEventListener('click', () => {
+            localStorage.removeItem(VIDEO_KEY);
+            videoUrl.value = '';
+            showToast('Video cleared');
+        });
+
+        // --- Activities CRUD ---
+        function getActivities() {
+            try { return JSON.parse(localStorage.getItem(ACTIVITIES_KEY)) || []; }
+            catch (e) { return []; }
+        }
+
+        function saveActivities(arr) {
+            localStorage.setItem(ACTIVITIES_KEY, JSON.stringify(arr));
+        }
+
+        // --- Tags input ---
+        const tagsContainer = document.getElementById('tagsContainer');
+        const tagInput = document.getElementById('tagInput');
+        let currentTags = [];
+
+        tagInput.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ',') {
+                e.preventDefault();
+                const val = tagInput.value.trim().replace(/,/g, '');
+                if (val && !currentTags.includes(val)) {
+                    currentTags.push(val);
+                    renderTags();
+                }
+                tagInput.value = '';
+            }
+            if (e.key === 'Backspace' && tagInput.value === '' && currentTags.length > 0) {
+                currentTags.pop();
+                renderTags();
+            }
+        });
+
+        function renderTags() {
+            tagsContainer.querySelectorAll('.form-tag').forEach(t => t.remove());
+            currentTags.forEach((tag, i) => {
+                const el = document.createElement('span');
+                el.className = 'form-tag';
+                el.innerHTML = `${tag} <span class="form-tag__remove" data-index="${i}">&times;</span>`;
+                tagsContainer.insertBefore(el, tagInput);
+            });
+            tagsContainer.querySelectorAll('.form-tag__remove').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentTags.splice(parseInt(btn.dataset.index), 1);
+                    renderTags();
+                });
+            });
+        }
+
+        // --- Activity form ---
+        const activityForm = document.getElementById('activityForm');
+        const actDate = document.getElementById('actDate');
+        const actType = document.getElementById('actType');
+        const actTitle = document.getElementById('actTitle');
+        const actDesc = document.getElementById('actDesc');
+
+        actDate.value = new Date().toISOString().split('T')[0];
+
+        activityForm.addEventListener('submit', e => {
+            e.preventDefault();
+            if (!actTitle.value.trim()) { actTitle.focus(); return; }
+
+            const entry = {
+                id: Date.now().toString(36) + Math.random().toString(36).substr(2, 5),
+                date: actDate.value,
+                type: actType.value,
+                title: actTitle.value.trim(),
+                description: actDesc.value.trim(),
+                tags: [...currentTags],
+                createdAt: new Date().toISOString()
+            };
+
+            const activities = getActivities();
+            activities.push(entry);
+            saveActivities(activities);
+
+            actTitle.value = '';
+            actDesc.value = '';
+            currentTags = [];
+            renderTags();
+            actDate.value = new Date().toISOString().split('T')[0];
+
+            showToast('Saved! ✅');
+            renderHistory();
+        });
+
+        activityForm.addEventListener('reset', () => {
+            setTimeout(() => {
+                currentTags = [];
+                renderTags();
+                actDate.value = new Date().toISOString().split('T')[0];
+            }, 10);
+        });
+
+        // --- Type meta ---
+        const TYPE_COLORS = {
+            workout: 'var(--workout)',
+            learning: 'var(--learning)',
+            building: 'var(--building)',
+            reading: 'var(--reading)',
+            misc: 'var(--misc)'
+        };
+
+        function getTagClass(type) { return 'tag--' + (type || 'misc'); }
+
+        function formatDate(dateStr) {
+            const d = new Date(dateStr + 'T00:00:00');
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+        }
+
+        // --- History ---
+        function renderHistory() {
+            const list = document.getElementById('historyList');
+            const activities = getActivities();
+
+            if (activities.length === 0) {
+                list.innerHTML = `
+            <div class="feed__empty">
+              <div class="feed__empty-icon">📝</div>
+              <p>No entries yet. Log your first activity above!</p>
+            </div>
+          `;
+                return;
+            }
+
+            activities.sort((a, b) => {
+                const dc = b.date.localeCompare(a.date);
+                if (dc !== 0) return dc;
+                return (b.createdAt || '').localeCompare(a.createdAt || '');
+            });
+
+            list.innerHTML = activities.map(entry => `
+          <div class="history-item">
+            <div class="history-item__header">
+              <span class="history-item__date">${formatDate(entry.date)}</span>
+              <div style="display: flex; align-items: center; gap: 0.6rem;">
+                <span class="history-item__type" style="color: ${TYPE_COLORS[entry.type] || 'var(--text-secondary)'}">${entry.type}</span>
+                <button class="history-item__delete" data-id="${entry.id}" title="Delete">&times;</button>
+              </div>
+            </div>
+            <h4 class="history-item__title">${entry.title}</h4>
+            ${entry.description ? `<p class="history-item__desc">${entry.description}</p>` : ''}
+            ${entry.tags && entry.tags.length > 0 ? `
+              <div class="history-item__tags">
+                ${entry.tags.map(t => `<span class="tag ${getTagClass(entry.type)}">${t}</span>`).join('')}
+              </div>
+            ` : ''}
+          </div>
+        `).join('');
+
+            list.querySelectorAll('.history-item__delete').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const acts = getActivities().filter(a => a.id !== btn.dataset.id);
+                    saveActivities(acts);
+                    renderHistory();
+                    showToast('Deleted 🗑️');
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>

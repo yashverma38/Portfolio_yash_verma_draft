@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>yash. — bloc ghostwriter</title>
+    <meta name="description" content="private bloc reddit ghostwriter cockpit" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="content-styles.css" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+    <style>
+        /* ============================================
+           GHOSTWRITER COCKPIT
+           ============================================ */
+
+        .login-card__avatar {
+            width: 48px; height: 48px; border-radius: 50%;
+            margin: 0 auto 0.75rem; border: 2px solid var(--border);
+        }
+        .btn--google {
+            display: inline-flex; align-items: center; justify-content: center;
+            gap: 0.6rem; width: 100%; padding: 0.75rem 1.3rem;
+            background: var(--bg-elevated); color: var(--text);
+            border: 1px solid var(--border); border-radius: var(--radius-sm);
+            font-family: var(--font-body); font-weight: 600; font-size: 0.88rem;
+            cursor: pointer; transition: all var(--duration) var(--ease);
+            margin-top: 1rem;
+        }
+        .btn--google:hover {
+            border-color: var(--border-hover); background: var(--bg-card);
+            transform: translateY(-1px); box-shadow: var(--shadow-sm);
+        }
+        .btn--google svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+        .cockpit { padding: 1.5rem 0 var(--section-pad); }
+
+        .cockpit__topbar {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 1rem; flex-wrap: wrap;
+            padding: 1rem 1.25rem; margin-bottom: 1.5rem;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+        }
+        .cockpit__meta {
+            display: flex; gap: 1.5rem; flex-wrap: wrap;
+            font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-dim);
+        }
+        .cockpit__meta strong { color: var(--text); font-weight: 600; }
+        .kill-switch {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.45rem 0.85rem; border-radius: var(--radius-sm);
+            background: var(--bg-elevated); border: 1px solid var(--border);
+            font-family: var(--font-mono); font-size: 0.75rem;
+            cursor: pointer; transition: all var(--duration) var(--ease);
+        }
+        .kill-switch[data-active="true"] {
+            background: #3a0d0d; border-color: #a33; color: #ff8a8a;
+        }
+        .kill-dot {
+            width: 8px; height: 8px; border-radius: 50%; background: #4ade80;
+        }
+        .kill-switch[data-active="true"] .kill-dot { background: #ff5252; }
+
+        /* View tabs */
+        .view-tabs {
+            display: flex; gap: 0.25rem; margin-bottom: 1.25rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .view-tab {
+            padding: 0.75rem 1.1rem; background: transparent; border: none;
+            color: var(--text-dim); font-family: var(--font-body); font-weight: 600;
+            font-size: 0.85rem; cursor: pointer;
+            border-bottom: 2px solid transparent; margin-bottom: -1px;
+            transition: all var(--duration) var(--ease);
+        }
+        .view-tab:hover { color: var(--text); }
+        .view-tab.is-active { color: var(--text); border-bottom-color: var(--accent); }
+        .view-tab__badge {
+            display: inline-block; margin-left: 0.4rem;
+            padding: 0.1rem 0.45rem; border-radius: 10px;
+            background: var(--bg-elevated); font-size: 0.7rem;
+            font-family: var(--font-mono); color: var(--text-dim);
+        }
+
+        .view { display: none; }
+        .view.is-active { display: block; }
+
+        /* Today's draft card */
+        .draft-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: var(--radius-md); padding: 1.5rem;
+        }
+        .draft-card__meta {
+            display: flex; gap: 0.75rem; flex-wrap: wrap;
+            font-family: var(--font-mono); font-size: 0.72rem;
+            color: var(--text-dim); margin-bottom: 1rem;
+        }
+        .chip {
+            display: inline-block; padding: 0.2rem 0.6rem;
+            background: var(--bg-elevated); border: 1px solid var(--border);
+            border-radius: 100px;
+        }
+        .chip--sub { color: #8ecae6; }
+        .chip--arch { color: #b39ddb; }
+        .chip--risk { color: #ffb74d; }
+        .chip--ceiling { color: #81c784; }
+
+        .draft-card__title {
+            font-family: var(--font-display); font-size: 1.6rem; line-height: 1.2;
+            margin: 0 0 0.75rem; letter-spacing: 0.01em;
+        }
+        .draft-card__body {
+            font-family: var(--font-body); font-size: 0.95rem; line-height: 1.65;
+            color: var(--text); white-space: pre-wrap;
+            background: var(--bg); padding: 1rem; border-radius: var(--radius-sm);
+            border: 1px solid var(--border); margin-bottom: 1rem;
+        }
+        .draft-card__alts {
+            margin-bottom: 1rem;
+        }
+        .draft-card__alts-label {
+            font-family: var(--font-mono); font-size: 0.72rem;
+            color: var(--text-dim); margin-bottom: 0.4rem;
+        }
+        .draft-card__alt {
+            display: block; padding: 0.5rem 0.75rem; margin-bottom: 0.35rem;
+            background: var(--bg-elevated); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); font-size: 0.88rem;
+        }
+        .draft-card__actions {
+            display: flex; gap: 0.5rem; flex-wrap: wrap;
+        }
+        .btn--approve { background: #14532d; color: #86efac; border-color: #166534; }
+        .btn--approve:hover { background: #166534; }
+        .btn--edit { background: var(--bg-elevated); color: var(--text); }
+        .btn--reject { background: #450a0a; color: #fca5a5; border-color: #7f1d1d; }
+        .btn--reject:hover { background: #7f1d1d; }
+
+        .empty-state {
+            text-align: center; padding: 3rem 1rem;
+            color: var(--text-dim); font-family: var(--font-mono); font-size: 0.85rem;
+            background: var(--bg-card); border: 1px dashed var(--border);
+            border-radius: var(--radius-md);
+        }
+        .empty-state__icon { font-size: 2rem; display: block; margin-bottom: 0.75rem; }
+
+        /* Queue list */
+        .queue-item, .live-item {
+            display: flex; align-items: center; gap: 1rem;
+            padding: 0.9rem 1rem; margin-bottom: 0.5rem;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+        }
+        .queue-item__date {
+            font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-dim);
+            min-width: 70px;
+        }
+        .queue-item__main { flex: 1; min-width: 0; }
+        .queue-item__title { font-weight: 600; font-size: 0.92rem; }
+        .queue-item__meta {
+            font-family: var(--font-mono); font-size: 0.72rem;
+            color: var(--text-dim); margin-top: 0.2rem;
+        }
+        .live-item__stats {
+            display: flex; gap: 1rem; font-family: var(--font-mono);
+            font-size: 0.78rem; color: var(--text-dim);
+        }
+        .live-item__stats strong { color: var(--text); }
+        .live-item[data-removed="true"] { border-color: #7f1d1d; background: #2a0a0a; }
+
+        /* Edit mode for draft */
+        .draft-card__input {
+            width: 100%; background: var(--bg); color: var(--text);
+            border: 1px solid var(--border); border-radius: var(--radius-sm);
+            padding: 0.75rem; font-family: var(--font-body); font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .draft-card__input--title {
+            font-family: var(--font-display); font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+        }
+        .draft-card__input--body { min-height: 280px; resize: vertical; }
+
+        /* Compose-own / manual draft box */
+        .compose-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: var(--radius-md); padding: 1.25rem; margin-top: 1rem;
+        }
+        .compose-card h3 {
+            font-size: 0.95rem; margin: 0 0 0.75rem;
+            color: var(--text-dim); font-family: var(--font-mono);
+            text-transform: uppercase; letter-spacing: 0.08em;
+        }
+
+        /* Persona editor */
+        .persona-grid {
+            display: grid; grid-template-columns: 220px 1fr; gap: 1rem;
+            min-height: 500px;
+        }
+        .persona-nav {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); padding: 0.5rem;
+        }
+        .persona-nav__item {
+            display: block; width: 100%; text-align: left;
+            padding: 0.55rem 0.75rem; background: transparent; border: none;
+            color: var(--text-dim); font-family: var(--font-mono); font-size: 0.8rem;
+            border-radius: var(--radius-sm); cursor: pointer;
+        }
+        .persona-nav__item:hover { background: var(--bg-elevated); color: var(--text); }
+        .persona-nav__item.is-active { background: var(--bg-elevated); color: var(--accent); }
+        .persona-editor {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); padding: 1rem;
+            display: flex; flex-direction: column;
+        }
+        .persona-editor__textarea {
+            flex: 1; width: 100%; min-height: 440px;
+            background: var(--bg); color: var(--text);
+            border: 1px solid var(--border); border-radius: var(--radius-sm);
+            padding: 0.85rem; font-family: var(--font-mono); font-size: 0.82rem;
+            line-height: 1.55; resize: vertical;
+        }
+        .persona-editor__footer {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 0.75rem;
+            font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim);
+        }
+
+        @media (max-width: 720px) {
+            .persona-grid { grid-template-columns: 1fr; }
+            .cockpit__meta { gap: 0.75rem; font-size: 0.7rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header__inner container">
+            <a href="index.html" class="logo">yash<span>.</span></a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="nav" id="siteNav">
+                <a class="nav__link" href="index.html">Feed</a>
+                <a class="nav__link nav__link--active" href="bip-q7x3m9.html">Ghostwriter</a>
+                <a class="nav__link" href="log.html">Log</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Auth wall -->
+        <section class="login-wall" id="loginWall">
+            <div class="login-card">
+                <div class="login-card__icon">🔒</div>
+                <h1 class="login-card__title">Bloc Ghostwriter</h1>
+                <p class="login-card__subtitle">Private cockpit for the bloc reddit engine. Sign in with Google to continue.</p>
+                <p class="login-card__error" id="loginError"></p>
+                <button class="btn--google" id="googleSignIn">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
+                        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                    </svg>
+                    Sign in with Google
+                </button>
+            </div>
+        </section>
+
+        <!-- Cockpit (hidden until auth) -->
+        <section class="cockpit" id="cockpitSection" style="display: none;">
+            <div class="container">
+
+                <!-- User bar -->
+                <div class="user-bar" id="userBar">
+                    <div class="user-bar__info">
+                        <img class="user-bar__avatar" id="userAvatar" src="" alt="" />
+                        <div>
+                            <div class="user-bar__name" id="userName"></div>
+                            <div class="user-bar__email" id="userEmail"></div>
+                        </div>
+                    </div>
+                    <button class="btn--signout" id="signOutBtn">Sign out</button>
+                </div>
+
+                <!-- Topbar: status + kill switch -->
+                <div class="cockpit__topbar">
+                    <div class="cockpit__meta">
+                        <span>sub: <strong id="activeSub">r/vibecoding</strong></span>
+                        <span>posted this week: <strong id="weekCount">0</strong> / 2</span>
+                        <span>karma 7d: <strong id="karmaDelta">—</strong></span>
+                        <span>telegram: <strong id="tgStatus">unlinked</strong></span>
+                    </div>
+                    <button class="kill-switch" id="killSwitch" data-active="false">
+                        <span class="kill-dot"></span>
+                        <span id="killLabel">engine: live</span>
+                    </button>
+                </div>
+
+                <!-- View tabs -->
+                <div class="view-tabs">
+                    <button class="view-tab is-active" data-view="today">Today <span class="view-tab__badge" id="todayBadge">0</span></button>
+                    <button class="view-tab" data-view="queue">Queue <span class="view-tab__badge" id="queueBadge">0</span></button>
+                    <button class="view-tab" data-view="live">Live <span class="view-tab__badge" id="liveBadge">0</span></button>
+                    <button class="view-tab" data-view="persona">Persona</button>
+                </div>
+
+                <!-- Today -->
+                <div class="view is-active" id="view-today">
+                    <div id="todayContainer">
+                        <div class="empty-state">
+                            <span class="empty-state__icon">✍️</span>
+                            No draft yet today. The engine will push one here after the 07:00 cron runs.
+                        </div>
+                    </div>
+                    <div class="compose-card">
+                        <h3>Compose manually</h3>
+                        <input type="text" class="draft-card__input draft-card__input--title"
+                               id="manualTitle" placeholder="Title (≤ 80 chars)" maxlength="300" />
+                        <textarea class="draft-card__input draft-card__input--body"
+                                  id="manualBody" placeholder="Body — this lands directly as an approved draft, bypasses the engine"></textarea>
+                        <div class="draft-card__actions" style="margin-top: 0.75rem;">
+                            <button class="btn btn--primary" id="manualSave">Save as approved draft</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Queue -->
+                <div class="view" id="view-queue">
+                    <div id="queueContainer">
+                        <div class="empty-state">
+                            <span class="empty-state__icon">📅</span>
+                            Queue is empty. Phase 1 scripts will populate the next 7 days of planned posts.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live posts -->
+                <div class="view" id="view-live">
+                    <div id="liveContainer">
+                        <div class="empty-state">
+                            <span class="empty-state__icon">📡</span>
+                            No live posts yet. Posted drafts will appear here with real-time metrics.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Persona / knowledge editor -->
+                <div class="view" id="view-persona">
+                    <div class="persona-grid">
+                        <div class="persona-nav" id="personaNav">
+                            <button class="persona-nav__item is-active" data-file="cm_persona">cm_persona.md</button>
+                            <button class="persona-nav__item" data-file="cm_voice_samples">cm_voice_samples.md</button>
+                            <button class="persona-nav__item" data-file="bloc_facts">bloc_facts.md</button>
+                            <button class="persona-nav__item" data-file="angle_bank">angle_bank.md</button>
+                            <button class="persona-nav__item" data-file="anti_slop">anti_slop.md</button>
+                            <button class="persona-nav__item" data-file="sub_vibecoding">r_vibecoding.md</button>
+                        </div>
+                        <div class="persona-editor">
+                            <textarea class="persona-editor__textarea" id="personaText"
+                                placeholder="loading..."></textarea>
+                            <div class="persona-editor__footer">
+                                <span id="personaStatus">read-only until Firestore sync is wired (Phase 2)</span>
+                                <button class="btn btn--primary btn--sm" id="personaSave" disabled>Save to Firestore</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">Saved!</div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer__inner">
+            <a href="index.html" class="logo">yash<span>.</span></a>
+            <p class="footer__copy">&copy; 2026 yash &middot; bloc ghostwriter</p>
+        </div>
+    </footer>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+    <script>
+        // --- Firebase ---
+        const firebaseConfig = {
+            apiKey: 'AIzaSyDoTbp91LlARVdzfrjArv8_qvKKpmr8ct4',
+            authDomain: 'profile-analytics-tracker.firebaseapp.com',
+            projectId: 'profile-analytics-tracker',
+            storageBucket: 'profile-analytics-tracker.firebasestorage.app',
+            messagingSenderId: '5287005463',
+            appId: '1:5287005463:web:fdd0885eb48981f4b47b52'
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        const ALLOWED_EMAILS = ['yashverma38@gmail.com'];
+
+        // --- DOM ---
+        const loginWall = document.getElementById('loginWall');
+        const cockpitSection = document.getElementById('cockpitSection');
+        const loginError = document.getElementById('loginError');
+        const googleSignInBtn = document.getElementById('googleSignIn');
+        const signOutBtn = document.getElementById('signOutBtn');
+        const userAvatar = document.getElementById('userAvatar');
+        const userName = document.getElementById('userName');
+        const userEmail = document.getElementById('userEmail');
+
+        // --- Mobile nav ---
+        const menuToggle = document.getElementById('menuToggle');
+        const siteNav = document.getElementById('siteNav');
+        if (menuToggle && siteNav) {
+            menuToggle.addEventListener('click', () => siteNav.classList.toggle('is-open'));
+            siteNav.querySelectorAll('a').forEach(l => l.addEventListener('click', () => siteNav.classList.remove('is-open')));
+            document.addEventListener('click', e => {
+                if (!menuToggle.contains(e.target) && !siteNav.contains(e.target)) siteNav.classList.remove('is-open');
+            });
+        }
+
+        // --- Auth ---
+        googleSignInBtn.addEventListener('click', async () => {
+            try {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                const result = await auth.signInWithPopup(provider);
+                if (!ALLOWED_EMAILS.includes(result.user.email)) {
+                    await auth.signOut();
+                    loginError.textContent = 'Access denied. This cockpit is private.';
+                }
+            } catch (err) {
+                if (err.code !== 'auth/popup-closed-by-user') {
+                    loginError.textContent = 'Sign-in failed. Try again.';
+                }
+            }
+        });
+        signOutBtn.addEventListener('click', () => auth.signOut());
+
+        auth.onAuthStateChanged(user => {
+            if (user && ALLOWED_EMAILS.includes(user.email)) {
+                loginWall.style.display = 'none';
+                cockpitSection.style.display = 'block';
+                userAvatar.src = user.photoURL || '';
+                userName.textContent = user.displayName || 'Yash';
+                userEmail.textContent = user.email;
+                initCockpit();
+            } else {
+                loginWall.style.display = '';
+                cockpitSection.style.display = 'none';
+            }
+        });
+
+        // --- Toast ---
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('is-visible');
+            setTimeout(() => toast.classList.remove('is-visible'), 2200);
+        }
+
+        // --- View switching ---
+        const viewTabs = document.querySelectorAll('.view-tab');
+        const views = document.querySelectorAll('.view');
+        viewTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                viewTabs.forEach(t => t.classList.remove('is-active'));
+                views.forEach(v => v.classList.remove('is-active'));
+                tab.classList.add('is-active');
+                document.getElementById('view-' + tab.dataset.view).classList.add('is-active');
+            });
+        });
+
+        // --- Kill switch ---
+        const killSwitch = document.getElementById('killSwitch');
+        const killLabel = document.getElementById('killLabel');
+        killSwitch.addEventListener('click', async () => {
+            const active = killSwitch.dataset.active === 'true';
+            const next = !active;
+            killSwitch.dataset.active = String(next);
+            killLabel.textContent = next ? 'engine: paused' : 'engine: live';
+            // TODO (Phase 2): persist to Firestore config/engine.paused
+            showToast(next ? 'Engine paused' : 'Engine resumed');
+        });
+
+        // ============================================
+        //  Live Firestore wiring
+        // ============================================
+        const escapeHtml = s => String(s || '').replace(/[&<>"']/g, c => ({
+            '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+        }[c]));
+
+        let currentUser = null;
+        const unsubs = [];
+
+        function initCockpit() {
+            unsubs.forEach(fn => { try { fn(); } catch(e){} });
+            unsubs.length = 0;
+
+            unsubs.push(watchConfig());
+            unsubs.push(watchToday());
+            unsubs.push(watchQueue());
+            unsubs.push(watchLive());
+            watchPersona('cm_persona');
+        }
+
+        // --- Config (kill switch + counters) ---
+        function watchConfig() {
+            return db.collection('config').doc('engine').onSnapshot(doc => {
+                const cfg = doc.exists ? doc.data() : {};
+                const paused = !!cfg.paused;
+                killSwitch.dataset.active = String(paused);
+                killLabel.textContent = paused ? 'engine: paused' : 'engine: live';
+                document.getElementById('karmaDelta').textContent = cfg.karma_delta_7d ?? '—';
+                document.getElementById('tgStatus').textContent = cfg.telegram_linked ? 'linked' : 'unlinked';
+            });
+        }
+        killSwitch.onclick = async () => {
+            const next = killSwitch.dataset.active !== 'true';
+            await db.collection('config').doc('engine').set({
+                paused: next,
+                [next ? 'paused_at' : 'resumed_at']: new Date().toISOString(),
+            }, { merge: true });
+            showToast(next ? 'Engine paused' : 'Engine resumed');
+        };
+
+        // --- TODAY: latest pending_review draft ---
+        function watchToday() {
+            return db.collection('drafts')
+                .where('status', '==', 'pending_review')
+                .orderBy('created_at', 'desc').limit(1)
+                .onSnapshot(snap => {
+                    const c = document.getElementById('todayContainer');
+                    const badge = document.getElementById('todayBadge');
+                    if (snap.empty) {
+                        badge.textContent = '0';
+                        c.innerHTML = `<div class="empty-state">
+                            <span class="empty-state__icon">✍️</span>
+                            No pending draft. Next one lands after 07:00 cron.
+                        </div>`;
+                        return;
+                    }
+                    badge.textContent = '1';
+                    const doc = snap.docs[0];
+                    c.innerHTML = renderDraftCard(doc.id, doc.data());
+                    wireDraftActions(doc.id, doc.data());
+                });
+        }
+
+        function renderDraftCard(id, d) {
+            const risks = (d.risk_flags || []).map(r => `<span class="chip chip--risk">⚠ ${escapeHtml(r)}</span>`).join('');
+            const ceil = d.predicted_ceiling || {};
+            return `
+              <div class="draft-card" id="draftCard-${id}">
+                <div class="draft-card__meta">
+                  <span class="chip chip--sub">${escapeHtml(d.subreddit || '?')}</span>
+                  <span class="chip chip--arch">${escapeHtml(d.archetype || '?')}</span>
+                  <span class="chip">angle ${escapeHtml(d.angle_id || '?')}</span>
+                  <span class="chip chip--ceiling">pred ${escapeHtml((ceil.upvotes_low ?? '?') + '-' + (ceil.upvotes_high ?? '?'))} (${escapeHtml(ceil.confidence || '?')})</span>
+                  ${risks}
+                </div>
+                <h2 class="draft-card__title" data-role="title">${escapeHtml(d.title)}</h2>
+                <div class="draft-card__body" data-role="body">${escapeHtml(d.body)}</div>
+                ${(d.alt_titles || []).length ? `
+                  <div class="draft-card__alts">
+                    <div class="draft-card__alts-label">alt titles</div>
+                    ${d.alt_titles.map(t => `<div class="draft-card__alt">${escapeHtml(t)}</div>`).join('')}
+                  </div>` : ''}
+                <div class="draft-card__actions">
+                  <button class="btn btn--approve" data-act="approve">✅ Approve & copy</button>
+                  <button class="btn btn--edit" data-act="edit">✏️ Edit</button>
+                  <button class="btn btn--reject" data-act="reject">❌ Reject</button>
+                  <button class="btn btn--edit" data-act="regen">🔄 Regenerate</button>
+                  <button class="btn" data-act="posted">📌 Mark posted (paste URL)</button>
+                </div>
+              </div>`;
+        }
+
+        function wireDraftActions(id, draft) {
+            const card = document.getElementById(`draftCard-${id}`);
+            if (!card) return;
+
+            card.querySelector('[data-act="approve"]').onclick = async () => {
+                const clip = `${draft.title}\n\n${draft.body}`;
+                try { await navigator.clipboard.writeText(clip); } catch (_) {}
+                await db.collection('drafts').doc(id).update({
+                    status: 'approved',
+                    approved_at: new Date().toISOString(),
+                });
+                showToast('Approved + copied to clipboard');
+            };
+
+            card.querySelector('[data-act="edit"]').onclick = () => {
+                const titleEl = card.querySelector('[data-role="title"]');
+                const bodyEl  = card.querySelector('[data-role="body"]');
+                const currentTitle = draft.title;
+                const currentBody  = draft.body;
+                titleEl.outerHTML = `<input class="draft-card__input draft-card__input--title" id="edit-title-${id}" value="${escapeHtml(currentTitle)}" />`;
+                bodyEl.outerHTML  = `<textarea class="draft-card__input draft-card__input--body" id="edit-body-${id}">${escapeHtml(currentBody)}</textarea>`;
+                const btns = card.querySelector('.draft-card__actions');
+                btns.innerHTML = `
+                    <button class="btn btn--approve" id="edit-save-${id}">💾 Save edits</button>
+                    <button class="btn btn--edit" id="edit-cancel-${id}">Cancel</button>
+                `;
+                document.getElementById(`edit-save-${id}`).onclick = async () => {
+                    const newTitle = document.getElementById(`edit-title-${id}`).value;
+                    const newBody  = document.getElementById(`edit-body-${id}`).value;
+                    await db.collection('drafts').doc(id).update({
+                        title: newTitle, body: newBody,
+                        edited_at: new Date().toISOString(),
+                    });
+                    showToast('Saved');
+                };
+                document.getElementById(`edit-cancel-${id}`).onclick = () => initCockpit();
+            };
+
+            card.querySelector('[data-act="reject"]').onclick = async () => {
+                const reason = prompt('Why? (used in weekly retro)');
+                if (reason === null) return;
+                await db.collection('drafts').doc(id).update({
+                    status: 'rejected',
+                    rejection_reason: reason,
+                    rejected_at: new Date().toISOString(),
+                });
+                showToast('Rejected');
+            };
+
+            card.querySelector('[data-act="regen"]').onclick = async () => {
+                await db.collection('drafts').doc(id).update({
+                    status: 'regen_requested',
+                    regen_at: new Date().toISOString(),
+                });
+                showToast('Regen requested — next cron picks it up');
+            };
+
+            card.querySelector('[data-act="posted"]').onclick = async () => {
+                const url = prompt('Paste the Reddit post URL:');
+                if (!url) return;
+                await db.collection('drafts').doc(id).update({
+                    status: 'posted',
+                    posted_url: url,
+                    posted_at: new Date().toISOString(),
+                });
+                await db.collection('posts').doc(id).set({
+                    draft_id: id,
+                    subreddit: draft.subreddit,
+                    archetype: draft.archetype,
+                    angle_id: draft.angle_id,
+                    title: draft.title,
+                    url,
+                    posted_at: new Date().toISOString(),
+                }, { merge: true });
+                showToast('Marked posted');
+            };
+        }
+
+        // --- QUEUE: upcoming schedule ---
+        function watchQueue() {
+            const today = new Date().toISOString().slice(0,10);
+            return db.collection('schedule')
+                .where('date', '>=', today)
+                .orderBy('date').limit(14)
+                .onSnapshot(snap => {
+                    const c = document.getElementById('queueContainer');
+                    document.getElementById('queueBadge').textContent = snap.size;
+                    if (snap.empty) {
+                        c.innerHTML = `<div class="empty-state">
+                            <span class="empty-state__icon">📅</span>
+                            Queue empty. plan_day cron populates this.
+                        </div>`;
+                        return;
+                    }
+                    c.innerHTML = snap.docs.map(d => {
+                        const x = d.data();
+                        if (x.skip) {
+                            return `<div class="queue-item">
+                                <div class="queue-item__date">${escapeHtml(x.date)}</div>
+                                <div class="queue-item__main">
+                                    <div class="queue-item__title">skip — ${escapeHtml(x.reason || '')}</div>
+                                </div>
+                            </div>`;
+                        }
+                        return `<div class="queue-item">
+                            <div class="queue-item__date">${escapeHtml(x.date)}</div>
+                            <div class="queue-item__main">
+                                <div class="queue-item__title">${escapeHtml(x.subreddit)} · ${escapeHtml(x.archetype)} · angle ${escapeHtml(x.angle_id)}</div>
+                                <div class="queue-item__meta">${escapeHtml(x.reasoning || '')}</div>
+                            </div>
+                        </div>`;
+                    }).join('');
+                });
+        }
+
+        // --- LIVE: posted items with metrics ---
+        function watchLive() {
+            const weekAgo = new Date(Date.now() - 14*24*60*60*1000).toISOString();
+            return db.collection('posts')
+                .where('posted_at', '>=', weekAgo)
+                .orderBy('posted_at', 'desc').limit(30)
+                .onSnapshot(snap => {
+                    const c = document.getElementById('liveContainer');
+                    document.getElementById('liveBadge').textContent = snap.size;
+                    if (snap.empty) {
+                        c.innerHTML = `<div class="empty-state">
+                            <span class="empty-state__icon">📡</span>
+                            No live posts yet.
+                        </div>`;
+                        return;
+                    }
+                    c.innerHTML = snap.docs.map(d => {
+                        const x = d.data();
+                        const removed = x.removed === true;
+                        const up = x.upvotes ?? x.upvotes_72h ?? x.upvotes_24h ?? '—';
+                        return `<div class="live-item" data-removed="${removed}">
+                            <div class="queue-item__main">
+                                <div class="queue-item__title">${escapeHtml(x.title || x.url || 'post')}</div>
+                                <div class="queue-item__meta">${escapeHtml(x.subreddit || '')} · ${escapeHtml((x.posted_at||'').slice(0,16).replace('T',' '))}${removed ? ' · REMOVED: ' + escapeHtml(x.removal_reason || '?') : ''}</div>
+                            </div>
+                            <div class="live-item__stats">
+                                <span><strong>${up}</strong> upvotes</span>
+                                <span><strong>${x.comments ?? '—'}</strong> comments</span>
+                                ${x.url ? `<a href="${escapeHtml(x.url)}" target="_blank" class="chip">open</a>` : ''}
+                            </div>
+                        </div>`;
+                    }).join('');
+                });
+        }
+
+        // --- PERSONA editor (read/write against Firestore) ---
+        const personaNavItems = document.querySelectorAll('.persona-nav__item');
+        const personaText = document.getElementById('personaText');
+        const personaSave = document.getElementById('personaSave');
+        const personaStatus = document.getElementById('personaStatus');
+        let currentPersonaFile = 'cm_persona';
+        let currentPersonaLoaded = '';
+
+        function watchPersona(fileKey) {
+            currentPersonaFile = fileKey;
+            personaText.value = 'loading…';
+            personaStatus.textContent = 'loading from Firestore…';
+            personaSave.disabled = true;
+            db.collection('persona').doc(fileKey).get().then(doc => {
+                if (doc.exists) {
+                    currentPersonaLoaded = doc.data().content || '';
+                    personaText.value = currentPersonaLoaded;
+                    personaStatus.textContent = `loaded · updated ${(doc.data().updated_at||'').slice(0,16).replace('T',' ')}`;
+                } else {
+                    currentPersonaLoaded = '';
+                    personaText.value = `# ${fileKey}\n\n(no document yet — type here and save to create)`;
+                    personaStatus.textContent = 'new file — type to create';
+                }
+                personaSave.disabled = false;
+            }).catch(e => {
+                personaStatus.textContent = 'load failed: ' + e.message;
+            });
+        }
+
+        personaNavItems.forEach(item => {
+            item.addEventListener('click', () => {
+                personaNavItems.forEach(n => n.classList.remove('is-active'));
+                item.classList.add('is-active');
+                watchPersona(item.dataset.file);
+            });
+        });
+
+        personaText.addEventListener('input', () => {
+            personaSave.disabled = (personaText.value === currentPersonaLoaded);
+            personaStatus.textContent = personaSave.disabled ? 'no changes' : 'unsaved changes';
+        });
+
+        personaSave.onclick = async () => {
+            const content = personaText.value;
+            personaSave.disabled = true;
+            personaStatus.textContent = 'saving…';
+            try {
+                await db.collection('persona').doc(currentPersonaFile).set({
+                    content,
+                    updated_at: new Date().toISOString(),
+                    updated_by: currentUser?.email || 'unknown',
+                }, { merge: true });
+                currentPersonaLoaded = content;
+                personaStatus.textContent = 'saved · next cron will sync to local disk';
+                showToast('Saved to Firestore');
+            } catch (e) {
+                personaStatus.textContent = 'save failed: ' + e.message;
+                personaSave.disabled = false;
+            }
+        };
+
+        // --- Manual compose (Today tab) ---
+        document.getElementById('manualSave').onclick = async () => {
+            const title = document.getElementById('manualTitle').value.trim();
+            const body  = document.getElementById('manualBody').value.trim();
+            if (!title || !body) { showToast('Title and body required'); return; }
+            const id = `${new Date().toISOString().slice(0,10)}-manual-${Math.random().toString(36).slice(2,8)}`;
+            await db.collection('drafts').doc(id).set({
+                id, title, body,
+                subreddit: 'r/vibecoding',
+                archetype: 'manual',
+                angle_id: 'manual',
+                status: 'approved',
+                source: 'manual_compose',
+                created_at: new Date().toISOString(),
+                approved_at: new Date().toISOString(),
+            });
+            document.getElementById('manualTitle').value = '';
+            document.getElementById('manualBody').value = '';
+            showToast('Saved as approved draft');
+        };
+
+        // Stash user for metadata on writes
+        auth.onAuthStateChanged(u => { currentUser = u; });
+    </script>
+</body>
+
+</html>
