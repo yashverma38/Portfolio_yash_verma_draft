@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analytics — Yash Verma</title>
+    <meta name="description" content="Live portfolio usage data — page views, engagement, clicks, and conversion tracked with Mixpanel." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="analytics.css" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <script type="text/javascript">(function(e,c){if(!c.__SV){var l,h;window.mixpanel=c;c._i=[];c.init=function(q,r,f){function t(d,a){var g=a.split(".");2==g.length&&(d=d[g[0]],a=g[1]);d[a]=function(){d.push([a].concat(Array.prototype.slice.call(arguments,0)))}}var b=c;"undefined"!==typeof f?b=c[f]=[]:f="mixpanel";b.people=b.people||[];b.toString=function(d){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);d||(a+=" (stub)");return a};b.people.toString=function(){return b.toString(1)+".people (stub)"};l="disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking start_batch_senders start_session_recording stop_session_recording people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");for(h=0;h<l.length;h++)t(b,l[h]);var n="set set_once union unset remove delete".split(" ");b.get_group=function(){function d(p){a[p]=function(){b.push([g,[p].concat(Array.prototype.slice.call(arguments,0))])}}for(var a={},g=["get_group"].concat(Array.prototype.slice.call(arguments,0)),m=0;m<n.length;m++)d(n[m]);return a};c._i.push([q,r,f])};c.__SV=1.2;var k=e.createElement("script");k.type="text/javascript";k.async=!0;k.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";e=e.getElementsByTagName("script")[0];e.parentNode.insertBefore(k,e)}})(document,window.mixpanel||[]);mixpanel.init('e6cecc98fc0b1ccf469125b25363ab62',{autocapture:true,record_sessions_percent:100});</script>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__inner container">
+        <a href="index.html" class="logo">yash<span>.</span></a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="nav" id="siteNav">
+          <a class="nav__link" href="index.html">Home</a>
+          <a class="nav__link" href="work.html">Work</a>
+          <a class="nav__link" href="about.html">About</a>
+          <a class="nav__link" href="contact.html">Contact</a>
+          <a class="nav__cta" href="assets/Yash-Verma-Resume.pdf" target="_blank">Resume</a>
+
+          <!-- Auth: Sign-in button (shown when not logged in) -->
+          <button class="nav__auth-btn" id="header-signin-btn" onclick="portfolioAuth.signIn()" style="display:none">Sign In</button>
+
+          <!-- Auth: Profile dropdown (shown when logged in) -->
+          <div class="nav__profile" id="header-profile" style="display:none">
+            <button class="nav__profile-toggle" id="header-profile-toggle">
+              <img class="nav__profile-avatar" id="header-avatar" src="" alt="" />
+              <svg class="nav__profile-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 5l3 3 3-3"/></svg>
+            </button>
+            <div class="nav__profile-dropdown" id="header-dropdown">
+              <div class="nav__profile-info">
+                <span class="nav__profile-name" id="header-name"></span>
+                <span class="nav__profile-email" id="header-email"></span>
+              </div>
+              <div class="nav__profile-divider"></div>
+              <button class="nav__profile-action" onclick="portfolioAuth.signOut()">Sign Out</button>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- 1. PAGE HERO -->
+      <section class="page-hero">
+        <div class="container">
+          <h1 class="page-hero__title">Portfolio Analytics</h1>
+          <p class="page-hero__subtitle">
+            Live usage data from this portfolio, powered by Mixpanel. Every
+            interaction, page views, clicks, scroll depth, is tracked using
+            36 custom events and visualized below in real time.
+          </p>
+        </div>
+      </section>
+
+      <!-- 2. LIVE STATS BAR (first 2 free, last 4 locked) -->
+      <section class="section section--alt" data-section-name="stats_bar">
+        <div class="container">
+          <div class="dash-stats-grid reveal">
+            <!-- FREE: these 2 always show real data -->
+            <div class="dash-stat-card">
+              <span class="dash-stat-card__value" id="stat-pageviews">—</span>
+              <span class="dash-stat-card__label">Page Views</span>
+            </div>
+            <div class="dash-stat-card">
+              <span class="dash-stat-card__value" id="stat-visitors">—</span>
+              <span class="dash-stat-card__label">Unique Visitors</span>
+            </div>
+            <!-- LOCKED: blurred until paid -->
+            <div class="dash-stat-card dash-stat-card--locked">
+              <span class="dash-stat-card__value" id="stat-pages">—</span>
+              <span class="dash-stat-card__label">Pages Visited</span>
+            </div>
+            <div class="dash-stat-card dash-stat-card--locked">
+              <span class="dash-stat-card__value" id="stat-clicks">—</span>
+              <span class="dash-stat-card__label">Click Events</span>
+            </div>
+            <div class="dash-stat-card dash-stat-card--locked">
+              <span class="dash-stat-card__value" id="stat-scrolls">—</span>
+              <span class="dash-stat-card__label">Scroll Events</span>
+            </div>
+            <div class="dash-stat-card dash-stat-card--locked">
+              <span class="dash-stat-card__value" id="stat-sections">—</span>
+              <span class="dash-stat-card__label">Section Views</span>
+            </div>
+          </div>
+          <p class="dash-stats-note">Last 30 days &middot; Data fetched live from Mixpanel</p>
+        </div>
+      </section>
+
+      <!-- PAYWALL OVERLAY -->
+      <div class="dash-paywall" id="dash-paywall" style="display:none">
+        <div class="container">
+          <!-- State: Not logged in -->
+          <div class="dash-paywall__card" id="paywall-signin">
+            <div class="dash-paywall__icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <h2 class="dash-paywall__title">See exactly how this portfolio performs</h2>
+            <p class="dash-paywall__text">
+              Traffic trends, scroll depth maps, click breakdowns, engagement
+              funnels. The full dashboard is behind a quick sign-in.
+              Takes 3 seconds.
+            </p>
+            <button class="btn btn--primary dash-paywall__btn" onclick="portfolioAuth.signIn()">
+              <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.997 8.997 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+              Sign in with Google
+            </button>
+            <p class="dash-paywall__fine">No spam. No newsletter. Just analytics.</p>
+          </div>
+
+          <!-- State: Logged in, not paid -->
+          <div class="dash-paywall__card" id="paywall-payment" style="display:none">
+            <div class="dash-paywall__user">
+              <img class="dash-paywall__avatar" id="paywall-avatar" src="" alt="" />
+              <span class="dash-paywall__name" id="paywall-name"></span>
+            </div>
+            <h2 class="dash-paywall__title">You're in. Now unlock the full picture.</h2>
+            <p class="dash-paywall__text">
+              You've seen the highlights. The full dashboard has 6 interactive
+              charts, engagement breakdowns, scroll depth analysis, your personal
+              activity timeline, and a complete 36-event taxonomy,
+              all live from Mixpanel.
+            </p>
+            <div class="dash-paywall__price">
+              <span class="dash-paywall__amount">&#8377;199</span>
+              <span class="dash-paywall__period">/ 30 days</span>
+            </div>
+            <button class="btn btn--primary dash-paywall__btn" id="paywall-pay-btn" onclick="portfolioAuth.pay()">
+              Unlock Full Dashboard
+            </button>
+            <button class="btn btn--ghost dash-paywall__btn-secondary" onclick="portfolioAuth.signOut()">
+              Sign out
+            </button>
+            <p class="dash-paywall__fine">Secure payment via Razorpay &middot; UPI, cards &amp; netbanking accepted</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- GATED CONTENT: realistic preview (blurred) when not paid, real content cloned after payment -->
+      <div id="dash-gated-content">
+
+        <!-- Preview: Your Activity -->
+        <section class="section">
+          <div class="container">
+            <div class="section-header">
+              <h2 class="section-header__title">Your activity</h2>
+              <p class="section-header__subtitle">
+                Here's what you've been up to on this portfolio, tracked locally in your browser.
+              </p>
+            </div>
+            <div class="dash-preview-blur">
+              <div class="dash-activity-stats">
+                <div class="dash-stat-card">
+                  <span class="dash-stat-card__value">47</span>
+                  <span class="dash-stat-card__label">Total Visits</span>
+                </div>
+                <div class="dash-stat-card">
+                  <span class="dash-stat-card__value">8</span>
+                  <span class="dash-stat-card__label">Pages Viewed</span>
+                </div>
+                <div class="dash-stat-card">
+                  <span class="dash-stat-card__value">23</span>
+                  <span class="dash-stat-card__label">Sections Seen</span>
+                </div>
+                <div class="dash-stat-card">
+                  <span class="dash-stat-card__value">2h ago</span>
+                  <span class="dash-stat-card__label">Last Visit</span>
+                </div>
+              </div>
+              <div class="dash-activity-grid">
+                <div class="dash-activity-card">
+                  <h3 class="dash-activity-card__title">Pages you visited</h3>
+                  <ul class="dash-activity-pages">
+                    <li><span class="dash-activity-pages__name">Home</span><div class="dash-activity-pages__bar"><div class="dash-activity-pages__bar-fill" style="width:85%"></div></div><span class="dash-activity-pages__count">12</span></li>
+                    <li><span class="dash-activity-pages__name">Work</span><div class="dash-activity-pages__bar"><div class="dash-activity-pages__bar-fill" style="width:60%"></div></div><span class="dash-activity-pages__count">8</span></li>
+                    <li><span class="dash-activity-pages__name">About</span><div class="dash-activity-pages__bar"><div class="dash-activity-pages__bar-fill" style="width:40%"></div></div><span class="dash-activity-pages__count">5</span></li>
+                    <li><span class="dash-activity-pages__name">Contact</span><div class="dash-activity-pages__bar"><div class="dash-activity-pages__bar-fill" style="width:22%"></div></div><span class="dash-activity-pages__count">3</span></li>
+                  </ul>
+                </div>
+                <div class="dash-activity-card">
+                  <h3 class="dash-activity-card__title">Your scroll depth</h3>
+                  <ul class="dash-activity-pages">
+                    <li><span class="dash-activity-pages__name">Home</span><div class="dash-activity-pages__bar"><div class="dash-activity-pages__bar-fill" style="width:92%"></div></div><span class="dash-activity-pages__count">92%</span></li>
+                    <li><span class="dash-activity-pages__name">Work</span><div class="dash-activity-pages__bar"><div class="dash-activity-pages__bar-fill" style="width:78%"></div></div><span class="dash-activity-pages__count">78%</span></li>
+                    <li><span class="dash-activity-pages__name">About</span><div class="dash-activity-pages__bar"><div class="dash-activity-pages__bar-fill" style="width:65%"></div></div><span class="dash-activity-pages__count">65%</span></li>
+                    <li><span class="dash-activity-pages__name">Contact</span><div class="dash-activity-pages__bar"><div class="dash-activity-pages__bar-fill" style="width:45%"></div></div><span class="dash-activity-pages__count">45%</span></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="dash-activity-card dash-activity-card--full">
+                <h3 class="dash-activity-card__title">Recent activity</h3>
+                <ul class="dash-activity-timeline">
+                  <li>
+                    <span class="dash-activity-timeline__dot"></span>
+                    <span class="dash-activity-timeline__event">Viewed <strong>Home</strong> page</span>
+                    <span class="dash-activity-timeline__time">2 min ago</span>
+                  </li>
+                  <li>
+                    <span class="dash-activity-timeline__dot"></span>
+                    <span class="dash-activity-timeline__event">Scrolled 92% on <strong>Home</strong></span>
+                    <span class="dash-activity-timeline__time">3 min ago</span>
+                  </li>
+                  <li>
+                    <span class="dash-activity-timeline__dot"></span>
+                    <span class="dash-activity-timeline__event">Clicked <strong>View Case Study</strong> button</span>
+                    <span class="dash-activity-timeline__time">5 min ago</span>
+                  </li>
+                  <li>
+                    <span class="dash-activity-timeline__dot"></span>
+                    <span class="dash-activity-timeline__event">Viewed <strong>Work</strong> page</span>
+                    <span class="dash-activity-timeline__time">8 min ago</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Preview: Traffic Overview -->
+        <section class="section section--alt">
+          <div class="container">
+            <div class="section-header">
+              <h2 class="section-header__title">Traffic overview</h2>
+              <p class="section-header__subtitle">
+                Page views and unique visitors over the last 30 days.
+              </p>
+            </div>
+            <div class="dash-preview-blur">
+              <div class="dash-chart-grid">
+                <div class="dash-chart">
+                  <h3 class="dash-chart__title">Page Views</h3>
+                  <div class="dash-chart__wrap">
+                    <svg class="dash-preview-svg" viewBox="0 0 400 200" preserveAspectRatio="none">
+                      <polyline fill="none" stroke="var(--ocean)" stroke-width="2.5" points="0,160 30,140 60,150 90,120 120,130 150,80 180,90 210,60 240,70 270,45 300,55 330,30 360,40 400,20" />
+                      <polyline fill="rgba(45,106,138,0.08)" stroke="none" points="0,200 0,160 30,140 60,150 90,120 120,130 150,80 180,90 210,60 240,70 270,45 300,55 330,30 360,40 400,20 400,200" />
+                    </svg>
+                  </div>
+                </div>
+                <div class="dash-chart">
+                  <h3 class="dash-chart__title">Unique Visitors</h3>
+                  <div class="dash-chart__wrap">
+                    <svg class="dash-preview-svg" viewBox="0 0 400 200" preserveAspectRatio="none">
+                      <rect x="10" y="120" width="22" height="80" rx="3" fill="var(--ocean)" opacity="0.3" />
+                      <rect x="42" y="100" width="22" height="100" rx="3" fill="var(--ocean)" opacity="0.4" />
+                      <rect x="74" y="130" width="22" height="70" rx="3" fill="var(--ocean)" opacity="0.3" />
+                      <rect x="106" y="80" width="22" height="120" rx="3" fill="var(--ocean)" opacity="0.5" />
+                      <rect x="138" y="90" width="22" height="110" rx="3" fill="var(--ocean)" opacity="0.45" />
+                      <rect x="170" y="60" width="22" height="140" rx="3" fill="var(--ocean)" opacity="0.6" />
+                      <rect x="202" y="70" width="22" height="130" rx="3" fill="var(--ocean)" opacity="0.55" />
+                      <rect x="234" y="40" width="22" height="160" rx="3" fill="var(--ocean)" opacity="0.7" />
+                      <rect x="266" y="50" width="22" height="150" rx="3" fill="var(--ocean)" opacity="0.65" />
+                      <rect x="298" y="30" width="22" height="170" rx="3" fill="var(--ocean)" opacity="0.75" />
+                      <rect x="330" y="45" width="22" height="155" rx="3" fill="var(--ocean)" opacity="0.7" />
+                      <rect x="362" y="20" width="22" height="180" rx="3" fill="var(--ocean)" opacity="0.8" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Preview: Pages & Scroll Depth -->
+        <section class="section">
+          <div class="container">
+            <div class="section-header">
+              <h2 class="section-header__title">Pages &amp; scroll depth</h2>
+              <p class="section-header__subtitle">
+                Most viewed pages and how far visitors scroll.
+              </p>
+            </div>
+            <div class="dash-preview-blur">
+              <div class="dash-chart-grid">
+                <div class="dash-chart">
+                  <h3 class="dash-chart__title">Top Pages</h3>
+                  <div class="dash-chart__wrap dash-chart__wrap--tall">
+                    <svg class="dash-preview-svg" viewBox="0 0 400 280" preserveAspectRatio="none">
+                      <rect x="80" y="20" width="300" height="28" rx="4" fill="var(--ocean)" opacity="0.7" />
+                      <rect x="80" y="60" width="240" height="28" rx="4" fill="var(--ocean)" opacity="0.55" />
+                      <rect x="80" y="100" width="180" height="28" rx="4" fill="var(--ocean)" opacity="0.45" />
+                      <rect x="80" y="140" width="140" height="28" rx="4" fill="var(--ocean)" opacity="0.35" />
+                      <rect x="80" y="180" width="100" height="28" rx="4" fill="var(--ocean)" opacity="0.25" />
+                      <rect x="80" y="220" width="70" height="28" rx="4" fill="var(--ocean)" opacity="0.18" />
+                      <text x="10" y="40" fill="var(--text-tertiary)" font-size="11" font-family="sans-serif">Home</text>
+                      <text x="10" y="80" fill="var(--text-tertiary)" font-size="11" font-family="sans-serif">Work</text>
+                      <text x="10" y="120" fill="var(--text-tertiary)" font-size="11" font-family="sans-serif">About</text>
+                      <text x="10" y="160" fill="var(--text-tertiary)" font-size="11" font-family="sans-serif">Contact</text>
+                      <text x="10" y="200" fill="var(--text-tertiary)" font-size="11" font-family="sans-serif">bloc</text>
+                      <text x="10" y="240" fill="var(--text-tertiary)" font-size="11" font-family="sans-serif">Stolo</text>
+                    </svg>
+                  </div>
+                </div>
+                <div class="dash-chart">
+                  <h3 class="dash-chart__title">Scroll Depth</h3>
+                  <div class="dash-chart__wrap">
+                    <svg class="dash-preview-svg" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
+                      <circle cx="100" cy="100" r="70" fill="none" stroke="var(--ocean)" stroke-width="30" stroke-dasharray="110 330" stroke-dashoffset="0" opacity="0.7" />
+                      <circle cx="100" cy="100" r="70" fill="none" stroke="var(--ocean)" stroke-width="30" stroke-dasharray="88 352" stroke-dashoffset="-110" opacity="0.5" />
+                      <circle cx="100" cy="100" r="70" fill="none" stroke="var(--ocean)" stroke-width="30" stroke-dasharray="66 374" stroke-dashoffset="-198" opacity="0.35" />
+                      <circle cx="100" cy="100" r="70" fill="none" stroke="var(--ocean)" stroke-width="30" stroke-dasharray="176 264" stroke-dashoffset="-264" opacity="0.2" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Preview: Engagement & Clicks -->
+        <section class="section section--alt">
+          <div class="container">
+            <div class="section-header">
+              <h2 class="section-header__title">Engagement &amp; clicks</h2>
+              <p class="section-header__subtitle">
+                Which content sections get viewed and which elements get clicked.
+              </p>
+            </div>
+            <div class="dash-preview-blur">
+              <div class="dash-chart-grid">
+                <div class="dash-chart">
+                  <h3 class="dash-chart__title">Section Views</h3>
+                  <div class="dash-chart__wrap dash-chart__wrap--tall">
+                    <svg class="dash-preview-svg" viewBox="0 0 400 280" preserveAspectRatio="none">
+                      <rect x="80" y="20" width="280" height="24" rx="4" fill="var(--ocean)" opacity="0.65" />
+                      <rect x="80" y="54" width="250" height="24" rx="4" fill="var(--ocean)" opacity="0.55" />
+                      <rect x="80" y="88" width="210" height="24" rx="4" fill="var(--ocean)" opacity="0.45" />
+                      <rect x="80" y="122" width="170" height="24" rx="4" fill="var(--ocean)" opacity="0.38" />
+                      <rect x="80" y="156" width="140" height="24" rx="4" fill="var(--ocean)" opacity="0.3" />
+                      <rect x="80" y="190" width="110" height="24" rx="4" fill="var(--ocean)" opacity="0.22" />
+                      <rect x="80" y="224" width="80" height="24" rx="4" fill="var(--ocean)" opacity="0.15" />
+                    </svg>
+                  </div>
+                </div>
+                <div class="dash-chart">
+                  <h3 class="dash-chart__title">Click Breakdown</h3>
+                  <div class="dash-chart__wrap">
+                    <svg class="dash-preview-svg" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
+                      <circle cx="100" cy="100" r="70" fill="none" stroke="var(--ocean)" stroke-width="30" stroke-dasharray="132 308" stroke-dashoffset="0" opacity="0.7" />
+                      <circle cx="100" cy="100" r="70" fill="none" stroke="var(--ocean)" stroke-width="30" stroke-dasharray="88 352" stroke-dashoffset="-132" opacity="0.5" />
+                      <circle cx="100" cy="100" r="70" fill="none" stroke="var(--ocean)" stroke-width="30" stroke-dasharray="66 374" stroke-dashoffset="-220" opacity="0.35" />
+                      <circle cx="100" cy="100" r="70" fill="none" stroke="var(--ocean)" stroke-width="30" stroke-dasharray="154 286" stroke-dashoffset="-286" opacity="0.2" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Preview: What's Being Tracked -->
+        <section class="section">
+          <div class="container">
+            <div class="section-header">
+              <h2 class="section-header__title">What's being tracked</h2>
+              <p class="section-header__subtitle">
+                36 custom events across 8 pages, organized by flow.
+              </p>
+            </div>
+            <div class="dash-preview-blur">
+              <div class="dash-overview-grid">
+                <div class="dash-overview-card">
+                  <span class="dash-overview-card__count">8</span>
+                  <span class="dash-overview-card__label">Page Views</span>
+                </div>
+                <div class="dash-overview-card">
+                  <span class="dash-overview-card__count">6</span>
+                  <span class="dash-overview-card__label">Navigation</span>
+                </div>
+                <div class="dash-overview-card">
+                  <span class="dash-overview-card__count">9</span>
+                  <span class="dash-overview-card__label">Discovery</span>
+                </div>
+                <div class="dash-overview-card">
+                  <span class="dash-overview-card__count">7</span>
+                  <span class="dash-overview-card__label">Contact</span>
+                </div>
+                <div class="dash-overview-card">
+                  <span class="dash-overview-card__count">4</span>
+                  <span class="dash-overview-card__label">Case Study</span>
+                </div>
+                <div class="dash-overview-card">
+                  <span class="dash-overview-card__count">2</span>
+                  <span class="dash-overview-card__label">Engagement</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Preview: Event Taxonomy -->
+        <section class="section section--warm">
+          <div class="container">
+            <div class="section-header">
+              <h2 class="section-header__title">Event taxonomy</h2>
+              <p class="section-header__subtitle">
+                Every event follows a consistent naming convention.
+              </p>
+            </div>
+            <div class="dash-preview-blur">
+              <div class="dash-taxonomy__convention">
+                <code class="dash-taxonomy__code">{action}_{element}_{module}_{screen}_{flow}_{product}</code>
+              </div>
+              <div class="dash-preview-table">
+                <div class="dash-preview-table__header">
+                  <span>#</span><span>Page</span><span>Event Name</span><span>Action</span><span>Flow</span>
+                </div>
+                <div class="dash-preview-table__row">
+                  <span>1</span><span>Home</span><span class="dash-preview-table__code">view_page_hero_home_disc...</span><span>view</span><span>discovery</span>
+                </div>
+                <div class="dash-preview-table__row">
+                  <span>2</span><span>Work</span><span class="dash-preview-table__code">view_page_page_hero_work...</span><span>view</span><span>discovery</span>
+                </div>
+                <div class="dash-preview-table__row">
+                  <span>3</span><span>About</span><span class="dash-preview-table__code">view_page_page_hero_abo...</span><span>view</span><span>about</span>
+                </div>
+                <div class="dash-preview-table__row">
+                  <span>4</span><span>Contact</span><span class="dash-preview-table__code">view_page_page_hero_con...</span><span>view</span><span>contact</span>
+                </div>
+                <div class="dash-preview-table__row dash-preview-table__row--fade">
+                  <span>5</span><span>Ads on...</span><span class="dash-preview-table__code">view_page_cs_hero_ads_o...</span><span>view</span><span>case_study</span>
+                </div>
+                <div class="dash-preview-table__row dash-preview-table__row--fade">
+                  <span>6</span><span>Credit...</span><span class="dash-preview-table__code">view_page_cs_hero_credi...</span><span>view</span><span>case_study</span>
+                </div>
+              </div>
+              <p class="dash-preview-more">+ 30 more events</p>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- REAL GATED CONTENT (inside <template> — NOT in DOM until payment verified) -->
+      <template id="dash-full-content">
+        <!-- YOUR ACTIVITY -->
+        <section class="section" data-section-name="your_activity">
+          <div class="container">
+            <div class="section-header reveal">
+              <h2 class="section-header__title">Your activity</h2>
+              <p class="section-header__subtitle">
+                Here's what you've been up to on this portfolio, tracked locally in your browser.
+              </p>
+            </div>
+            <div id="activity-content">
+              <div class="dash-activity-empty reveal" id="activity-empty">
+                <p class="dash-activity-empty__text">No activity recorded yet. Browse around and come back to see your stats here!</p>
+              </div>
+              <div class="dash-activity-filled" id="activity-filled" style="display:none">
+                <div class="dash-activity-stats reveal">
+                  <div class="dash-stat-card">
+                    <span class="dash-stat-card__value" id="act-total-visits">—</span>
+                    <span class="dash-stat-card__label">Total Visits</span>
+                  </div>
+                  <div class="dash-stat-card">
+                    <span class="dash-stat-card__value" id="act-pages-viewed">—</span>
+                    <span class="dash-stat-card__label">Pages Viewed</span>
+                  </div>
+                  <div class="dash-stat-card">
+                    <span class="dash-stat-card__value" id="act-sections-seen">—</span>
+                    <span class="dash-stat-card__label">Sections Seen</span>
+                  </div>
+                  <div class="dash-stat-card">
+                    <span class="dash-stat-card__value" id="act-last-visit">—</span>
+                    <span class="dash-stat-card__label">Last Visit</span>
+                  </div>
+                </div>
+                <div class="dash-activity-grid reveal">
+                  <div class="dash-activity-card">
+                    <h3 class="dash-activity-card__title">Pages you visited</h3>
+                    <ul class="dash-activity-pages" id="act-pages-list"></ul>
+                  </div>
+                  <div class="dash-activity-card">
+                    <h3 class="dash-activity-card__title">Your scroll depth</h3>
+                    <ul class="dash-activity-pages" id="act-scroll-list"></ul>
+                  </div>
+                </div>
+                <div class="dash-activity-card dash-activity-card--full reveal">
+                  <h3 class="dash-activity-card__title">Recent activity</h3>
+                  <ul class="dash-activity-timeline" id="act-timeline"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TRAFFIC DASHBOARD -->
+        <section class="section section--alt" data-section-name="traffic_dashboard">
+          <div class="container">
+            <div class="section-header reveal">
+              <h2 class="section-header__title">Traffic overview</h2>
+              <p class="section-header__subtitle">
+                Page views and unique visitors over the last 30 days.
+              </p>
+            </div>
+            <div class="dash-chart-grid reveal">
+              <div class="dash-chart">
+                <h3 class="dash-chart__title">Page Views</h3>
+                <div class="dash-chart__wrap">
+                  <span class="dash-chart__loading">Loading...</span>
+                  <canvas id="chart-pageviews" style="display:none"></canvas>
+                </div>
+              </div>
+              <div class="dash-chart">
+                <h3 class="dash-chart__title">Unique Visitors</h3>
+                <div class="dash-chart__wrap">
+                  <span class="dash-chart__loading">Loading...</span>
+                  <canvas id="chart-visitors" style="display:none"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TOP PAGES & SCROLL DEPTH -->
+        <section class="section" data-section-name="pages_scroll">
+          <div class="container">
+            <div class="section-header reveal">
+              <h2 class="section-header__title">Pages &amp; scroll depth</h2>
+              <p class="section-header__subtitle">
+                Most viewed pages and how far visitors scroll.
+              </p>
+            </div>
+            <div class="dash-chart-grid reveal">
+              <div class="dash-chart">
+                <h3 class="dash-chart__title">Top Pages</h3>
+                <div class="dash-chart__wrap dash-chart__wrap--tall">
+                  <span class="dash-chart__loading">Loading...</span>
+                  <canvas id="chart-top-pages" style="display:none"></canvas>
+                </div>
+              </div>
+              <div class="dash-chart">
+                <h3 class="dash-chart__title">Scroll Depth</h3>
+                <div class="dash-chart__wrap">
+                  <span class="dash-chart__loading">Loading...</span>
+                  <canvas id="chart-scroll-depth" style="display:none"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION VIEWS & CLICKS -->
+        <section class="section section--alt" data-section-name="sections_clicks">
+          <div class="container">
+            <div class="section-header reveal">
+              <h2 class="section-header__title">Engagement &amp; clicks</h2>
+              <p class="section-header__subtitle">
+                Which content sections get viewed and which elements get clicked.
+              </p>
+            </div>
+            <div class="dash-chart-grid reveal">
+              <div class="dash-chart">
+                <h3 class="dash-chart__title">Section Views</h3>
+                <div class="dash-chart__wrap dash-chart__wrap--tall">
+                  <span class="dash-chart__loading">Loading...</span>
+                  <canvas id="chart-section-views" style="display:none"></canvas>
+                </div>
+              </div>
+              <div class="dash-chart">
+                <h3 class="dash-chart__title">Click Breakdown</h3>
+                <div class="dash-chart__wrap">
+                  <span class="dash-chart__loading">Loading...</span>
+                  <canvas id="chart-clicks" style="display:none"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- EVENT OVERVIEW -->
+        <section class="section" data-section-name="event_overview">
+          <div class="container">
+            <div class="section-header reveal">
+              <h2 class="section-header__title">What's being tracked</h2>
+              <p class="section-header__subtitle">
+                36 custom events across 8 pages, organized by flow.
+              </p>
+            </div>
+            <div class="dash-overview-grid reveal">
+              <div class="dash-overview-card">
+                <span class="dash-overview-card__count">8</span>
+                <span class="dash-overview-card__label">Page Views</span>
+              </div>
+              <div class="dash-overview-card">
+                <span class="dash-overview-card__count">6</span>
+                <span class="dash-overview-card__label">Navigation</span>
+              </div>
+              <div class="dash-overview-card">
+                <span class="dash-overview-card__count">9</span>
+                <span class="dash-overview-card__label">Discovery</span>
+              </div>
+              <div class="dash-overview-card">
+                <span class="dash-overview-card__count">7</span>
+                <span class="dash-overview-card__label">Contact</span>
+              </div>
+              <div class="dash-overview-card">
+                <span class="dash-overview-card__count">4</span>
+                <span class="dash-overview-card__label">Case Study</span>
+              </div>
+              <div class="dash-overview-card">
+                <span class="dash-overview-card__count">2</span>
+                <span class="dash-overview-card__label">Engagement</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- EVENT TAXONOMY -->
+        <section class="section section--warm" data-section-name="event_taxonomy">
+          <div class="container">
+            <div class="section-header reveal">
+              <h2 class="section-header__title">Event taxonomy</h2>
+              <p class="section-header__subtitle">
+                Every event follows a consistent naming convention.
+              </p>
+            </div>
+            <div class="dash-taxonomy reveal">
+              <div class="dash-taxonomy__convention">
+                <code class="dash-taxonomy__code">{action}_{element}_{module}_{screen}_{flow}_{product}</code>
+              </div>
+              <details class="dash-taxonomy__details">
+                <summary class="dash-taxonomy__summary">View all 36 events</summary>
+                <div class="dash-taxonomy__table-wrap">
+                  <table class="dash-taxonomy__table">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Page</th>
+                        <th>Event Name</th>
+                        <th>Action</th>
+                        <th>Flow</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="dash-taxonomy__group-label"><td colspan="5">Page Views</td></tr>
+                      <tr><td>1</td><td>Home</td><td><code>view_page_hero_home_discovery_portfolio</code></td><td>view</td><td>discovery</td></tr>
+                      <tr><td>2</td><td>Work</td><td><code>view_page_page_hero_work_discovery_portfolio</code></td><td>view</td><td>discovery</td></tr>
+                      <tr><td>3</td><td>About</td><td><code>view_page_page_hero_about_about_portfolio</code></td><td>view</td><td>about</td></tr>
+                      <tr><td>4</td><td>Contact</td><td><code>view_page_page_hero_contact_contact_portfolio</code></td><td>view</td><td>contact</td></tr>
+                      <tr><td>5</td><td>Ads on Speaker</td><td><code>view_page_cs_hero_ads_on_speaker_case_study_portfolio</code></td><td>view</td><td>case_study</td></tr>
+                      <tr><td>6</td><td>Credit Line</td><td><code>view_page_cs_hero_credit_line_upi_case_study_portfolio</code></td><td>view</td><td>case_study</td></tr>
+                      <tr><td>7</td><td>Stolo UX</td><td><code>view_page_cs_hero_stolo_ux_case_study_portfolio</code></td><td>view</td><td>case_study</td></tr>
+                      <tr><td>8</td><td>bloc</td><td><code>view_page_cs_hero_bloc_case_study_portfolio</code></td><td>view</td><td>case_study</td></tr>
+                      <tr class="dash-taxonomy__group-label"><td colspan="5">Header &amp; Footer Navigation <span class="dash-taxonomy__dynamic-note">Screen-aware: fires with the current page name in the event</span></td></tr>
+                      <tr><td>9</td><td>Home (example)</td><td><code>tap_link_header_nav_home_navigation_portfolio</code></td><td>tap</td><td>navigation</td></tr>
+                      <tr><td>10</td><td>Home (example)</td><td><code>tap_button_header_nav_home_navigation_portfolio</code></td><td>tap</td><td>navigation</td></tr>
+                      <tr><td>11</td><td>Home (example)</td><td><code>tap_logo_header_nav_home_navigation_portfolio</code></td><td>tap</td><td>navigation</td></tr>
+                      <tr><td>12</td><td>Home (example)</td><td><code>toggle_menu_header_nav_home_navigation_portfolio</code></td><td>toggle</td><td>navigation</td></tr>
+                      <tr><td>13</td><td>Home (example)</td><td><code>tap_link_footer_home_navigation_portfolio</code></td><td>tap</td><td>navigation</td></tr>
+                      <tr><td>14</td><td>Home (example)</td><td><code>tap_link_footer_home_navigation_portfolio</code></td><td>tap</td><td>navigation</td></tr>
+                      <tr class="dash-taxonomy__group-label"><td colspan="5">Home Page</td></tr>
+                      <tr><td>15</td><td>Home</td><td><code>tap_button_hero_home_discovery_portfolio</code></td><td>tap</td><td>discovery</td></tr>
+                      <tr><td>16</td><td>Home</td><td><code>tap_link_hero_home_discovery_portfolio</code></td><td>tap</td><td>discovery</td></tr>
+                      <tr><td>17</td><td>Home</td><td><code>tap_card_work_cards_home_discovery_portfolio</code></td><td>tap</td><td>discovery</td></tr>
+                      <tr><td>18</td><td>Home</td><td><code>tap_link_side_projects_home_discovery_portfolio</code></td><td>tap</td><td>discovery</td></tr>
+                      <tr><td>19</td><td>Home</td><td><code>tap_link_about_teaser_home_about_portfolio</code></td><td>tap</td><td>about</td></tr>
+                      <tr><td>20</td><td>Home</td><td><code>tap_button_cta_section_home_contact_portfolio</code></td><td>tap</td><td>contact</td></tr>
+                      <tr><td>21</td><td>Home</td><td><code>tap_button_cta_section_home_contact_portfolio</code></td><td>tap</td><td>contact</td></tr>
+                      <tr class="dash-taxonomy__group-label"><td colspan="5">Work Page</td></tr>
+                      <tr><td>22</td><td>Work</td><td><code>tap_card_work_cards_work_discovery_portfolio</code></td><td>tap</td><td>discovery</td></tr>
+                      <tr><td>23</td><td>Work</td><td><code>tap_link_side_projects_work_discovery_portfolio</code></td><td>tap</td><td>discovery</td></tr>
+                      <tr><td>24</td><td>Work</td><td><code>tap_button_cta_section_work_contact_portfolio</code></td><td>tap</td><td>contact</td></tr>
+                      <tr><td>25</td><td>Work</td><td><code>tap_button_cta_section_work_contact_portfolio</code></td><td>tap</td><td>contact</td></tr>
+                      <tr class="dash-taxonomy__group-label"><td colspan="5">About &amp; Contact Pages</td></tr>
+                      <tr><td>26</td><td>About</td><td><code>tap_button_cta_section_about_contact_portfolio</code></td><td>tap</td><td>contact</td></tr>
+                      <tr><td>27</td><td>About</td><td><code>tap_button_cta_section_about_contact_portfolio</code></td><td>tap</td><td>contact</td></tr>
+                      <tr><td>28</td><td>Contact</td><td><code>tap_link_contact_channels_contact_contact_portfolio</code></td><td>tap</td><td>contact</td></tr>
+                      <tr><td>29</td><td>Contact</td><td><code>focus_form_contact_form_contact_contact_portfolio</code></td><td>focus</td><td>contact</td></tr>
+                      <tr><td>30</td><td>Contact</td><td><code>submit_form_contact_form_contact_contact_portfolio</code></td><td>submit</td><td>contact</td></tr>
+                      <tr class="dash-taxonomy__group-label"><td colspan="5">Case Study Pages <span class="dash-taxonomy__dynamic-note">Screen-aware: fires with the case study name in the event</span></td></tr>
+                      <tr><td>31</td><td>bloc (example)</td><td><code>tap_link_cs_hero_bloc_case_study_portfolio</code></td><td>tap</td><td>case_study</td></tr>
+                      <tr><td>32</td><td>bloc (example)</td><td><code>tap_link_cs_nav_bloc_case_study_portfolio</code></td><td>tap</td><td>case_study</td></tr>
+                      <tr><td>33</td><td>bloc</td><td><code>tap_button_cs_hero_bloc_case_study_portfolio</code></td><td>tap</td><td>case_study</td></tr>
+                      <tr><td>34</td><td>bloc</td><td><code>tap_button_cs_content_bloc_case_study_portfolio</code></td><td>tap</td><td>case_study</td></tr>
+                      <tr class="dash-taxonomy__group-label"><td colspan="5">Scroll &amp; Engagement <span class="dash-taxonomy__dynamic-note">Screen-aware: fires with the current page and section name in the event</span></td></tr>
+                      <tr><td>35</td><td>Home (example)</td><td><code>scroll_page_page_content_home_engagement_portfolio</code></td><td>scroll</td><td>engagement</td></tr>
+                      <tr><td>36</td><td>Home (example)</td><td><code>view_section_hero_home_engagement_portfolio</code></td><td>view</td><td>engagement</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </details>
+            </div>
+          </div>
+        </section>
+      </template>
+
+      <!-- 8. CTA (always visible) -->
+      <section class="cta-section" data-section-name="cta_section">
+        <div class="container">
+          <div class="cta-box reveal">
+            <h2 class="cta-box__title">Like how I think about analytics?</h2>
+            <p class="cta-box__text">
+              This is the same rigor I bring to every product I build.
+              Let's talk about how I can do this for your product.
+            </p>
+            <div class="cta-box__actions">
+              <a class="btn btn--primary" href="contact.html">Get in Touch</a>
+              <a class="btn btn--outline" href="work.html">See My Work</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <a href="index.html" class="logo">yash<span>.</span></a>
+        <div class="footer__links">
+          <a class="footer__link" href="https://www.linkedin.com/in/-yashverma" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a class="footer__link" href="mailto:yashverma.iitkgp@gmail.com">Email</a>
+        </div>
+        <p class="footer__copy">&copy; 2026 Yash Verma</p>
+      </div>
+    </footer>
+
+    <!-- Firebase SDKs (compat for no-build-tool environments) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+    <!-- Razorpay Checkout -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <!-- Portfolio scripts -->
+    <script src="scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script src="analytics-dashboard.js"></script>
+    <script src="auth.js"></script>
+  </body>
+</html>

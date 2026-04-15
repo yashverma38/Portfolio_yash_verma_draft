@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stolo UX Research — Case Study | Yash Verma</title>
+    <meta name="description" content="How talking to 200+ traders and watching 100+ sessions led to an 18% retention lift for Stolo's options trading platform." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script>firebase.initializeApp({apiKey:'AIzaSyDoTbp91LlARVdzfrjArv8_qvKKpmr8ct4',projectId:'profile-analytics-tracker'});</script>
+    <script type="text/javascript">(function(e,c){if(!c.__SV){var l,h;window.mixpanel=c;c._i=[];c.init=function(q,r,f){function t(d,a){var g=a.split(".");2==g.length&&(d=d[g[0]],a=g[1]);d[a]=function(){d.push([a].concat(Array.prototype.slice.call(arguments,0)))}}var b=c;"undefined"!==typeof f?b=c[f]=[]:f="mixpanel";b.people=b.people||[];b.toString=function(d){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);d||(a+=" (stub)");return a};b.people.toString=function(){return b.toString(1)+".people (stub)"};l="disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking start_batch_senders start_session_recording stop_session_recording people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");for(h=0;h<l.length;h++)t(b,l[h]);var n="set set_once union unset remove delete".split(" ");b.get_group=function(){function d(p){a[p]=function(){b.push([g,[p].concat(Array.prototype.slice.call(arguments,0))])}}for(var a={},g=["get_group"].concat(Array.prototype.slice.call(arguments,0)),m=0;m<n.length;m++)d(n[m]);return a};c._i.push([q,r,f])};c.__SV=1.2;var k=e.createElement("script");k.type="text/javascript";k.async=!0;k.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";e=e.getElementsByTagName("script")[0];e.parentNode.insertBefore(k,e)}})(document,window.mixpanel||[]);mixpanel.init('e6cecc98fc0b1ccf469125b25363ab62',{autocapture:true,record_sessions_percent:100});</script>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__inner container">
+        <a href="index.html" class="logo">yash<span>.</span></a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="nav" id="siteNav">
+          <a class="nav__link" href="index.html">Home</a>
+          <a class="nav__link" href="work.html">Work</a>
+          <a class="nav__link" href="about.html">About</a>
+          <a class="nav__link" href="contact.html">Contact</a>
+          <a class="nav__cta" href="assets/Yash-Verma-Resume.pdf" target="_blank">Resume</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="cs-hero">
+        <div class="container">
+          <a class="cs-hero__back" href="work.html">&larr; All work</a>
+          <div class="cs-hero__tags">
+            <span class="tag tag--design">Design</span>
+            <span class="tag tag--analytics">Analytics</span>
+          </div>
+          <h1 class="cs-hero__title">Stolo: the UX research that actually moved retention</h1>
+          <p class="cs-hero__tldr">
+            Traders were signing up for Stolo's options platform but not coming
+            back. I spent weeks watching Hotjar recordings and interviewing
+            traders, across 100+ sessions and 200+ conversations. The findings drove
+            feature changes that lifted retention 18% and conversion 12%.
+          </p>
+        </div>
+      </section>
+
+      <section class="cs-meta">
+        <div class="container">
+          <div class="cs-meta__grid">
+            <div class="cs-meta__item">
+              <span class="cs-meta__label">Company</span>
+              <span class="cs-meta__value">Stolo (First Launch)</span>
+            </div>
+            <div class="cs-meta__item">
+              <span class="cs-meta__label">Role</span>
+              <span class="cs-meta__value">Product Intern</span>
+            </div>
+            <div class="cs-meta__item">
+              <span class="cs-meta__label">Timeline</span>
+              <span class="cs-meta__value">May — July 2023</span>
+            </div>
+            <div class="cs-meta__item">
+              <span class="cs-meta__label">Impact</span>
+              <span class="cs-meta__value">+18% retention, +12% conversion</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="cs-content">
+        <h2>The context</h2>
+        <p>
+          Stolo is an options trading platform for retail traders in India. It
+          provides tools for options analysis, strategy building, and trade
+          execution. The market is competitive. Acquiring a new trader is
+          expensive, so keeping existing ones engaged matters more than almost
+          anything else.
+        </p>
+        <p>
+          When I joined, the user base was growing but retention was a problem.
+          People would sign up, poke around, and then disappear within a few
+          sessions.
+        </p>
+
+        <div class="cs-callout">
+          <p>
+            <strong>The question I started with:</strong> Why are traders
+            leaving after signup? Is it a product problem, a UX problem,
+            or are we just attracting the wrong users?
+          </p>
+        </div>
+
+        <h2>The problem</h2>
+        <p>
+          The team had theories. Maybe the onboarding was too complex. Maybe
+          the interface was cluttered. Maybe features were too hard to find.
+          But none of these were validated ; they were opinions, not insights.
+          Without knowing the real friction points, feature prioritization was
+          just guesswork.
+        </p>
+
+        <div class="cs-gated-wrapper cs-gated-wrapper--locked" id="csGate">
+          <div class="cs-gate">
+            <div class="cs-gate__icon">&#128274;</div>
+            <h3 class="cs-gate__title">Get the full breakdown</h3>
+            <p class="cs-gate__text">The detailed process, metrics, and learnings from this project. Drop your info below and it's yours instantly.</p>
+            <form class="cs-gate__form" id="csGateForm">
+              <div class="cs-gate__field">
+                <label class="cs-gate__label" for="gate-name">Full Name</label>
+                <input class="cs-gate__input" type="text" id="gate-name" name="name" required autocomplete="name" placeholder="Jane Doe" />
+              </div>
+              <div class="cs-gate__field">
+                <label class="cs-gate__label" for="gate-email">Work Email</label>
+                <input class="cs-gate__input" type="email" id="gate-email" name="email" required autocomplete="email" placeholder="jane@company.com" />
+              </div>
+              <div class="cs-gate__field">
+                <label class="cs-gate__label" for="gate-company">Company</label>
+                <input class="cs-gate__input" type="text" id="gate-company" name="company" required autocomplete="organization" placeholder="Acme Inc." />
+              </div>
+              <button class="btn btn--primary cs-gate__submit" type="submit">Unlock Full Case Study</button>
+              <p class="cs-gate__fine-print">No login needed. No spam. Just the content.</p>
+            </form>
+          </div>
+          <div class="cs-gated-content">
+
+        <h2>What I did</h2>
+
+        <h3>1. Watched 100+ Hotjar sessions</h3>
+        <p>
+          I started with the quantitative side. For each recorded session, I
+          tracked:
+        </p>
+        <ul>
+          <li><strong>Drop-off points:</strong> Exactly where users stopped engaging</li>
+          <li><strong>Rage clicks and confusion signals:</strong> Which UI elements frustrated people</li>
+          <li><strong>Feature discovery:</strong> What features users found vs. missed entirely</li>
+          <li><strong>Session duration trends:</strong> How engagement changed across sessions 1, 2, 3</li>
+        </ul>
+        <p>
+          Two things jumped out. First, the onboarding tutorial was the biggest
+          drop-off point, which was not surprising. But second, and more interesting:
+          users who made it to the "Scalping Terminal" feature had dramatically
+          higher retention. They just had trouble finding it.
+        </p>
+
+        <figure class="cs-image">
+          <img src="assets/cs/sticky-notes.jpg" alt="UX analysis with session data and heatmaps" loading="lazy" />
+          <figcaption>Session analysis: mapping drop-off points and feature discovery patterns across the user journey</figcaption>
+        </figure>
+
+        <h3>2. Talked to 200+ traders</h3>
+        <p>
+          The session data showed me <em>where</em> the problems were. To
+          understand <em>why</em>, I needed to talk to people. I ran deep-dive
+          interviews with three groups:
+        </p>
+        <ul>
+          <li><strong>Churned users:</strong> Why did you leave? What were you hoping to find?</li>
+          <li><strong>Power users:</strong> What keeps you here? Which features matter most?</li>
+          <li><strong>New users:</strong> What was your first impression? Where did you get stuck?</li>
+        </ul>
+        <p>
+          Two insights came through clearly:
+        </p>
+        <ol>
+          <li>
+            New traders felt overwhelmed by the interface. They didn't know
+            where to start, and the onboarding tutorial was too generic and
+            didn't match their skill level.
+          </li>
+          <li>
+            Power users loved the Scalping Terminal and Multi-Layout analysis.
+            But these features were buried deep in the navigation. Users who
+            found them stayed. Users who didn't, churned.
+          </li>
+        </ol>
+
+        <figure class="cs-image">
+          <img src="assets/cs/team-whiteboard.jpg" alt="Research synthesis and affinity mapping" loading="lazy" />
+          <figcaption>Research synthesis: distilling 200+ interviews into actionable themes and user personas</figcaption>
+        </figure>
+
+        <h3>3. Fixed the two biggest problems</h3>
+        <p>
+          Based on the research, I led two parallel workstreams:
+        </p>
+        <p>
+          <strong>Better onboarding:</strong> I redesigned the activation funnel
+          to segment users by skill level. Instead of one generic tutorial,
+          beginners and experienced traders got different first-time experiences.
+          Beginners got guided hand-holding. Experienced traders got pointed
+          straight to the power features.
+        </p>
+        <p>
+          <strong>Feature surfacing:</strong> I moved the Scalping Terminal and
+          Multi-Layout analysis into more prominent positions in the product.
+          New navigation structure, contextual prompts during natural usage
+          moments, making sure users actually discovered the features that
+          would make them stay.
+        </p>
+
+        <h2>Results</h2>
+
+        <div class="cs-metrics">
+          <div class="cs-metric">
+            <p class="cs-metric__number">+18%</p>
+            <p class="cs-metric__label">User retention MoM</p>
+          </div>
+          <div class="cs-metric">
+            <p class="cs-metric__number">+12%</p>
+            <p class="cs-metric__label">Subscription conversion MoM</p>
+          </div>
+          <div class="cs-metric">
+            <p class="cs-metric__number">200+</p>
+            <p class="cs-metric__label">Traders interviewed</p>
+          </div>
+        </div>
+
+        <p>
+          The combined effect of better onboarding and feature surfacing drove
+          an 18% MoM increase in retention. Subscription conversion went up 12%
+          too, as more users were reaching the features that justified paying for
+          a plan.
+        </p>
+
+        <h2>What I learned</h2>
+        <div class="cs-learnings">
+          <ul>
+            <li>
+              <strong>Quant tells you where. Qual tells you why.</strong>
+              Hotjar showed me the drop-off points. Interviews explained them.
+              You need both to make confident product decisions. Either one
+              alone gives you an incomplete picture.
+            </li>
+            <li>
+              <strong>The best feature you've built might be invisible.</strong>
+              The Scalping Terminal was the most retention-driving feature in
+              the product. But users couldn't find it. Making it more prominent
+              was as impactful as building something new from scratch.
+            </li>
+            <li>
+              <strong>Don't give everyone the same onboarding.</strong>
+              A generic tutorial alienates beginners (too complex) and experts
+              (too basic). Segmented onboarding tracks fixed this, and the
+              activation rate improvement was immediate.
+            </li>
+          </ul>
+        </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="cs-nav">
+        <div class="container cs-nav__inner">
+          <a class="cs-nav__link" href="case-study-2.html">
+            <span class="cs-nav__label">Previous</span>
+            <span class="cs-nav__title">&larr; Credit Line on UPI</span>
+          </a>
+          <a class="cs-nav__link cs-nav__link--next" href="case-study-4.html">
+            <span class="cs-nav__label">Next</span>
+            <span class="cs-nav__title">bloc &rarr;</span>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <a href="index.html" class="logo">yash<span>.</span></a>
+        <div class="footer__links">
+          <a class="footer__link" href="https://www.linkedin.com/in/-yashverma" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a class="footer__link" href="mailto:yashverma.iitkgp@gmail.com">Email</a>
+        </div>
+        <p class="footer__copy">&copy; 2026 Yash Verma</p>
+      </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+  </body>
+</html>

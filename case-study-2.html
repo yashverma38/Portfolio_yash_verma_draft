@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Credit Line on UPI — Case Study | Yash Verma</title>
+    <meta name="description" content="How I led the end-to-end implementation of Credit Line on UPI at BharatPe, creating a $12K MoM revenue stream with 12% WoW growth." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script>firebase.initializeApp({apiKey:'AIzaSyDoTbp91LlARVdzfrjArv8_qvKKpmr8ct4',projectId:'profile-analytics-tracker'});</script>
+    <script type="text/javascript">(function(e,c){if(!c.__SV){var l,h;window.mixpanel=c;c._i=[];c.init=function(q,r,f){function t(d,a){var g=a.split(".");2==g.length&&(d=d[g[0]],a=g[1]);d[a]=function(){d.push([a].concat(Array.prototype.slice.call(arguments,0)))}}var b=c;"undefined"!==typeof f?b=c[f]=[]:f="mixpanel";b.people=b.people||[];b.toString=function(d){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);d||(a+=" (stub)");return a};b.people.toString=function(){return b.toString(1)+".people (stub)"};l="disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking start_batch_senders start_session_recording stop_session_recording people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");for(h=0;h<l.length;h++)t(b,l[h]);var n="set set_once union unset remove delete".split(" ");b.get_group=function(){function d(p){a[p]=function(){b.push([g,[p].concat(Array.prototype.slice.call(arguments,0))])}}for(var a={},g=["get_group"].concat(Array.prototype.slice.call(arguments,0)),m=0;m<n.length;m++)d(n[m]);return a};c._i.push([q,r,f])};c.__SV=1.2;var k=e.createElement("script");k.type="text/javascript";k.async=!0;k.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";e=e.getElementsByTagName("script")[0];e.parentNode.insertBefore(k,e)}})(document,window.mixpanel||[]);mixpanel.init('e6cecc98fc0b1ccf469125b25363ab62',{autocapture:true,record_sessions_percent:100});</script>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__inner container">
+        <a href="index.html" class="logo">yash<span>.</span></a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="nav" id="siteNav">
+          <a class="nav__link" href="index.html">Home</a>
+          <a class="nav__link" href="work.html">Work</a>
+          <a class="nav__link" href="about.html">About</a>
+          <a class="nav__link" href="contact.html">Contact</a>
+          <a class="nav__cta" href="assets/Yash-Verma-Resume.pdf" target="_blank">Resume</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="cs-hero">
+        <div class="container">
+          <a class="cs-hero__back" href="work.html">&larr; All work</a>
+          <div class="cs-hero__tags">
+            <span class="tag tag--analytics">Analytics</span>
+            <span class="tag tag--growth">Growth</span>
+          </div>
+          <h1 class="cs-hero__title">Credit Line on UPI: building a new revenue engine</h1>
+          <p class="cs-hero__tldr">
+            When the RBI enabled credit lines on UPI, I led the full
+            implementation at BharatPe, from digging into payment data to
+            designing the activation funnel to coordinating with lending
+            partners. The result was $12K in monthly revenue and a steady
+            12% week-over-week growth rate.
+          </p>
+        </div>
+      </section>
+
+      <section class="cs-meta">
+        <div class="container">
+          <div class="cs-meta__grid">
+            <div class="cs-meta__item">
+              <span class="cs-meta__label">Company</span>
+              <span class="cs-meta__value">BharatPe</span>
+            </div>
+            <div class="cs-meta__item">
+              <span class="cs-meta__label">Role</span>
+              <span class="cs-meta__value">Product Intern, Payments</span>
+            </div>
+            <div class="cs-meta__item">
+              <span class="cs-meta__label">Timeline</span>
+              <span class="cs-meta__value">July — Dec 2024</span>
+            </div>
+            <div class="cs-meta__item">
+              <span class="cs-meta__label">Impact</span>
+              <span class="cs-meta__value">$12K MoM, 12% WoW growth</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="cs-content">
+        <h2>The context</h2>
+        <p>
+          UPI processes billions of transactions every month in India. It's the
+          backbone of digital payments for BharatPe's merchant network. But
+          the revenue model was mostly transaction fees, and not much room to grow
+          without growing volume.
+        </p>
+        <p>
+          Then the RBI enabled "Credit Line on UPI," letting users access
+          pre-approved credit lines directly through UPI payments. For a
+          payments platform like BharatPe, this was a big deal: suddenly every
+          UPI transaction could potentially generate interest income and
+          processing fees on top.
+        </p>
+
+        <div class="cs-callout">
+          <p>
+            <strong>The opportunity:</strong> Credit Line on UPI could turn
+            every transaction into a lending moment, adding a revenue layer
+            to payment volume that already existed.
+          </p>
+        </div>
+
+        <h2>The problem</h2>
+        <p>
+          The regulatory green light was there, but actually building this
+          was messy:
+        </p>
+        <ul>
+          <li>Integrating with lending partners and their credit decisioning APIs</li>
+          <li>Designing a UX that surfaces credit without disrupting the payment flow</li>
+          <li>Navigating compliance requirements for credit products</li>
+          <li>Getting adoption among merchants and customers who'd never heard of the concept</li>
+        </ul>
+
+        <div class="cs-gated-wrapper cs-gated-wrapper--locked" id="csGate">
+          <div class="cs-gate">
+            <div class="cs-gate__icon">&#128274;</div>
+            <h3 class="cs-gate__title">Get the full breakdown</h3>
+            <p class="cs-gate__text">The detailed process, metrics, and learnings from this project. Drop your info below and it's yours instantly.</p>
+            <form class="cs-gate__form" id="csGateForm">
+              <div class="cs-gate__field">
+                <label class="cs-gate__label" for="gate-name">Full Name</label>
+                <input class="cs-gate__input" type="text" id="gate-name" name="name" required autocomplete="name" placeholder="Jane Doe" />
+              </div>
+              <div class="cs-gate__field">
+                <label class="cs-gate__label" for="gate-email">Work Email</label>
+                <input class="cs-gate__input" type="email" id="gate-email" name="email" required autocomplete="email" placeholder="jane@company.com" />
+              </div>
+              <div class="cs-gate__field">
+                <label class="cs-gate__label" for="gate-company">Company</label>
+                <input class="cs-gate__input" type="text" id="gate-company" name="company" required autocomplete="organization" placeholder="Acme Inc." />
+              </div>
+              <button class="btn btn--primary cs-gate__submit" type="submit">Unlock Full Case Study</button>
+              <p class="cs-gate__fine-print">No login needed. No spam. Just the content.</p>
+            </form>
+          </div>
+          <div class="cs-gated-content">
+
+        <h2>What I did</h2>
+
+        <h3>1. Dug into the payment data</h3>
+        <p>
+          I started with SQL queries on our data warehouse and Mixpanel event
+          data, trying to understand where credit could add the most value.
+          I was looking for:
+        </p>
+        <ul>
+          <li>Transaction patterns that indicated credit demand: high-frequency, mid-ticket-size payments</li>
+          <li>Which merchant categories were most likely to see credit usage</li>
+          <li>Time-of-day and day-of-week patterns for when to surface credit options</li>
+        </ul>
+        <p>
+          This wasn't glamorous work, but it was the foundation for everything
+          else. The data told us exactly where to focus.
+        </p>
+
+        <figure class="cs-image">
+          <img src="assets/cs/laptop-analytics.jpg" alt="Data analytics dashboard on laptop" loading="lazy" />
+          <figcaption>Behavioral analysis: mapping transaction patterns to identify credit demand signals</figcaption>
+        </figure>
+
+        <h3>2. Designed the activation funnel</h3>
+        <p>
+          Based on the data, I designed the end-to-end funnel for credit
+          line activation:
+        </p>
+        <ul>
+          <li><strong>Discovery:</strong> Surfacing credit availability at the right moment in the payment flow (not before, not after)</li>
+          <li><strong>Activation:</strong> Minimizing the steps from "oh this exists" to first credit transaction</li>
+          <li><strong>Retention:</strong> Notification triggers and usage nudges to build the habit</li>
+        </ul>
+        <p>
+          I applied the same behavioral analysis to Credit Card on UPI
+          placement and increased that revenue 21% just through better
+          funnel positioning. Same product, better placement, more money.
+        </p>
+
+        <h3>3. Coordinated across teams</h3>
+        <p>
+          This touched engineering (API integration), compliance (regulatory
+          sign-off), business development (lending partner agreements), and
+          the merchant-facing team (education and onboarding). I also led a
+          team of 8 on the parallel Multi-cycle Settlement initiative, which
+          cut payout costs by $20K monthly.
+        </p>
+
+        <h2>Results</h2>
+
+        <div class="cs-metrics">
+          <div class="cs-metric">
+            <p class="cs-metric__number">$12K</p>
+            <p class="cs-metric__label">Monthly revenue</p>
+          </div>
+          <div class="cs-metric">
+            <p class="cs-metric__number">12%</p>
+            <p class="cs-metric__label">Week-over-week growth</p>
+          </div>
+          <div class="cs-metric">
+            <p class="cs-metric__number">21%</p>
+            <p class="cs-metric__label">Revenue lift (CC on UPI)</p>
+          </div>
+        </div>
+
+        <p>
+          Credit Line on UPI hit steady compound growth from day one. And the
+          21% revenue lift on Credit Card on UPI came purely from better
+          placement: same product, better understanding of when users were
+          ready to see it.
+        </p>
+
+        <h2>What I learned</h2>
+        <div class="cs-learnings">
+          <ul>
+            <li>
+              <strong>Look at the actual data before building hypotheses.</strong>
+              The payment patterns revealed credit demand signals that weren't
+              obvious from aggregate metrics. Spending time in the data warehouse
+              paid off more than any brainstorming session.
+            </li>
+            <li>
+              <strong>Placement is a product lever.</strong>
+              The 21% revenue lift from Credit Card on UPI was purely a funnel
+              positioning change. No new features, no redesign. Just showing the
+              right thing at the right time.
+            </li>
+            <li>
+              <strong>12% weekly growth compounds fast.</strong>
+              It sounds incremental, but 12% week-over-week means you roughly
+              double every 6 weeks. That kind of compounding is what makes a
+              feature go from "promising" to "important."
+            </li>
+          </ul>
+        </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="cs-nav">
+        <div class="container cs-nav__inner">
+          <a class="cs-nav__link" href="case-study-1.html">
+            <span class="cs-nav__label">Previous</span>
+            <span class="cs-nav__title">&larr; Ads on Speaker</span>
+          </a>
+          <a class="cs-nav__link cs-nav__link--next" href="case-study-3.html">
+            <span class="cs-nav__label">Next</span>
+            <span class="cs-nav__title">Stolo UX Research &rarr;</span>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <a href="index.html" class="logo">yash<span>.</span></a>
+        <div class="footer__links">
+          <a class="footer__link" href="https://www.linkedin.com/in/-yashverma" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a class="footer__link" href="mailto:yashverma.iitkgp@gmail.com">Email</a>
+        </div>
+        <p class="footer__copy">&copy; 2026 Yash Verma</p>
+      </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+  </body>
+</html>
